@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 14:00:37 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/10 20:34:09 by dcarvalh         ###   ########.fr       */
+/*   Created: 2023/02/10 20:37:43 by dcarvalh          #+#    #+#             */
+/*   Updated: 2023/02/10 20:39:11 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+int env(char **envp)
+{
+	int i;
 
-
-// Podemos implementar o cd -...
-// like guradarmos na estrutura global o caminho atual sempre que chamarmos o cd
-
-int cd(char *path)
-{	
-	return chdir(path);
-}
-
-int main(){
-	cd("../../..");
-	pwd();
-	cd("-");
-	pwd();
+	i = -1;
+	while (envp[++i])
+		printf("%s\n", envp[i]);
 }

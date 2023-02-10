@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:31:16 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/10 14:15:50 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/02/10 20:39:35 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 //https://web.mit.edu/gnu/doc/html/rlman_2.html -> for keybindings etc
 
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
 	char *str;
 	while (1)

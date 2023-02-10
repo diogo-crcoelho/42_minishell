@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 00:41:56 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/10 14:06:02 by dcarvalh         ###   ########.fr       */
+/*   Created: 2023/02/10 14:00:37 by dcarvalh          #+#    #+#             */
+/*   Updated: 2023/02/10 14:09:50 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIHSELL_H
-# define MINIHSELL_H
+#include "minishell.h"
 
-#include <stdio.h>
-#include <unistd.h>
-#include <limits.h>
+int cd(char *path)
+{
+	return chdir(path);
+}
 
-void pwd();
-
-
-#endif
+int main(){
+	cd("..");
+	cd("..");
+	cd("..");
+	cd("..");
+	cd("..");
+	pwd();
+}

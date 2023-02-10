@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/10 00:41:56 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/10 14:06:02 by dcarvalh         ###   ########.fr       */
+/*   Created: 2023/02/10 13:43:29 by dcarvalh          #+#    #+#             */
+/*   Updated: 2023/02/10 14:05:55 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIHSELL_H
-# define MINIHSELL_H
+#include "minishell.h"
 
-#include <stdio.h>
-#include <unistd.h>
-#include <limits.h>
-
-void pwd();
-
-
-#endif
+void pwd()
+{
+	char	str[PATH_MAX];
+	printf("%s\n", getcwd(str, PATH_MAX));
+}

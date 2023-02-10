@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:31:16 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/10 12:10:40 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/02/10 14:15:50 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 //TODO
 
 
-//ideias a propor ao miguel
+//ideias a propor ao Miguel
 //
 // comecar por retirar as aspas -> guardar tudo o que esta dentro de aspas dentro de uma string.
 //e so depois trtar dos valores dentro da string. $ e o caralho
@@ -30,6 +30,7 @@
 
 // Cores fica sempre nice!!
 
+//https://web.mit.edu/gnu/doc/html/rlman_2.html -> for keybindings etc
 
 
 int main()
@@ -37,9 +38,9 @@ int main()
 	char *str;
 	while (1)
 	{
-		str = readline("\nSoups>");
+		str = readline("\nnot-bash>");
 		if (str)
-			printf("%s", str);
+			printf("%s", str);  //still needs parsing
 		free(str);
 	}
 }

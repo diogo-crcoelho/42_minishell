@@ -6,7 +6,7 @@
 #    By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 20:44:34 by dcarvalh          #+#    #+#              #
-#    Updated: 2023/02/10 13:19:35 by dcarvalh         ###   ########.fr        #
+#    Updated: 2023/02/10 13:58:57 by dcarvalh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 LIBS = -lreadline
 
-SRCS =	minishell.c
+SRCS =	minishell.c\
+		builtins/pwd.c
+		pwd.c
 
 B_SRCS = 
 

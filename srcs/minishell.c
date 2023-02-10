@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:31:16 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/10 00:56:10 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/02/10 12:10:40 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int main()
 	char *str;
 	while (1)
 	{
-		str = readline("Soups>");
+		str = readline("\nSoups>");
 		if (str)
-			printf("%s\n", str);
+			printf("%s", str);
 		free(str);
 	}
 }

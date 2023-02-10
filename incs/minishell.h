@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <limits.h>
+#include "../srcs/libs/list/list_utils.h"
+#include "../srcs/libs/strs/ft_strings.h"
 
 void pwd();
 

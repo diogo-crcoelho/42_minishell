@@ -20,10 +20,3 @@ int cd(char *path)
 {	
 	return chdir(path);
 }
-
-int main(){
-	cd("../../..");
-	pwd();
-	cd("-");
-	pwd();
-}

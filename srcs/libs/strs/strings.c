@@ -12,11 +12,11 @@
 
 #include "ft_strings.h"
 
-char			**ft_split(const char *str, int sep);
-unsigned long	__str_len(const char *str);
-int				__strn_cmp(const char *str1, const char *str2, unsigned long n);
-int				__strn_str(const char *haystack, const char *needle);
-char			*__str_trim(const char *str);
+char		**ft_split(const char *str, int sep);
+int        	__str_len(const char *str);
+int			__strn_cmp(const char *str1, const char *str2, unsigned long n);
+int			__strn_str(const char *haystack, const char *needle);
+char		*__str_trim(const char *str);
 
 static char	*__str_dup(const char *str)
 {
@@ -45,7 +45,7 @@ int	__str_cmp(const char *str1, const char *str2)
 	return (0);
 }
 
-char	*__strjoin(char *s1, char *s2, char *sep)
+char	*__str_join(char *s1, char *s2, char *sep)
 {
 	char	*new;
 	int		i;
@@ -72,7 +72,8 @@ t_strings	strings(void)
 		__str_cmp,
 		__strn_cmp,
 		__strn_str,
-		__str_trim
+		__str_trim,
+        __str_join
 	};
 	return (string);
 }

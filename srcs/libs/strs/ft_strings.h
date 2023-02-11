@@ -27,7 +27,7 @@ typedef struct s_strings
 	int		(*equal_n)(const char *, const char *, size_t);
 	int		(*contains)(const char *, const char *);
 	char	*(*trim)(const char *);
-	char 	*(*strjoin)(char *s1, char *s2, char *sep);
+	char 	*(*join)(char *s1, char *s2, char *sep);
 }	t_strings;
 
 t_strings	strings(void);

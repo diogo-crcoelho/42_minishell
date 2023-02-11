@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../INCS/pipex.h"
+#include "../../../incs/minishell.h"
 
 char	*find_path_var(char **env)
 {
 	while (*env)
 	{
-		if (!ft_strncmp(*env, "PATH=", 5))
+		if (!strings().equal_n(*env, "PATH=", 5))
 			return (*env + 5);
 		env++;
 	}
@@ -28,17 +28,15 @@ void	parse_here_doc(int *fd_in, char *lim, int *flag)
 	char	*s;
 
 	*fd_in = open("temp", O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	s = ft_calloc(1);
-	lim = str_join(lim, "", '\n');
-	while (ft_strncmp(s, lim, str_len(lim)))
+	lim = strings().join(lim, "", "\n");
+	while (strings().equal_n(s, lim, strings().len(lim)))
 	{
-		free(s);
-		s = get_next_line(0);
-		if (!ft_strncmp(s, lim, str_len(lim)))
+		s = readline("heredoc>");
+		if (!strings().equal_n(s, lim, strings().len(lim)))
 			break ;
-		write(*fd_in, s, str_len(s));
+		write(*fd_in, s, strings().len(s));
+		free(s);
 	}
-	free(s);
 	free(lim);
 	close(*fd_in);
 	*fd_in = open("temp", O_RDONLY);
@@ -53,11 +51,11 @@ char	*find_cmds(char **paths, char *av)
 		return (ft_calloc(1));
 	while (*paths)
 	{
-		temp = str_join(*paths, av, '/');
+		temp = strings().join(*paths, av, "/");
 		if (!access(temp, F_OK))
 			return (temp);
 		free(temp);
 		paths++;
 	}
-	return (str_dup(av));
+	return (strings().copy(av));
 }

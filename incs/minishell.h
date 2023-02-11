@@ -14,8 +14,10 @@
 # define MINIHSELL_H
 
 #include <stdio.h>
+#include <fcntl.h>
 #include <unistd.h>
 #include <limits.h>
+#include <sys/wait.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "../srcs/libs/list/list_utils.h"
@@ -24,18 +26,26 @@
 typedef 	void	(*t_func)();
 //t_func func = (void *) printf;
 typedef struct s_mini t_mini;
+typedef struct s_cmd	t_cmd;
 
 void pwd();
-void env();
-void init_minishell(char **envp);
-
 t_mini 	*minishell(void);
+void	del_elem(void *content);
 
 struct s_mini{
 	void	*env;
 	void	*cmds;
 	int 	exit_status;
 	char 	*prev_path;
+};
+
+
+
+struct s_cmd{
+	char	*path;
+	char	**args;
+	int		fd[2];
+	int		pid;
 };
 
 

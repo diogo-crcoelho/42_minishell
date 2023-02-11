@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../INCS/pipex.h"
+#include "../../../incs/minishell.h"
+
+char	*find_cmds(char **paths, char *av);
 
 void	**cmds(void)
 {
@@ -33,27 +35,30 @@ void	del_cmd(void *cmd)
 	free(tmp);
 }
 
-void	init_cmds(int size, char **paths, char **args, int fd_out)
-{
-	int	i;
-
-	i = -1;
-	*cmds() = creat_array();
-	while (++i < size)
-		(array(*cmds()))->add(create_cmd(args[i], paths))->del = del_cmd;
-	((t_cmd *)((array(*cmds()))->end->prev->content))->fd[1] = fd_out;
-	free_split(paths);
-}
-
 t_cmd	*create_cmd(char *arg, char **paths)
 {
 	t_cmd	*new;
 
 	new = ft_calloc(sizeof(t_cmd));
-	new->args = split(arg, ' ');
+	new->args =  strings().split(arg, ' ');
 	new->path = find_cmds(paths, *new->args);
 	new->fd[0] = -1;
 	new->fd[1] = -1;
 	pipe(new->fd);
 	return (new);
 }
+
+void	init_cmds(int size, char **paths, char **args, int fd_out)
+{
+	int	i;
+
+	i = -1;
+
+	*cmds() = creat_array();
+	while (++i < size)
+		(array(*cmds()))->add(create_cmd(args[i], paths))->del = del_cmd;
+	((t_cmd *)((array(*cmds()))->end->prev->content))->fd[1] = fd_out;
+	del_elem(paths);
+}
+
+

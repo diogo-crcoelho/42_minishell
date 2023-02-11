@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../INCS/pipex.h"
+#include "../../incs/minishell.h"
+
+void	parse_here_doc(int *fd_in, char *lim, int *flag);
+void	init_cmds(int size, char **paths, char **args, int fd_out);
+void	**cmds(void);
 
 int	dup_and_close(int fd_in, int fd_out)
 {
@@ -78,7 +82,7 @@ int	treat_infile(char *av)
 	return (fd[0]);
 }
 
-int	main(int ac, char **av, char **env)
+int	pipex(int ac, char **av, char **env)
 {
 	int		fd_in;
 	int		fd_out;
@@ -87,7 +91,7 @@ int	main(int ac, char **av, char **env)
 	if (ac > 4)
 	{
 		flag = 2;
-		if (!ft_strncmp(av[1], "here_doc", 9))
+		if (!strings().equal_n(av[1], "here_doc", 9))
 		{
 			parse_here_doc(&fd_in, *(av + 2), &flag);
 			fd_out = open(av[ac - 1], O_WRONLY | O_APPEND | O_CREAT, 0644);
@@ -100,8 +104,8 @@ int	main(int ac, char **av, char **env)
 			fd_out = open(av[ac - 1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		}
 		if (fd_out == -1)
-			exit(ft_printf("Couldn't open %s\n", av[ac - 1]));
-		init_cmds(ac - flag, split(find_path_var(env), ':'), av + flag, fd_out);
+			exit(printf("Couldn't open %s\n", av[ac - 1]));
+		init_cmds(ac - flag, strings().split(getenv("PATH"), ':'), av + flag, fd_out);
 		execute(array(*cmds())->begin, fd_in, env, ac - flag);
 		array(*cmds())->destroy();
 	}

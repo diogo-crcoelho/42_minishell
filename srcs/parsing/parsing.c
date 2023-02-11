@@ -18,7 +18,13 @@ void	del_elem(void *content)
 
 void	create_env(char **envp)
 {
-	*get_env() = creat_array();
+	minishell()->env = creat_array();
 	while (*envp)
-		array(*get_env())->add(strings().split(*envp++, '='))->del = del_elem;
+		array(minishell()->env)->add(strings().split(*envp++, '='))->del = del_elem;
+}
+
+void init_minishell(char **envp)
+{
+	create_env(envp);
+
 }

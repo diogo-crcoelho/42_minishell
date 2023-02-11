@@ -4,7 +4,7 @@
 
 #include "../../incs/minishell.h"
 
-void	**env(void)
+void	**get_env(void)
 {
 	static void	*a;
 
@@ -25,7 +25,7 @@ void	del_elem(void *content)
 
 void	create_env(char **envp)
 {
-	*env() = creat_array();
+	*get_env() = creat_array();
 	while (*envp)
-		array(*env())->add(strings().split(*envp++, '='))->del = del_elem;
+		array(*get_env())->add(strings().split(*envp++, '='))->del = del_elem;
 }

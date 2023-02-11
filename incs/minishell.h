@@ -19,7 +19,16 @@
 #include "../srcs/libs/list/list_utils.h"
 #include "../srcs/libs/strs/ft_strings.h"
 
+typedef 	void	(*t_func)();
+//t_func func = (void *) printf;
+typedef struct s_mini t_mini;
+
 void pwd();
+
+typedef struct s_mini{
+	void	*env;
+
+};
 
 
 #endif

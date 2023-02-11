@@ -37,12 +37,17 @@ t_mini 	*minishell(void)
 
 int main(int argc, char **argv, char **envp)
 {
-	char *str;
-	while (1)
-	{
-		str = readline("\nnot-bash>");
-		if (str)
-			printf("%s", str);  //still needs parsing
-		free(str);
-	}
+    if (argc != 1)
+        exit(1);
+//    char *str;
+    (void)argv;
+    init_minishell(envp);
+    env();
+//	while (1)
+//	{
+//		str = readline("\nnot-bash>");
+//		if (str)
+//			printf("%s", str);  //still needs parsing
+//		free(str);
+//	}
 }

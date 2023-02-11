@@ -26,10 +26,12 @@ typedef 	void	(*t_func)();
 typedef struct s_mini t_mini;
 
 void pwd();
+void env();
+void init_minishell(char **envp);
+
 t_mini 	*minishell(void);
 
-
-typedef struct s_mini{
+struct s_mini{
 	void	*env;
 	void	*cmds;
 	int 	exit_status;

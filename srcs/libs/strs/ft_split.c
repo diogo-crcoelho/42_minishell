@@ -12,29 +12,32 @@
 
 #include "ft_strings.h"
 
-char	**ft_split(const char *str, int sep)
+char	**rec_split(char **splited, int words, char c, const char *s)
 {
-	char		**strings;
-	static int	size;
-	int			i;
-	char		*word;
+    char	*word;
+    int		i;
 
-	i = 0;
-	while (*str && *str == sep)
-		str++;
-	while (str[i] && str[i] != sep)
-		++i;
-	word = NULL;
-	if (i)
-	{
-		word = ft_calloc(i + 1);
-		while (*str && *str != sep)
-			*word++ = *str++;
-	}
-	if (*str && *str == sep  && ++size)
-		strings = ft_split(str, sep);
-	else
-		strings = malloc((size + 1) * sizeof(char *));
-	strings[size--] = word - i;
-	return (strings);
+    i = 0;
+    while (*s && *s == c)
+        s++;
+    while (s[i] && s[i] != c)
+        i++;
+    word = NULL;
+    if (i)
+    {
+        word = ft_calloc(i + 1);
+        while (*s && *s != c)
+            *word++ = *s++;
+    }
+    if (*s == c)
+        splited = rec_split(splited, words + 1, c, s);
+    else if (!*s)
+        splited = ft_calloc(sizeof(char *) * (words + 2));
+    splited[words] = word - i;
+    return (splited);
+}
+
+char	**ft_split(const char *s, char c)
+{
+    return (rec_split(0, 0, c, s));
 }

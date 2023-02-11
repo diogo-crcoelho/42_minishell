@@ -20,7 +20,7 @@ void	create_env(char **envp)
 {
 	minishell()->env = creat_array();
 	while (*envp)
-		array(minishell()->env)->add(strings().split(*envp++, '='))->del = del_elem;
+        array(minishell()->env)->add(strings().split(*envp++, '='))->del = del_elem;
 }
 
 void init_minishell(char **envp)

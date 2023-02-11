@@ -65,7 +65,10 @@ fclean: clean
 	@$(echo) "$(C_RED)\tRemoved $(NAME)$(C_RESET)"
 	
 re: fclean all
-	
+
+r: re
+	./minishell
+
 sanitize: $(OBJS)
 	@$(CC) $(OBJS) -o $(NAME) -g -fsanitize=address
 

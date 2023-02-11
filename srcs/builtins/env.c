@@ -12,11 +12,13 @@
 
 #include "../../incs/minishell.h"
 
-int env(char **envp)
+void print_each(t_elems *elem, void *o)
 {
-	int i;
+    (void)o;
+    printf("%s=%s\n", ((char **)elem->content)[0], ((char **)elem->content)[1]);
+}
 
-	i = -1;
-	while (envp[++i])
-		printf("%s\n", envp[i]);
+void env()
+{
+    array(minishell()->env)->for_each(print_each, 0);
 }

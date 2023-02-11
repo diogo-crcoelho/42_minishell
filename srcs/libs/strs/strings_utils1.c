@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_strings.h"
 
 int	__str_len(const char *str, char c)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str && str[i] && str[i] != c)
@@ -21,9 +22,9 @@ int	__str_len(const char *str, char c)
 	return (i);
 }
 
-int	__strn_cmp(const char *str1, const char *str2, unsigned long n)
+int	__strn_cmp(const char *str1, const char *str2, int n)
 {
-	size_t	i;
+	int	i;
 
 	i = -1;
 	if (str1 && str2)
@@ -35,15 +36,15 @@ int	__strn_cmp(const char *str1, const char *str2, unsigned long n)
 
 int	__strn_str(const char *haystack, const char *needle)
 {
-	size_t	i;
-	size_t	size_small;
-	size_t	size_big;
+	int	i;
+	int	size_small;
+	int	size_big;
 
 	if (!needle || !haystack)
 		return (0);
 	i = -1;
-	size_small = __str_len(needle);
-	size_big = __str_len(haystack);
+	size_small = __str_len(needle, 0);
+	size_big = __str_len(haystack, 0);
 	if (size_big >= size_small)
 	{	
 		while (++i <= size_big - size_small)
@@ -57,12 +58,12 @@ int	__strn_str(const char *haystack, const char *needle)
 
 static size_t	check_size(const char *str)
 {
-	size_t	size;
-	size_t	i;
+	int	size;
+	int	i;
 
 	if (!str)
 		return (0);
-	size = __str_len(str);
+	size = __str_len(str, 0);
 	i = 0;
 	while (str[i] && str[i] == ' ')
 		++i;
@@ -73,10 +74,10 @@ static size_t	check_size(const char *str)
 
 char	*__str_trim(const char *str)
 {
-	size_t		size;
+	int		size;
 	char		*res;
-	size_t		i;
-	size_t		j;
+	int		i;
+	int		j;
 
 	if (!str)
 		return (NULL);

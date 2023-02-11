@@ -16,6 +16,8 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <limits.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include "../srcs/libs/list/list_utils.h"
 #include "../srcs/libs/strs/ft_strings.h"
 
@@ -24,10 +26,14 @@ typedef 	void	(*t_func)();
 typedef struct s_mini t_mini;
 
 void pwd();
+t_mini 	*minishell(void);
+
 
 typedef struct s_mini{
 	void	*env;
-
+	void	*cmds;
+	int 	exit_status;
+	char 	*prev_path;
 };
 
 

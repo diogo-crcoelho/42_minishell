@@ -4,13 +4,6 @@
 
 #include "../../incs/minishell.h"
 
-void	**get_env(void)
-{
-	static void	*a;
-
-	return (&a);
-}
-
 void	del_elem(void *content)
 {
 	char	**vars;

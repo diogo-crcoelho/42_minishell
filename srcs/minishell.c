@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-
+#include "../incs/minishell.h"
 
 //TODO
 
@@ -32,6 +27,13 @@
 
 //https://web.mit.edu/gnu/doc/html/rlman_2.html -> for keybindings etc
 
+
+t_mini 	*minishell(void)
+{
+	static t_mini a;
+
+	return (&a);
+}
 
 int main(int argc, char **argv, char **envp)
 {

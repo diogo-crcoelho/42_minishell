@@ -43,9 +43,12 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
     init_minishell(envp);
     env();
-    export("LOVE=ROSINHA");
-    printf("\n\n");
+    export("LOVE===ROSINHA");
+    export("ABC=ABC");
+    export("LOVE====TETES");
     env();
+    printf("\n\n");
+    array(minishell()->env)->destroy();
 //	while (1)
 //	{
 //		str = readline("\nnot-bash>");

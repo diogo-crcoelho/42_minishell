@@ -34,7 +34,7 @@ void env();
 t_mini 	*minishell(void);
 void    init_minishell(char **envp);
 void	del_elem(void *content);
-int export(char *var);
+void     export(char *var);
 
 
 struct s_mini{

@@ -13,7 +13,7 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 LIBS = -lreadline
 
 SRCS =	minishell.c \
@@ -45,7 +45,7 @@ echo = /bin/echo -e
 	@$(echo) "$(C_GREEN) [OK]   $(C_PURPLE) Compiling:$(C_RESET)" $<
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@$(echo) "$(C_GREEN) [OK]   $(C_PURPLE) Compiling:$(C_RESET)" $(NAME)
 	@$(echo) "$(C_GREEN)\tCompiled $(NAME)$(C_RESET)"
 	
@@ -70,12 +70,6 @@ r: re
 	make clean
 	./minishell
 
-
-sanitize: $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) -g -fsanitize=address
-
-b_sanitize : $(B_OBJS)
-	@$(CC) $(B_OBJS) -o $(NAME) -g -fsanitize=address
 
 norm_M:
 	@$(echo) "$(C_RED)$(BG_YELLOW)[Norminette]$(C_RESET)"

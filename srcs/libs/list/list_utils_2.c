@@ -54,6 +54,7 @@ t_elems *__search(int (*cmp)(void *cont, void *buf, int size),void *buf, int siz
 	{
 		if (!cmp(temp->content, buf, size))
 			return (temp);
+        temp = temp->next;
 	}
 	return (NULL);
 }

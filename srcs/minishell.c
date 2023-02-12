@@ -44,8 +44,10 @@ int main(int argc, char **argv, char **envp)
     init_minishell(envp);
     env();
     export("LOVE===ROSINHA");
-    export("ABC=ABC");
+    export("ABC=DEF");
     export("LOVE====TETES");
+    env();
+    unset("ABC");
     env();
     printf("\n\n");
     array(minishell()->env)->destroy();

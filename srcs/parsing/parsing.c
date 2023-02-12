@@ -11,9 +11,10 @@ void	del_elem(void *content)
 
 	vars = (char **)content;
 	i = -1;
-	while (vars[++i])
-		free(vars[i]);
-	free(vars);
+
+    while (vars[++i])
+        free(vars[i]);
+    free(vars);
 }
 
 void	create_env(char **envp)

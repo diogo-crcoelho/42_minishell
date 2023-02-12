@@ -28,13 +28,18 @@ typedef 	void	(*t_func)();
 typedef struct s_mini t_mini;
 typedef struct s_cmd	t_cmd;
 
-void pwd();
-void env();
+void    pwd();
+void    env();
+void    unset(char *var);
+void    export(char *var);
 
 t_mini 	*minishell(void);
 void    init_minishell(char **envp);
+
 void	del_elem(void *content);
-void     export(char *var);
+
+int cmp(void *cont1, void *cont2, int size);
+
 
 
 struct s_mini{

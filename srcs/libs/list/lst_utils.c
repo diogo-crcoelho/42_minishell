@@ -28,7 +28,7 @@ void	__del(t_elems *elem)
 			elem->next->prev = elem->prev;
 	}
 	if (elem->del)
-		elem->del(elem);
+		elem->del(elem->content);
 	free(elem);
 	(*__this())->size--;
 }

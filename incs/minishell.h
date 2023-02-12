@@ -29,7 +29,10 @@ typedef struct s_mini t_mini;
 typedef struct s_cmd	t_cmd;
 
 void pwd();
+void env();
+
 t_mini 	*minishell(void);
+void init_minishell(char **envp);
 void	del_elem(void *content);
 
 struct s_mini{

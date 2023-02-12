@@ -43,7 +43,6 @@ struct s_mini{
 };
 
 
-
 struct s_cmd{
 	char	*path;
 	char	**args;

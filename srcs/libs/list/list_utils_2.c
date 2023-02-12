@@ -45,6 +45,19 @@ void	*ft_calloc(size_t size)
 	return (ptr);
 }
 
+t_elems *__search(int (*cmp)(void *cont, void *buf, int size),void *buf, int size)
+{
+	t_elems	*temp;
+
+	temp = (*__this())->begin;
+	while (temp)
+	{
+		if (!cmp(temp->content, buf, size))
+			return (temp);
+	}
+	return (NULL);
+}
+
 void	*creat_array(void)
 {
 	t_array	*new;
@@ -54,5 +67,6 @@ void	*creat_array(void)
 	new->remove = __del;
 	new->destroy = __destroy;
 	new->for_each = __for_each;
+	new->search = __search;
 	return (new);
 }

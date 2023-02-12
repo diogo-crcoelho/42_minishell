@@ -43,6 +43,9 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
     init_minishell(envp);
     env();
+    export("LOVE=ROSINHA");
+    printf("\n\n");
+    env();
 //	while (1)
 //	{
 //		str = readline("\nnot-bash>");

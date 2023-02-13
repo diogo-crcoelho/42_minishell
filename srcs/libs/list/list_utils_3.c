@@ -12,7 +12,7 @@ void	**__to_array(void)
 	t_elems *temp;
 	int		i;
 
-	arr = ft_calloc((*__this())->size);
+    arr = ft_calloc(((*__this())->size + 1) * sizeof(void *));
 	temp = (*__this())->begin;
 	i = 0;
 	while (temp)

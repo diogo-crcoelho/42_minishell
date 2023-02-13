@@ -50,10 +50,7 @@ int main(int argc, char **argv, char **envp)
 //    env();
 //    unset("ABC");
 //    env();
-    void **t = array(minishell()->env)->to_array();
-    (void)t;
-    while (t)
-        printf("%s\n", ((t_env *)(*t++))->total);
+
 //	while (1)
 //	{
 //        str = readline("\nnot-bash>");

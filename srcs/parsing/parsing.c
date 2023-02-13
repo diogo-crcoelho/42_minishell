@@ -18,6 +18,23 @@ void	del_elem(void *content)
 	free(content);
 }
 
+void	**to_array_mini(void)
+{
+	void	**arr;
+	t_elems *temp;
+	int		i;
+
+	arr = ft_calloc(((array(minishell()->env)->size + 1) * sizeof(void *)));
+	temp = array(minishell()->env)->begin;
+	i = 0;
+	while (temp)
+	{
+		arr[i++] = ((t_env *)(temp->content))->total;
+		temp = temp->next;
+	}
+	return (arr);
+}
+
 char **env_split(char *str, char sep)
 {
     char **split_env;
@@ -49,7 +66,8 @@ void	create_env(char **envp)
 {
 	minishell()->env = creat_array();
 	while (*envp)
-        array(minishell()->env)->add(create_content(*envp++))->del = del_elem;
+		array(minishell()->env)->add(create_content(*envp++))->del = del_elem;
+	array(minishell()->env)->to_array = to_array_mini;
 }
 
 void init_minishell(char **envp)

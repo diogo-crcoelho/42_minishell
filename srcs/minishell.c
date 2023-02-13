@@ -39,28 +39,20 @@ int main(int argc, char **argv, char **envp)
 {
     if (argc != 1)
         exit(1);
-//    char *str;
+    char *str;
+
     (void)argv;
     init_minishell(envp);
-//    env();
-        printf("\n\n");
-//   export("LOVE===ROSINHA");
-//    export("ABC=DEF");
-//    export("LOVE====Pequena=Rosinha");
-//    env();
-//    unset("ABC");
-//    env();
-
-//	while (1)
-//	{
-//        str = readline("\nnot-bash>");
-//        if (str){
-//            init_parse(str);  //still needs parsing
-//            if (strings().equal(str, "exit\n")) {
-//                break;
-//            }
-//        }
-//        free(str);
-//    }
+	while (1)
+	{
+        str = readline("\nnot-bash>");
+        if (str){
+            init_parse(str);  //still needs parsing
+            if (strings().equal(str, "exit\n")) {
+                break;
+            }
+        }
+        free(str);
+    }
     array(minishell()->env)->destroy();
 }

@@ -25,12 +25,11 @@
 //#include "pipex.h"
 #include "../srcs/libs/list/list_utils.h"
 #include "../srcs/libs/strs/ft_strings.h"
+#include "structs.h"
 
 typedef 	void	(*t_func)();
 //t_func func = (void *) printf;
-typedef struct s_mini t_mini;
-typedef struct s_cmd t_cmd;
-typedef struct s_env t_env;
+
 
 void    pwd();
 void    env();
@@ -49,25 +48,9 @@ void init_parse(const char *str);
 //utils
 char	**env_split(char *str, char sep);
 t_env	*create_content(char *total);
-struct s_mini{
-	void	*env;
-	void	*cmds;
-	int 	exit_status;
-	char 	*prev_path;
-};
-
-struct s_env{
-	char	*total;
-	char	**splitted;
-};
 
 
-struct s_cmd{
-	char	*path;
-	char	**args;
-	int		fd[2];
-	int		pid;
-};
+
 
 
 #endif

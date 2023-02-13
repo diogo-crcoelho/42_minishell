@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "../../incs/minishell.h"
 
 // Podemos implementar o cd -...
 // like guradarmos na estrutura global o caminho atual sempre que chamarmos o cd

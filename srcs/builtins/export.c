@@ -27,12 +27,17 @@ void export(char *var)
     splitted = env_split(var, '=');
     temp = array(minishell()->env)->search(cmp, splitted[0], strings().len(var, 0));
     if (!temp)
-        array(minishell()->env)->add(splitted)->del = del_elem;
+    {
+        free(splitted[1]);
+        array(minishell()->env)->add(create_content(var))->del = del_elem;
+    }
     else
     {
-        free(((char **)temp->content)[1]);
-        ((char **)temp->content)[1] = splitted[1];
-        free(splitted[0]);
-        free(splitted);
+        free(((t_env *)temp->content)->splitted[1]);
+        ((t_env *)temp->content)->splitted[1] = splitted[1];
+        free(((t_env *)temp->content)->total);
+        ((t_env *)temp->content)->total = strings().copy(var);
     }
+    free(splitted[0]);
+    free (splitted);
 }

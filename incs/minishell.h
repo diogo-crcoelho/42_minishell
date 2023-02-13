@@ -14,12 +14,15 @@
 # define MINIHSELL_H
 
 #include <stdio.h>
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <limits.h>
 #include <sys/wait.h>
+
 #include <readline/readline.h>
 #include <readline/history.h>
+//#include "pipex.h"
 #include "../srcs/libs/list/list_utils.h"
 #include "../srcs/libs/strs/ft_strings.h"
 
@@ -38,12 +41,14 @@ t_mini 	*minishell(void);
 void    init_minishell(char **envp);
 
 void	del_elem(void *content);
+char **env_split(char *str, char sep);
 
 int cmp(void *cont1, void *cont2, int size);
+void init_parse(const char *str);
 
 //utils
 char	**env_split(char *str, char sep);
-
+t_env	*create_content(char *total);
 struct s_mini{
 	void	*env;
 	void	*cmds;

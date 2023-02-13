@@ -50,13 +50,16 @@ int main(int argc, char **argv, char **envp)
     env();
     unset("ABC");
     env();
-
-    array(minishell()->env)->destroy();
 //	while (1)
 //	{
-//		str = readline("\nnot-bash>");
-//		if (str)
-//			printf("%s", str);  //still needs parsing
-//		free(str);
-//	}
+//        str = readline("\nnot-bash>");
+//        if (str){
+//            init_parse(str);  //still needs parsing
+//            if (strings().equal(str, "exit\n")) {
+//                break;
+//            }
+//        }
+//        free(str);
+//    }
+    array(minishell()->env)->destroy();
 }

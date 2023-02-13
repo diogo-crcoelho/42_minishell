@@ -15,7 +15,7 @@
 void print_each(t_elems *elem, void *o)
 {
     (void)o;
-    printf("%s\n", ((t_env *)elem)->total);
+    printf("%s\n", ((t_env *)elem->content)->total);
 }
 
 void env()

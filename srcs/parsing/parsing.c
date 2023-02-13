@@ -41,7 +41,7 @@ t_env	*create_content(char *total)
 
 	content = ft_calloc(sizeof(t_env));
 	content->splitted = env_split(total, '=');
-	content->total = strings().join(content->splitted[0], content->splitted[1], "=");
+	content->total = strings().copy(total);
 	return (content);
 }
 

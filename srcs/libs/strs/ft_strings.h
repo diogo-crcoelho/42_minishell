@@ -20,8 +20,9 @@
 
 typedef struct s_strings
 {
-	int 	(*len)(const char *);
+	int 	(*len)(const char *, char c);
 	char	*(*copy)(const char *);
+	char	*(*copy_n)(const char *, int size);
 	char	**(*split)(const char *, int);
 	int		(*equal)(const char *, const char *);
 	int		(*equal_n)(const char *, const char *, size_t);

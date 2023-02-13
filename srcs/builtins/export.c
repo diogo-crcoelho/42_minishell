@@ -24,8 +24,8 @@ void export(char *var)
     t_elems *temp;
     char    **splitted;
 
-    splitted = strings().split(var, '=');
-    temp = array(minishell()->env)->search(cmp, splitted[0], strings().len(var));
+    splitted = env_split(var, '=');
+    temp = array(minishell()->env)->search(cmp, splitted[0], strings().len(var, 0));
     if (!temp)
         array(minishell()->env)->add(splitted)->del = del_elem;
     else

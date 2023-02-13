@@ -35,6 +35,7 @@ struct s_array{
 	void	(*for_each)(void (*func)(t_elems	*elem, void *o), void *o);
 	void	(*destroy)(void);
 	t_elems *(*search)(int (*cmp)(void *cont, void *buf, int size),void *buf, int size);
+	void	**(*to_array)(void);
 };
 
 t_array	*array(void *lst);

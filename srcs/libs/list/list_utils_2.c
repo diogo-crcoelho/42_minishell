@@ -16,6 +16,7 @@ void	__destroy(void);
 t_elems	*__add(void *content);
 void	__for_each(void (*func)(t_elems *elem, void *p), void *o);
 void	__del(t_elems *elem);
+void	**__to_array(void);
 
 t_array	**__this(void)
 {
@@ -69,5 +70,6 @@ void	*creat_array(void)
 	new->destroy = __destroy;
 	new->for_each = __for_each;
 	new->search = __search;
+	new->to_array = __to_array;
 	return (new);
 }

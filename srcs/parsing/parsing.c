@@ -11,9 +11,7 @@ void	del_elem(void *content)
 
 	vars = ((t_env *)content)->splitted;
 	i = -1;
-
-//	acho que nao precisa desse free, confirmar
-//	free(((t_env *)content)->total);
+	free(((t_env *)content)->total);
     while (vars[++i])
         free(vars[i]);
     free(vars);
@@ -42,8 +40,8 @@ t_env	*create_content(char *total)
 	t_env	*content;
 
 	content = ft_calloc(sizeof(t_env));
-	content->total = total;
 	content->splitted = env_split(total, '=');
+	content->total = strings().join(content->splitted[0], content->splitted[1], "=");
 	return (content);
 }
 

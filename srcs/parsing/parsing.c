@@ -9,12 +9,15 @@ void	del_elem(void *content)
 	char	**vars;
 	int 	i;
 
-	vars = (char **)content;
+	vars = ((t_env *)content)->splitted;
 	i = -1;
 
+//	acho que nao precisa desse free, confirmar
+//	free(((t_env *)content)->total);
     while (vars[++i])
         free(vars[i]);
     free(vars);
+	free(content);
 }
 
 char **env_split(char *str, char sep)
@@ -34,12 +37,21 @@ char **env_split(char *str, char sep)
     return (split_env);
 }
 
+t_env	*create_content(char *total)
+{
+	t_env	*content;
+
+	content = ft_calloc(sizeof(t_env));
+	content->total = total;
+	content->splitted = env_split(total, '=');
+	return (content);
+}
 
 void	create_env(char **envp)
 {
 	minishell()->env = creat_array();
 	while (*envp)
-        array(minishell()->env)->add(env_split(*envp++, 61))->del = del_elem;
+        array(minishell()->env)->add(create_content(*envp++))->del = del_elem;
 }
 
 void init_minishell(char **envp)

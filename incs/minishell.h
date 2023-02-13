@@ -26,7 +26,8 @@
 typedef 	void	(*t_func)();
 //t_func func = (void *) printf;
 typedef struct s_mini t_mini;
-typedef struct s_cmd	t_cmd;
+typedef struct s_cmd t_cmd;
+typedef struct s_env t_env;
 
 void    pwd();
 void    env();
@@ -40,13 +41,19 @@ void	del_elem(void *content);
 
 int cmp(void *cont1, void *cont2, int size);
 
-
+//utils
+char	**env_split(char *str, char sep);
 
 struct s_mini{
 	void	*env;
 	void	*cmds;
 	int 	exit_status;
 	char 	*prev_path;
+};
+
+struct s_env{
+	char	*total;
+	char	**splitted;
 };
 
 

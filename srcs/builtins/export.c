@@ -9,7 +9,7 @@ int cmp(void *cont1, void *cont2, int size)
     char *str1;
     char *str2;
 
-    str1 = ((char **)cont1)[0];
+    str1 = ((t_env *)cont1)->splitted[0];
     str2 = (char *)cont2;
     i = -1;
     if (str1 && str2)

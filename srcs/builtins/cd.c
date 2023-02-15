@@ -16,6 +16,17 @@
 // like guradarmos na estrutura global o caminho atual sempre que chamarmos o cd
 
 int cd(char *path)
-{	
-	return chdir(path);
+{
+    int err;
+
+    if (!strings().len(path, 0))
+        path = strings().copy(getenv("HOME"));
+    else if(!strings().equal_n(path, "~", 1))
+        path = strings().join(getenv("HOME"), &path[1], 0);
+    else
+        path = strings().copy(path);
+    err = chdir(path);
+    if (path)
+        free(path);
+    return err;
 }

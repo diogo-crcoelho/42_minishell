@@ -68,6 +68,8 @@ t_elems	*__add(void *content)
 	}
 	(*__this())->end = new;
 	(*__this())->size++;
+    if ((*__this())->root)
+        (*__this())->add_leaf(content);
 	return (new);
 }
 

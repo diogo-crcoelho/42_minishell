@@ -18,6 +18,7 @@
 # include <unistd.h>
 
 typedef struct s_elems	t_elems;
+typedef struct s_tree	t_tree;
 typedef struct s_array	t_array;
 
 struct s_elems{
@@ -25,6 +26,14 @@ struct s_elems{
 	void	(*del)(void *content);
 	t_elems	*next;
 	t_elems	*prev;
+};
+
+struct s_tree{
+    void	*content;
+    void	(*del)(void *content);
+    t_tree	*left;
+    t_tree	*right;
+    t_tree	*up;
 };
 
 struct s_array{
@@ -37,6 +46,10 @@ struct s_array{
 	void	(*destroy)(void);
 	t_elems *(*search)(int (*cmp)(void *cont, void *buf, int size),void *buf, int size);
 	void	**(*to_array)(void);
+    t_tree  *root;
+    void    (*build_tree)(void);
+    t_tree  *(*add_leaf)(void *content);
+    int     (*cmp)(void *cont1, void *cont2);
 };
 
 t_array	*array(void *lst);

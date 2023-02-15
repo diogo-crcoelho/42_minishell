@@ -25,6 +25,10 @@
 
 // Cores fica sempre nice!!
 
+
+// Para discutir com o MIGUEL::
+//Sera que vale a pena estar a meter as condicoes do ~ do cd ouo qd virmos o til damos logo replace!!!
+
 //https://web.mit.edu/gnu/doc/html/rlman_2.html -> for keybindings etc
 
 
@@ -47,6 +51,7 @@ int main(int argc, char **argv, char **envp)
     cd(NULL);
 //    free (str);
     pwd();
+    echo(NULL, 1);
 //	while (1)
 //	{
 //        str = readline("\nnot-bash>");

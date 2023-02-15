@@ -35,7 +35,9 @@ void    pwd();
 void    env();
 void    unset(char *var);
 void    export(char *var);
-int cd(char *path);
+int     cd(char *path);
+void	echo(char *str, int flag);
+
 
 
 t_mini 	*minishell(void);

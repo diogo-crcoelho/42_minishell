@@ -26,6 +26,8 @@ void export(char *var)
 
     splitted = env_split(var, '=');
     temp = array(minishell()->env)->search(cmp, splitted[0], strings().len(var, 0));
+    if (strings().alnum(splitted[0]))
+        ft_exit(1);
     if (!temp)
     {
         free(splitted[1]);

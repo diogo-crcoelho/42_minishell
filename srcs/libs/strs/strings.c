@@ -14,9 +14,10 @@
 
 char		**ft_split(const char *str, int sep);
 int        	__str_len(const char *str, char c);
-int			__strn_cmp(const char *str1, const char *str2, unsigned long n);
+int			__strn_cmp(const char *str1, const char *str2, int n);
 int			__strn_str(const char *haystack, const char *needle);
 char		*__str_trim(const char *str);
+int __isal_num(char *str);
 
 static char *__strn_dup(const char *str, int size)
 {
@@ -85,7 +86,8 @@ t_strings	strings(void)
 		__strn_cmp,
 		__strn_str,
 		__str_trim,
-        __str_join
+        __str_join,
+        __isal_num,
 	};
 	return (string);
 }

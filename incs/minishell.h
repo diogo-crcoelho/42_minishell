@@ -54,6 +54,8 @@ char	**env_split(char *str, char sep);
 t_env	*create_content(char *total);
 
 
+void	ft_exit(int exit_status);
+char *expand(char *str);
 
 
 

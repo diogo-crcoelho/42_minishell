@@ -51,7 +51,7 @@ t_tree  *__add_leaf(void *content)
     else
     {
         temp = find_leaf(temp, content, (*__this())->cmp);
-        if (cmp(temp->content, content) <= 0)
+        if ( (*__this())->cmp(temp->content, content) <= 0)
             temp->right = new;
         else
             temp->left = new;

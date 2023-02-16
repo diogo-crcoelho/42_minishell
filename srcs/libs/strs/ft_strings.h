@@ -25,10 +25,11 @@ typedef struct s_strings
 	char	*(*copy_n)(const char *, int size);
 	char	**(*split)(const char *, int);
 	int		(*equal)(const char *, const char *);
-	int		(*equal_n)(const char *, const char *, size_t);
+	int		(*equal_n)(const char *, const char *, int);
 	int		(*contains)(const char *, const char *);
 	char	*(*trim)(const char *);
-	char 	*(*join)(char *s1, char *s2, char *sep);
+	char 	*(*join)(char *, char *, char *);
+    int     (*alnum)(char *);
 }	t_strings;
 
 t_strings	strings(void);

@@ -69,7 +69,7 @@ re: fclean all
 
 r: re
 	make clean
-	./minishell
+	valgrind --leak-check=full ./minishell #| grep entrou | wc -l
 
 
 norm_M:

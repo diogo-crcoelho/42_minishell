@@ -16,6 +16,7 @@ void    __del_root(void)
         lower_leaf = find_leaf((*__this())->root->right, (*__this())->root->content, (*__this())->cmp);
         lower_leaf->right = (*__this())->root->left;
         (*__this())->root->left->up = lower_leaf;
+        (*__this())->root = (*__this())->root->right;
     }
     else if ((*__this())->root->left)
         (*__this())->root = (*__this())->root->left;
@@ -48,4 +49,21 @@ void    __del_from_tree(void *content)
         temp->content = to_del->content;
     }
     free(to_del);
+}
+
+void    __destroy_tree(t_tree *root)
+{
+    if (root->left)
+        __destroy_tree(root->left);
+    if (root->right)
+        __destroy_tree(root->right);
+    if (!root->left && !root->right)
+    {
+        if (root->up && root == root->up->left)
+            root->up->left = NULL;
+        if (root->up && root == root->up->right)
+            root->up->right = NULL;
+        free(root);
+    }
+    return ;
 }

@@ -17,7 +17,7 @@ CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 LIBS = -lreadline
 
 SRCS =	minishell.c \
-		libs/list/lst_utils.c libs/list/list_utils_2.c libs/list/list_utils_3.c\
+		libs/list/lst_utils.c libs/list/list_utils_2.c libs/list/list_utils_3.c libs/list/list_utils_4.c\
 		libs/strs/strings.c libs/strs/strings_utils1.c libs/strs/ft_split.c \
 		parsing/parsing.c parsing/parsing_utils.c\
 		builtins/pwd.c builtins/env.c builtins/cd.c builtins/export.c builtins/unset.c\

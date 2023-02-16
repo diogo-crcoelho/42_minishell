@@ -19,7 +19,7 @@ void	__del(t_elems *elem)
 {
     if ((*__this())->root)
         __del_from_tree(elem->content);
-	if ((*__this())->begin == elem)
+    if ((*__this())->begin == elem)
 	{
 		(*__this())->begin = (*__this())->begin->next;
 		(*__this())->begin->prev = 0;
@@ -73,7 +73,7 @@ t_elems	*__add(void *content)
 	(*__this())->end = new;
 	(*__this())->size++;
     if ((*__this())->root)
-        (*__this())->add_leaf(content);
+       (*__this())->add_leaf(content);
 	return (new);
 }
 

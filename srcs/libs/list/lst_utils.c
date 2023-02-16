@@ -13,9 +13,12 @@
 #include "list_utils.h"
 
 t_array	**__this(void);
+void    __del_from_tree(void *content);
 
 void	__del(t_elems *elem)
 {
+    if ((*__this())->root)
+        __del_from_tree(elem->content);
 	if ((*__this())->begin == elem)
 	{
 		(*__this())->begin = (*__this())->begin->next;
@@ -31,6 +34,7 @@ void	__del(t_elems *elem)
 		elem->del(elem->content);
 	free(elem);
 	(*__this())->size--;
+
 }
 
 void	__for_each(void (*func)(t_elems *elem, void *p), void *o)

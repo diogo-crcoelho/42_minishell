@@ -72,32 +72,16 @@ void    __build_tree(void)
     }
 }
 
-t_tree   *__search_tree(void *content)
+t_tree   *__search_tree(t_tree *root, void *content)
 {
-    return (find_leaf((*__this())->root, content, (*__this())->cmp));
-}
+    t_tree  *elem;
 
-void    _del_from_tree(void *content)
-{
-    t_tree  *to_del;
-    t_tree  *temp;
-
-    to_del = find_leaf((*__this())->root, content, (*__this())->cmp);
-    if (!to_del->right && to_del->left)
-    {
-        to_del->up->left = to_del->left;
-        to_del->left->up = to_del->up;
-    }
-    else if (to_del->right && !to_del->left)
-    {
-        to_del->up->right = to_del->right;
-        to_del->right->up = to_del->up;
-    }
-    else if (to_del->right && to_del->left)
-    {
-        temp = to_del;
-        to_del = find_leaf(to_del->left, to_del->content, (*__this())->cmp);
-        temp->content = to_del->content;
-    }
-    free(to_del);
+    elem = NULL;
+    if ((*__this())->cmp(root->content, content) < 0 && root->left)
+         elem = __search_tree(root->left, content);
+    else if ((*__this())->cmp(root->content, content) > 0 && root->right)
+        elem = __search_tree(root->right, content);
+    else if ((*__this())->cmp(root->content, content) == 0)
+        elem = root;
+    return (elem);
 }

@@ -39,19 +39,35 @@ t_mini 	*minishell(void)
 	return (&a);
 }
 
+int cmp_env(void *cont1, void *cont2)
+{
+    char    *s1 = ((t_env *)cont1)->total;
+    char    *s2 = ((t_env *)cont2)->total;
+    return (strings().equal(s1, s2));
+}
+
 int main(int argc, char **argv, char **envp)
 {
     if (argc != 1)
         exit(1);
 //    char *str =  strings().copy("");
 
+
     (void)argv;
     init_minishell(envp);
-    pwd();
-    cd(NULL);
+    array(minishell()->env)->cmp = cmp_env;
+    array(minishell()->env)->build_tree();
+    printf("%s\n", ((t_env *)array(minishell()->env)->root->content)->total);
+    t_tree  *test = array(minishell()->env)->search_tree(array(minishell()->env)->root, array(minishell()->env)->begin->content);
+//    t_elems *temp = array(minishell()->env)->search(cmp, ((t_env *)array(minishell()->env)->root->content)->total, 1000);
+    printf("%s\n", ((t_env *)test->content)->total);
+//    array(minishell()->env)->remove(temp);
+    printf("%s\n", ((t_env *)array(minishell()->env)->root->content)->total);
+//    pwd();
+//    cd(NULL);
 //    free (str);
-    pwd();
-    echo(NULL, 1);
+//    pwd();
+//    echo(NULL, 1);
 //	while (1)
 //	{
 //        str = readline("\nnot-bash>");

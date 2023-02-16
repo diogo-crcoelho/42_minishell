@@ -13,7 +13,7 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 LIBS = -lreadline
 
 SRCS =	minishell.c \
@@ -69,7 +69,7 @@ re: fclean all
 
 r: re
 	make clean
-	./minishell
+	valgrind --leak-check=full ./minishell #| grep entrou | wc -l
 
 
 norm_M:

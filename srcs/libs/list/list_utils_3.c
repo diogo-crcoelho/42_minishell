@@ -43,14 +43,13 @@ t_tree  *__add_leaf(void *content)
     t_tree  *new;
     t_tree  *temp;
 
-    temp = (*__this())->root;
     new = ft_calloc(sizeof(t_tree));
     new->content = content;
     if (!(*__this())->root)
         (*__this())->root = new;
     else
     {
-        temp = find_leaf(temp, content, (*__this())->cmp);
+        temp = find_leaf((*__this())->root, content, (*__this())->cmp);
         if ((*__this())->cmp(temp->content, content) <= 0)
             temp->right = new;
         else

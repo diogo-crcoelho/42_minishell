@@ -14,6 +14,7 @@
 
 t_array	**__this(void);
 void    __del_from_tree(void *content);
+void    __destroy_tree(t_tree *root);
 
 void	__del(t_elems *elem)
 {
@@ -82,6 +83,10 @@ void	__destroy(void)
 	t_elems	*temp;
 	t_elems	*temp2;
 
+    if ((*__this())->root)
+    {
+        __destroy_tree((*__this())->root);
+    }
 	temp = (*__this())->begin;
 	while (temp)
 	{

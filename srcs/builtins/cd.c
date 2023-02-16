@@ -21,8 +21,6 @@ int cd(char *path)
 
     if (!strings().len(path, 0))
         path = strings().copy(getenv("HOME"));
-    else if(!strings().equal_n(path, "~", 1))
-        path = strings().join(getenv("HOME"), &path[1], 0);
     else
         path = strings().copy(path);
     err = chdir(path);

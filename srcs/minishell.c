@@ -43,15 +43,14 @@ int main(int argc, char **argv, char **envp)
 {
     if (argc != 1)
         exit(1);
-//    char *str =  strings().copy("");
+    char *str =  strings().copy("$ABC");
 
     (void)argv;
     init_minishell(envp);
-    pwd();
-    cd(NULL);
-//    free (str);
-    pwd();
-    echo(NULL, 1);
+    export("ABC=Teste");
+//    pwd();
+
+    echo( expand(str), 1);
 //	while (1)
 //	{
 //        str = readline("\nnot-bash>");

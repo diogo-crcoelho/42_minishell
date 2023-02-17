@@ -33,7 +33,8 @@
 
 
 // Caracteres a ter cuidado..
-/*""
+/* |
+ * ""
  * ''
  *
  * $

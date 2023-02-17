@@ -36,7 +36,7 @@ void    env();
 void    unset(char *var);
 void    export(char *var);
 int     cd(char *path);
-void	echo(char *str, int flag);
+void	echo(char **str, int flag);
 
 
 

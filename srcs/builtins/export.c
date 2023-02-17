@@ -13,9 +13,13 @@ int cmp(void *cont1, void *cont2, int size)
     str2 = (char *)cont2;
     i = -1;
     if (str1 && str2)
-        while (++i < size && (str1[i] || str2[i]))
+        while (++i < size && (str1[i] && str2[i]))
             if (str1[i] != str2[i])
+            {
+//                printf("%s--%s\n", str1, str2);
                 return ((unsigned char )str1[i] - (unsigned char )str2[i]);
+            }
+    printf("==========================================\n");
     return (0);
 }
 

@@ -1,9 +1,12 @@
 #include "../../incs/minishell.h"
 
-void	echo(char *str, int flag)
+void	echo(char **strs, int flag)
 {
-    if (strings().len(str, 0))
-        printf("%s", str);
+    int i;
+
+    i = -1;
+    while(strs[++i])
+        printf("%s", strs[i]);
     if (flag)
     		printf("\n");
 }

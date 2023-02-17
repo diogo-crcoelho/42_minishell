@@ -55,14 +55,25 @@ int main(int argc, char **argv, char **envp)
 
     (void)argv;
     init_minishell(envp);
-    array(minishell()->env)->cmp = cmp_env;
-    array(minishell()->env)->build_tree();
-    printf("%s\n", ((t_env *)array(minishell()->env)->root->content)->total);
-    t_tree  *test = array(minishell()->env)->search_tree(array(minishell()->env)->root, array(minishell()->env)->begin->content);
-//    t_elems *temp = array(minishell()->env)->search(cmp, ((t_env *)array(minishell()->env)->root->content)->total, 1000);
-    printf("%s\n", ((t_env *)test->content)->total);
-//    array(minishell()->env)->remove(temp);
-    printf("%s\n", ((t_env *)array(minishell()->env)->root->content)->total);
+    env();
+//    array(minishell()->env)->cmp = cmp_env;
+//    array(minishell()->env)->build_tree();
+//    printf("%s\n", ((t_env *)array(minishell()->env)->root->content)->total);
+//    t_tree  *test = array(minishell()->env)->search_tree(array(minishell()->env)->root, array(minishell()->env)->begin->content);
+////    t_elems *temp = array(minishell()->env)->search(cmp, ((t_env *)array(minishell()->env)->root->content)->total, 1000);
+//    printf("%s\n", ((t_env *)test->content)->total);
+////    array(minishell()->env)->remove(temp);
+//    printf("%s\n", ((t_env *)array(minishell()->env)->root->content)->total);
+
+//    char fuck[5] = "$ABC";
+//
+    char **teste = ft_calloc(2 * sizeof(char *));
+
+    teste[0] = expand("$ABC");
+    export("ABC=Fuck this shit im out");
+    env();
+    export("DD=Odeio esta merda");
+    echo(teste, 1);
 //    pwd();
 //    cd(NULL);
 //    free (str);

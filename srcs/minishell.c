@@ -32,6 +32,16 @@
 //https://web.mit.edu/gnu/doc/html/rlman_2.html -> for keybindings etc
 
 
+// Caracteres a ter cuidado..
+/*""
+ * ''
+ *
+ * $
+ *<< e >>
+ *< e >
+ *
+ */
+
 t_mini 	*minishell(void)
 {
 	static t_mini a;

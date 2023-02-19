@@ -18,7 +18,7 @@ void	__for_each(void (*func)(t_elems *elem, void *p), void *o);
 void	__del(t_elems *elem);
 void	**__to_array(void);
 void    __build_tree(void);
-t_tree   *__search_tree(t_tree *root, void *content);
+t_tree   *__search_tree(t_tree *root, void *content, int (*cmp)(void *cont1, void *cont2));
 t_tree  *__add_leaf(void *content);
 
 t_array	**__this(void)

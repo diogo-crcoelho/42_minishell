@@ -32,6 +32,17 @@
 //https://web.mit.edu/gnu/doc/html/rlman_2.html -> for keybindings etc
 
 
+// Caracteres a ter cuidado..
+/* |
+ * ""
+ * ''
+ *
+ * $
+ *<< e >>
+ *< e >
+ *
+ */
+
 t_mini 	*minishell(void)
 {
 	static t_mini a;
@@ -55,40 +66,21 @@ int main(int argc, char **argv, char **envp)
 
     (void)argv;
     init_minishell(envp);
-    env();
-//    array(minishell()->env)->cmp = cmp_env;
-//    array(minishell()->env)->build_tree();
-//    printf("%s\n", ((t_env *)array(minishell()->env)->root->content)->total);
-//    t_tree  *test = array(minishell()->env)->search_tree(array(minishell()->env)->root, array(minishell()->env)->begin->content);
-////    t_elems *temp = array(minishell()->env)->search(cmp, ((t_env *)array(minishell()->env)->root->content)->total, 1000);
-//    printf("%s\n", ((t_env *)test->content)->total);
-////    array(minishell()->env)->remove(temp);
-//    printf("%s\n", ((t_env *)array(minishell()->env)->root->content)->total);
-
-//    char fuck[5] = "$ABC";
-//
-    char **teste = ft_calloc(2 * sizeof(char *));
-
-    teste[0] = expand("$ABC");
-    export("ABC=Fuck this shit im out");
-    env();
-    export("DD=Odeio esta merda");
-    echo(teste, 1);
-//    pwd();
-//    cd(NULL);
-//    free (str);
-//    pwd();
-//    echo(NULL, 1);
-//	while (1)
-//	{
-//        str = readline("\nnot-bash>");
-//        if (str){
-//            init_parse(str);  //still needs parsing
-//            if (strings().equal(str, "exit\n")) {
-//                break;
-//            }
-//        }
-//        free(str);
-//    }
+    char *s = strings().copy("$test");
+    char *temp;
+//    t_dict teste = {s, 0, 0};
+    t_tree *symbol;
+    temp = NULL;
+    while (*s)
+    {
+        symbol = array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, s, comp_symbols_search);
+        if (symbol)
+        {
+            temp = ((t_dict *)symbol->content)->state(&s, 1);
+//            continue;
+        }
+        s++;
+    }
+    printf("temp: %s\n", temp);
     array(minishell()->env)->destroy();
 }

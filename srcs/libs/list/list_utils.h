@@ -49,7 +49,7 @@ struct s_array{
     t_tree  *root;
     void    (*build_tree)(void);
     t_tree  *(*add_leaf)(void *content);
-    t_tree  *(*search_tree)(t_tree *root, void *content);
+    t_tree  *(*search_tree)(t_tree *root, void *content, int (*cmp)(void *cont1, void *cont2));
     int     (*cmp)(void *cont1, void *cont2);
 };
 

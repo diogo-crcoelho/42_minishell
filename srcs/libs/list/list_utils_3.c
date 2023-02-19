@@ -26,12 +26,14 @@ void	**__to_array(void)
 t_tree  *find_leaf(t_tree *temp, void *content, int (*cmp)(void *cont1, void *cont2))
 {
     t_tree  *leaf;
+    int     val;
 
-    if (cmp(temp->content, content) < 0 && temp->right)
+    val = cmp(temp->content, content);
+    if (val < 0 && temp->right)
         leaf = find_leaf(temp->right, content, cmp);
-    else if (cmp(temp->content, content) < 0 && !temp->right)
+    else if (val < 0 && !temp->right)
         return (temp);
-    else if (cmp(temp->content, content) > 0 && temp->left)
+    else if (val > 0 && temp->left)
         leaf = find_leaf(temp->left, content, cmp);
     else
         return (temp);
@@ -71,16 +73,18 @@ void    __build_tree(void)
     }
 }
 
-t_tree   *__search_tree(t_tree *root, void *content)
+t_tree   *__search_tree(t_tree *root, void *content, int (*cmp)(void *cont1, void *cont2))
 {
     t_tree  *elem;
+    int     val;
 
     elem = NULL;
-    if ((*__this())->cmp(root->content, content) < 0 && root->left)
-         elem = __search_tree(root->left, content);
-    else if ((*__this())->cmp(root->content, content) > 0 && root->right)
-        elem = __search_tree(root->right, content);
-    else if ((*__this())->cmp(root->content, content) == 0)
+    val = cmp(root->content, content);
+    if (val < 0 && root->right)
+         elem = __search_tree(root->right, content, cmp);
+    else if (val > 0 && root->left)
+        elem = __search_tree(root->left, content, cmp);
+    else if (val == 0)
         elem = root;
     return (elem);
 }

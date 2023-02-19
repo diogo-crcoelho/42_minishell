@@ -30,6 +30,7 @@ typedef struct s_strings
 	char	*(*trim)(const char *);
 	char 	*(*join)(char *, char *, char *);
     int     (*alnum)(char *);
+    char    *(*append)(char *s, char c);
 }	t_strings;
 
 t_strings	strings(void);

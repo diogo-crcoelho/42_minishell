@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:41:56 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/10 14:06:02 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:00:42 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ int     comp_symbols_build(void *c1, void *c2);
 void	ft_exit(int exit_status);
 char    *expand(char *str);
 
-
+void signals_hand(void);
 
 #endif

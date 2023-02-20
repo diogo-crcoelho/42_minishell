@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:31:16 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/10 20:39:35 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:21:08 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
  * ""
  * ''
  *
- * $
+ * $ e ~
  *<< e >>
  *< e >
  *
@@ -65,22 +65,24 @@ int main(int argc, char **argv, char **envp)
 
 
     (void)argv;
-    init_minishell(envp);
-    char *s = strings().copy("$test");
-    char *temp;
-//    t_dict teste = {s, 0, 0};
-    t_tree *symbol;
-    temp = NULL;
-    while (*s)
+    (void)envp;
+
+    // init_minishell(envp);
+//     char *s = strings().copy("$test");
+//     char *temp;
+// //    t_dict teste = {s, 0, 0};
+//     t_tree *symbol;
+//     temp = NULL;
+	char *str;
+	signals_hand();
+    while (1)
     {
-        symbol = array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, s, comp_symbols_search);
-        if (symbol)
-        {
-            temp = ((t_dict *)symbol->content)->state(&s, 1);
-//            continue;
-        }
-        s++;
+		str = readline("not bash>");
+		if (!str)
+			ft_exit(0);
+		printf("%s\n", str);
+		free(str);
     }
-    printf("temp: %s\n", temp);
+    // printf("temp: %s\n", temp);
     array(minishell()->env)->destroy();
 }

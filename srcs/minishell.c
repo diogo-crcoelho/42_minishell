@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:31:16 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/20 13:21:08 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:17:02 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,17 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
     (void)envp;
 
-    // init_minishell(envp);
+    init_minishell(envp);
 //     char *s = strings().copy("$test");
 //     char *temp;
 // //    t_dict teste = {s, 0, 0};
 //     t_tree *symbol;
 //     temp = NULL;
 	char *str;
+	export("ABC=teste");
 	signals_hand();
+	export_empty(array(minishell()->env)->root);
+	env();
     while (1)
     {
 		str = readline("not bash>");

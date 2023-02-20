@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:41:56 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/20 12:00:42 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:02:33 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,9 @@ void	ft_exit(int exit_status);
 char    *expand(char *str);
 
 void signals_hand(void);
+int cmp_env(void *cont1, void *cont2);
+
+void export_empty(t_tree *root);
+
 
 #endif

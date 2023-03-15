@@ -73,19 +73,29 @@ int main(int argc, char **argv, char **envp)
 // //    t_dict teste = {s, 0, 0};
 //     t_tree *symbol;
 //     temp = NULL;
-	char *str;
-	export("ABC=teste");
-	signals_hand();
-	export_empty(array(minishell()->env)->root);
-	env();
-    while (1)
-    {
-		str = readline("not bash>");
-		if (!str)
-			ft_exit(0);
-		printf("%s\n", str);
-		free(str);
-    }
+//	char *str;
+//	export("ABC=teste");
+//	signals_hand();
+//	export_empty(array(minishell()->env)->root);
+//	env();
+//    while (1)
+//    {
+//		str = readline("not bash>");
+//		if (!str)
+//			ft_exit(0);
+//		printf("%s\n", str);
+//		free(str);
+//    }
+    array(minishell()->tokens)->add(c_token("ABC", 1));
+    array(minishell()->tokens)->add(c_token("ABC", 3));
+    array(minishell()->tokens)->add(c_token("ABC", 2));
+    array(minishell()->tokens)->add(c_token("ABC", 4));
+    array(minishell()->tokens)->add(c_token("ABC", 6));
+    array(minishell()->tokens)->add(c_token("ABC", 1));
+    array(minishell()->tokens)->add(c_token("ABC", 3));
+    array(minishell()->tokens)->add(c_token("ABC", 2));
+    array(minishell()->tokens)->add(c_token("ABC", 4));
+    delexer();
     // printf("temp: %s\n", temp);
     array(minishell()->env)->destroy();
 }

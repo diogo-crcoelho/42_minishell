@@ -57,6 +57,21 @@ int cmp_env(void *cont1, void *cont2)
     return (strings().equal(s1, s2));
 }
 
+void print_tokens()
+{
+    t_elems *c;
+    int i = 0;
+
+    c = (array(minishell()->tokens)->begin);
+    while (c)
+    {
+        printf("Token %d: %s\n", i, ((t_token *)(c->content))->token);
+        c = c->next;
+        i++;
+    }
+}
+
+
 int main(int argc, char **argv, char **envp)
 {
     if (argc != 1)
@@ -70,10 +85,13 @@ int main(int argc, char **argv, char **envp)
     init_minishell(envp);
 	char *str;
 	char *temp;
+	int c;
     t_dict *symbol;
     t_tree *temp_tree;
     t_tree *root = array(minishell()->symbols)->root;
 	signals_hand();
+    export("C=TH");
+
     while (1)
     {
 		str = readline("not bash>");
@@ -82,19 +100,28 @@ int main(int argc, char **argv, char **envp)
         temp = str;
         while (*temp)
         {
-            printf("%s\n", temp);
             temp_tree = array(minishell()->symbols)->search_tree(root, temp);
             if (temp_tree) {
                 symbol = temp_tree->content;
                 printf("%s\n", (char *) symbol->state(&temp, 1));
             }
-            if (!temp)
+            else
+            {
+                c = 0;
+                while (*(temp + c) && *(temp + c) != ' ' && !array(minishell()->symbols)->search_tree(NULL, temp + c))
+                    c++;
+                array(minishell()->tokens)->add(c_token(strings().copy_n(temp, c), CMD));
+                temp += c;
+            }
+            if (!*temp)
                 break ;
-            temp++;
+            if (!array(minishell()->symbols)->search_tree(root, temp))
+                temp++;
         }
+        print_tokens();
 		free(str);
     }
-//    export("C=TH");
+//
 //
 //    char *t = strings().copy("<$PAa'a'$C");
 //    char *temp = t;

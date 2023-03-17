@@ -99,6 +99,8 @@ void    *str_state(char **s, int add)
             break ;
         (*s)++;
     }
+    if (**s)
+        (*s)++;
     if (add)
         array(minishell()->tokens)->add(c_token(infile, p_sym->value));
     return (infile);

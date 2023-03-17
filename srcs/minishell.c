@@ -74,6 +74,7 @@ int main(int argc, char **argv, char **envp)
     t_tree *temp_tree;
     t_tree *root = array(minishell()->symbols)->root;
 	signals_hand();
+    export("C=TH");
     while (1)
     {
 		str = readline("not bash>");
@@ -88,13 +89,13 @@ int main(int argc, char **argv, char **envp)
                 symbol = temp_tree->content;
                 printf("%s\n", (char *) symbol->state(&temp, 1));
             }
-            if (!temp)
+            if (!*temp)
                 break ;
             temp++;
         }
 		free(str);
     }
-//    export("C=TH");
+//
 //
 //    char *t = strings().copy("<$PAa'a'$C");
 //    char *temp = t;

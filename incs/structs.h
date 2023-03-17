@@ -51,6 +51,7 @@ struct s_cmd{
 	char	*path;
 	char	**args;
 	int		fd[2];
+    int     fd_red[2];
 	int		pid;
 };
 

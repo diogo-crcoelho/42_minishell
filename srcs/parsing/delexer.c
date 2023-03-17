@@ -14,9 +14,9 @@ void delexer()
     (void)cmds;
     while(tmp)
     {
-        teste = (t_token *)tmp->content;
-        if (6 != teste->type)
-            printf("%s--%i\n", teste->token, teste->type);
-        tmp = tmp->next;
+        while (6 != ((t_token *)tmp->content)->type)
+        {
+
+        }
     }
 }

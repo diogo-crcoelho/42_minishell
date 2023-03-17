@@ -23,9 +23,10 @@ SRCS =	minishell.c \
 		builtins/pwd.c builtins/env.c builtins/cd.c builtins/export.c builtins/unset.c \
 		builtins/echo.c builtins/exit.c \
 		utils/symbols.c utils/tokens.c \
-		signals/signals.c
+		signals/signals.c \
 
-B_SRCS = 
+
+B_SRCS =
 
 OBJS = $(SRCS:.c=.o)
 B_OBJS = $(B_SRCS:.c=.o)
@@ -50,10 +51,10 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@$(echo) "$(C_GREEN) [OK]   $(C_PURPLE) Compiling:$(C_RESET)" $(NAME)
 	@$(echo) "$(C_GREEN)\tCompiled $(NAME)$(C_RESET)"
-	
+
 all : $(NAME)
 
-bonus : $(B_OBJS) 
+bonus : $(B_OBJS)
 	@$(CC) $(B_OBJS) -o $(NAME)
 	@$(echo) "$(C_GREEN) [OK]   $(C_PURPLE) Compiling:$(C_RESET)" $(NAME)
 	@$(echo) "$(C_GREEN)\tCompiled $(NAME)$(C_RESET)"
@@ -61,11 +62,11 @@ bonus : $(B_OBJS)
 clean:
 	@rm -f $(OBJS) $(B_OBJS)
 	@$(echo) "$(C_RED)\tRemoved object files$(C_RESET)"
-	
+
 fclean: clean
 	@rm -f $(NAME) *.txt
 	@$(echo) "$(C_RED)\tRemoved $(NAME)$(C_RESET)"
-	
+
 re: fclean all
 
 r: re

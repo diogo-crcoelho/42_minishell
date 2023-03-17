@@ -86,16 +86,29 @@ int main(int argc, char **argv, char **envp)
 //		printf("%s\n", str);
 //		free(str);
 //    }
-    array(minishell()->tokens)->add(c_token("ABC", 1));
-    array(minishell()->tokens)->add(c_token("ABC", 3));
-    array(minishell()->tokens)->add(c_token("ABC", 2));
-    array(minishell()->tokens)->add(c_token("ABC", 4));
-    array(minishell()->tokens)->add(c_token("ABC", 6));
-    array(minishell()->tokens)->add(c_token("ABC", 1));
-    array(minishell()->tokens)->add(c_token("ABC", 3));
-    array(minishell()->tokens)->add(c_token("ABC", 2));
-    array(minishell()->tokens)->add(c_token("ABC", 4));
+//    array(minishell()->tokens)->add(c_token("ABC", 1));
+    array(minishell()->tokens)->add(c_token("teste.txt", 2));
+    array(minishell()->tokens)->add(c_token("Makefile", 1));
+    array(minishell()->tokens)->add(c_token("cat", 4));
+    array(minishell()->tokens)->add(c_token(" -e", 4));
+    array(minishell()->tokens)->add(c_token(" -f", 2));
+    array(minishell()->tokens)->add(c_token("|", 6));
+    array(minishell()->tokens)->add(c_token("grep", 4));
+    array(minishell()->tokens)->add(c_token("main", 4));
     delexer();
+
+    t_elems *teste = array(minishell()->cmds)->begin;
+    while(teste)
+    {
+        printf("infile: %d\n", ((t_cmd *)teste->content)->fd_red[0]);
+        printf("outfile: %d\n", ((t_cmd *)teste->content)->fd_red[1]);
+        char **strs =  ((t_cmd *)teste->content)->args;
+        printf("cmds: ");
+        while(*strs)
+            printf("%s ", *strs++);
+        printf("\n");
+        teste = teste->next;
+    }
     // printf("temp: %s\n", temp);
     array(minishell()->env)->destroy();
 }

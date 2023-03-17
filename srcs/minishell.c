@@ -61,28 +61,47 @@ int main(int argc, char **argv, char **envp)
 {
     if (argc != 1)
         exit(1);
-//    char *str =  strings().copy("");
 
-
+//
+//
     (void)argv;
     (void)envp;
 
-    // init_minishell(envp);
-//     char *s = strings().copy("$test");
-//     char *temp;
-// //    t_dict teste = {s, 0, 0};
-//     t_tree *symbol;
-//     temp = NULL;
+    init_minishell(envp);
 	char *str;
+	char *temp;
+    t_dict *symbol;
+    t_tree *temp_tree;
+    t_tree *root = array(minishell()->symbols)->root;
 	signals_hand();
     while (1)
     {
 		str = readline("not bash>");
 		if (!str)
 			ft_exit(0);
-		printf("%s\n", str);
+        temp = str;
+        while (*temp)
+        {
+            printf("%s\n", temp);
+            temp_tree = array(minishell()->symbols)->search_tree(root, temp);
+            if (temp_tree) {
+                symbol = temp_tree->content;
+                printf("%s\n", (char *) symbol->state(&temp, 1));
+            }
+            if (!temp)
+                break ;
+            temp++;
+        }
 		free(str);
     }
-    // printf("temp: %s\n", temp);
-    array(minishell()->env)->destroy();
+//    export("C=TH");
+//
+//    char *t = strings().copy("<$PAa'a'$C");
+//    char *temp = t;
+//    printf("%s\n", t);
+//    symbol = array(minishell()->symbols)->search_tree(root, t)->content;
+//    printf("%s\n", (char *)symbol->state(&t, 1));
+//    free (temp);
+//     printf("temp: %s\n", temp);
+//    array(minishell()->env)->destroy();
 }

@@ -30,6 +30,7 @@ void export(char *var)
 
     splitted = env_split(var, '=');
     temp = array(minishell()->env)->search(cmp, splitted[0], strings().len(var, 0));
+    array(minishell()->env)->cmp = cmp_env;
     if (strings().alnum(splitted[0]))
         ft_exit(1);
     if (!temp)
@@ -46,4 +47,5 @@ void export(char *var)
     }
     free(splitted[0]);
     free (splitted);
+    array(minishell()->env)->cmp = comp_var;
 }

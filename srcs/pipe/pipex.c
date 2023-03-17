@@ -82,7 +82,7 @@ int	treat_infile(char *av)
 	return (fd[0]);
 }
 
-int	pipex(int ac, char **av, char **env)
+void	pipex(int ac, char **av, char **env)
 {
 	int		fd_in;
 	int		fd_out;

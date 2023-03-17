@@ -68,6 +68,9 @@ void	create_env(char **envp)
 	while (*envp)
 		array(minishell()->env)->add(create_content(*envp++))->del = del_elem;
 	array(minishell()->env)->to_array = to_array_mini;
+	array(minishell()->env)->cmp = cmp_env;
+	array(minishell()->env)->build_tree();
+    array(minishell()->env)->cmp = comp_var;
 }
 
 void init_minishell(char **envp)

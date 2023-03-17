@@ -51,6 +51,10 @@ char    **env_split(char *str, char sep);
 int cmp(void *cont1, void *cont2, int size);
 void init_parse(const char *str);
 
+//env
+int cmp_env(void *cont1, void *cont2);
+int comp_var(void *c1, void *c2);
+
 //utils
 char	**env_split(char *str, char sep);
 t_env	*create_content(char *total);
@@ -62,7 +66,9 @@ t_token *c_token(char *s, int type);
 //states
 void    *infile_state(char **s, int add);
 void    *var_state(char **s, int add);
-char    *aux_state(char **s, char *lex);
+char    *aux_state(char **s, char *lex, t_dict *p_sym);
+void    *lstr_state(char **s, int add);
+void    *str_state(char **s, int add);
 
 //symbols
 int     comp_symbols_search(void *c1, void *c2);

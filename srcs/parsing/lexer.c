@@ -11,19 +11,25 @@ int ft_isalnum(char c)
     return (0);
 }
 
-char    *aux_state(char **s, char *lex)
+//int **compatibility(void)
+//{
+//
+//}
+
+char    *aux_state(char **s, char *lex, t_dict *p_sym)
 {
     char    *temp;
     char    *temp_symbol;
     t_dict  *symbol;
 
     symbol = NULL;
-    if (array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s, comp_symbols_search))
-        symbol = (t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s, comp_symbols_search)->content;
+    if (array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s))
+        symbol = (t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s)->content;
     temp = lex;
-    if (symbol)
+    if (symbol && p_sym->comp[symbol->value])
     {
         temp_symbol = symbol->state(s, 0);
+        (*s)--;
         lex = strings().join(lex, temp_symbol, "");
         free(temp_symbol);
     }
@@ -35,41 +41,83 @@ char    *aux_state(char **s, char *lex)
 
 void    *var_state(char **s, int add)
 {
-    int     type;
+    t_dict  *p_sym;
     char    *variable;
     char    *temp;
 
-    type = ((t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s, comp_symbols_search)->content)->value;
+    p_sym = ((t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s)->content);
     temp = *s + 1;
+    (*s)++;
     while (**s && ft_isalnum(**s))
         (*s)++;
     temp = strings().copy_n(temp, *s - temp);
-    if (array(minishell()->env)->search_tree(array(minishell()->env)->root, temp, comp_symbols_search))
-        variable = strings().copy(((t_env *)array(minishell()->env)->search_tree(array(minishell()->env)->root, temp, comp_symbols_search)->content)->splitted[1]);
+    if (array(minishell()->env)->search_tree(array(minishell()->env)->root, temp))
+        variable = strings().copy(((t_env *)array(minishell()->env)->search_tree(array(minishell()->env)->root, temp)->content)->splitted[1]);
     else
         variable = ft_calloc(1);
     if (add)
-        array(minishell()->tokens)->add(c_token(variable, type));
+        array(minishell()->tokens)->add(c_token(variable, p_sym->value));
     free(temp);
     return (variable);
 }
 
 void    *infile_state(char **s, int add)
 {
-    int     type;
+    t_dict  *p_sym;
     char    *infile;
 
     (void)add;
-    type = ((t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s, comp_symbols_search)->content)->value;
+    p_sym = ((t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s)->content);
     infile = ft_calloc(1);
+    (*s)++;
     while (**s && **s == ' ')
         (*s)++;
     while (**s && **s != ' ')
     {
-        infile = aux_state(s, infile);
+        infile = aux_state(s, infile, p_sym);
+        if (!**s)
+            break ;
         (*s)++;
     }
-    array(minishell()->tokens)->add(c_token(infile, type));
+    array(minishell()->tokens)->add(c_token(infile, p_sym->value));
     return (infile);
 }
 
+void    *str_state(char **s, int add)
+{
+    t_dict  *p_sym;
+    char    *infile;
+
+    (void)add;
+    p_sym = ((t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s)->content);
+    infile = ft_calloc(1);
+    (*s)++;
+    while (**s && **s != '"')
+    {
+        infile = aux_state(s, infile, p_sym);
+        if (!**s)
+            break ;
+        (*s)++;
+    }
+    if (add)
+        array(minishell()->tokens)->add(c_token(infile, p_sym->value));
+    return (infile);
+}
+
+void    *lstr_state(char **s, int add)
+{
+    int     type;
+    char    *lstr;
+    char    *temp;
+
+    type = ((t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s)->content)->value;
+    (*s)++;
+    temp = *s;
+    while (**s && **s != 39)
+        (*s)++;
+    lstr = strings().copy_n(temp, *s - temp);
+    (*s)++;
+    if (add)
+        array(minishell()->tokens)->add(c_token(lstr, type));
+    return (lstr);
+}

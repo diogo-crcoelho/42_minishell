@@ -73,17 +73,19 @@ void    __build_tree(void)
     }
 }
 
-t_tree   *__search_tree(t_tree *root, void *content, int (*cmp)(void *cont1, void *cont2))
+t_tree   *__search_tree(t_tree *root, void *content)
 {
     t_tree  *elem;
     int     val;
 
     elem = NULL;
-    val = cmp(root->content, content);
+    if (!root)
+        root = (*__this())->root;
+    val = (*__this())->cmp(root->content, content);
     if (val < 0 && root->right)
-         elem = __search_tree(root->right, content, cmp);
+         elem = __search_tree(root->right, content);
     else if (val > 0 && root->left)
-        elem = __search_tree(root->left, content, cmp);
+        elem = __search_tree(root->left, content);
     else if (val == 0)
         elem = root;
     return (elem);

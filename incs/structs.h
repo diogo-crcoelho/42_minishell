@@ -38,6 +38,7 @@ struct s_env{
 struct s_dict{
     char    *key;
     int     value;
+    int     *comp;
     void    *(*state)(char **str, int add);
 };
 

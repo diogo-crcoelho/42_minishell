@@ -18,7 +18,9 @@ enum e_type{
     OUT,
     STR,
     LSTR,
-    HERE
+    HERE,
+    CMD,
+    PIPE
 };
 
 struct s_mini{

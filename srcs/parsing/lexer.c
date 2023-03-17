@@ -123,3 +123,4 @@ void    *lstr_state(char **s, int add)
         array(minishell()->tokens)->add(c_token(lstr, type));
     return (lstr);
 }
+

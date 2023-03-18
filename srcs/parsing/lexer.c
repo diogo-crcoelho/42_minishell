@@ -124,3 +124,30 @@ void    *lstr_state(char **s, int add)
     return (lstr);
 }
 
+void    *non_symbol_state(char **s, int add)
+{
+    char    *temp;
+    char    *temp_free;
+    t_dict  *symbol;
+
+    temp = ft_calloc(1);
+    while (**s && **s != ' ')
+    {
+        symbol = (t_dict *)array(minishell()->symbols)->search_tree(NULL, *s);
+        temp_free = temp;
+        if (symbol)
+        {
+            symbol = ((t_tree *)(symbol))->content;
+            temp = strings().join(temp, symbol->state(s, 1), "");
+        }
+        else
+            temp = strings().append(temp, **s);
+        free(temp_free);
+        if (!**s)
+            break ;
+        (*s)++;
+    }
+    if (add)
+        array(minishell()->tokens)->add(c_token(temp, CMD));
+    return (temp);
+}

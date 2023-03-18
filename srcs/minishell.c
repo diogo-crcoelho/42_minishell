@@ -85,7 +85,6 @@ int main(int argc, char **argv, char **envp)
     init_minishell(envp);
 	char *str;
 	char *temp;
-	int c;
     t_dict *symbol;
     t_tree *temp_tree;
     t_tree *root = array(minishell()->symbols)->root;
@@ -103,16 +102,10 @@ int main(int argc, char **argv, char **envp)
             temp_tree = array(minishell()->symbols)->search_tree(root, temp);
             if (temp_tree) {
                 symbol = temp_tree->content;
-                printf("%s\n", (char *) symbol->state(&temp, 1));
+                symbol->state(&temp, 1);
             }
             else
-            {
-                c = 0;
-                while (*(temp + c) && *(temp + c) != ' ' && !array(minishell()->symbols)->search_tree(NULL, temp + c))
-                    c++;
-                array(minishell()->tokens)->add(c_token(strings().copy_n(temp, c), CMD));
-                temp += c;
-            }
+                non_symbol_state(&temp, 1);
             if (!*temp)
                 break ;
             if (!array(minishell()->symbols)->search_tree(root, temp))

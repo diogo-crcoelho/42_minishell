@@ -69,6 +69,8 @@ void    *var_state(char **s, int add);
 char    *aux_state(char **s, char *lex, t_dict *p_sym);
 void    *lstr_state(char **s, int add);
 void    *str_state(char **s, int add);
+void    *non_symbol_state(char **s, int add);
+void    *outfile_state(char **s, int add);
 
 //symbols
 int     comp_symbols_search(void *c1, void *c2);

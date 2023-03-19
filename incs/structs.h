@@ -20,7 +20,8 @@ enum e_type{
     LSTR,
     HERE,
     CMD,
-    PIPE
+    PIPE,
+    SPC
 };
 
 struct s_mini{

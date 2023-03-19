@@ -65,12 +65,20 @@ void print_tokens()
     c = (array(minishell()->tokens)->begin);
     while (c)
     {
-        printf("Token %d: %s\n", i, ((t_token *)(c->content))->token);
+        printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->content))->token, ((t_token *)(c->content))->type);
         c = c->next;
         i++;
     }
 }
 
+int add_space(char *s)
+{
+    if (*s == '|' || !*s)
+        return (0);
+    else if (((t_token *)array(minishell()->tokens)->end->content)->type == PIPE)
+        return (0);
+    return (1);
+}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -85,7 +93,6 @@ int main(int argc, char **argv, char **envp)
     init_minishell(envp);
 	char *str;
 	char *temp;
-	int c;
     t_dict *symbol;
     t_tree *temp_tree;
     t_tree *root = array(minishell()->symbols)->root;
@@ -103,23 +110,19 @@ int main(int argc, char **argv, char **envp)
             temp_tree = array(minishell()->symbols)->search_tree(root, temp);
             if (temp_tree) {
                 symbol = temp_tree->content;
-                printf("%s\n", (char *) symbol->state(&temp, 1));
+                symbol->state(&temp, 1);
             }
-            else
-            {
-                c = 0;
-                while (*(temp + c) && *(temp + c) != ' ' && !array(minishell()->symbols)->search_tree(NULL, temp + c))
-                    c++;
-                array(minishell()->tokens)->add(c_token(strings().copy_n(temp, c), CMD));
-                temp += c;
-            }
-            if (!*temp)
-                break ;
-            if (!array(minishell()->symbols)->search_tree(root, temp))
+            if (*temp != ' ')
+                non_symbol_state(&temp, 1);
+            while (*temp == ' ' || (add_space(temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
+                temp++;
+            if (*temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
                 temp++;
         }
         print_tokens();
 		free(str);
+        array(minishell()->tokens)->destroy();
+        minishell()->tokens = creat_array();
     }
 //
 //

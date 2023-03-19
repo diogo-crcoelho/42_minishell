@@ -5,15 +5,17 @@
 //
 void filler(t_token *token)
 {
-    t_elems *tmp;
+    t_elems *tmp;	
     char *clean;
 
     tmp = array(minishell()->cmds)->end;
-    if ((1 == token->type) && !((t_cmd *)tmp->content)->fd_red[0])
+    if ((IN == token->type) && !((t_cmd *)tmp->content)->fd_red[0])
         ((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
-    else if ((2 == token->type))
+    else if ((OUT == token->type))
         ((t_cmd *)tmp->content)->fd_red[1] = open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-    else if (1 != token->type)
+    else if ((APP == token->type))
+        ((t_cmd *)tmp->content)->fd_red[1] = open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	else if (IN != token->type)
     {
         clean = strings().join(((t_cmd *)tmp->content)->path, token->token, " ");
         free(((t_cmd *)tmp->content)->path);

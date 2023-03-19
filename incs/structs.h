@@ -14,8 +14,9 @@ typedef struct s_env t_env;
 
 enum e_type{
     VAR,
-    IN,
+	IN,
     OUT,
+	APP,
     STR,
     LSTR,
     HERE,
@@ -27,6 +28,7 @@ enum e_type{
 struct s_mini{
 	void	*env;
 	void	*cmds;
+	int		inter;
 	int 	exit_status;
 	char 	*prev_path;
     void    *tokens;

@@ -5,7 +5,7 @@
 //
 void filler(t_token *token)
 {
-    t_elems *tmp;
+    t_elems *tmp;	
     char *clean;
 
     tmp = array(minishell()->cmds)->end;

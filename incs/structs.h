@@ -16,6 +16,7 @@ enum e_type{
     VAR,
     IN,
     OUT,
+	APP,
     STR,
     LSTR,
     HERE,

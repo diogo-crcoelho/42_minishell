@@ -99,7 +99,7 @@ void    lex(char **temp)
         if (**temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
             (*temp)++;
     }
-    print_tokens();
+    print_tokens(); //substituir pela funcao que executa
     array(minishell()->tokens)->destroy();
     minishell()->tokens = creat_array();
 }
@@ -113,13 +113,9 @@ int main(int argc, char **argv, char **envp)
 //
     (void)argv;
     (void)envp;
-
     init_minishell(envp);
 	char *str;
 	char *temp;
-//    t_dict *symbol;
-//    t_tree *temp_tree;
-//    t_tree *root = array(minishell()->symbols)->root;
 	signals_hand();
     export("C=TH");
 
@@ -130,33 +126,7 @@ int main(int argc, char **argv, char **envp)
 			ft_exit(0);
         temp = str;
         lex(&temp);
-//        while (*temp)
-//        {
-//            temp_tree = array(minishell()->symbols)->search_tree(root, temp);
-//            if (temp_tree) {
-//                symbol = temp_tree->content;
-//                symbol->state(&temp, 1);
-//            }
-//            if (*temp && *temp != ' ')
-//                non_symbol_state(&temp, 1);
-//            while (*temp == ' ' || (add_space(temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
-//                temp++;
-//            if (*temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
-//                temp++;
-//        }
-//        print_tokens();
 		free(str);
-//        array(minishell()->tokens)->destroy();
-//        minishell()->tokens = creat_array();
     }
-//
-//
-//    char *t = strings().copy("<$PAa'a'$C");
-//    char *temp = t;
-//    printf("%s\n", t);
-//    symbol = array(minishell()->symbols)->search_tree(root, t)->content;
-//    printf("%s\n", (char *)symbol->state(&t, 1));
-//    free (temp);
-//     printf("temp: %s\n", temp);
-//    array(minishell()->env)->destroy();
+
 }

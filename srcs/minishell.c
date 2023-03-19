@@ -65,12 +65,20 @@ void print_tokens()
     c = (array(minishell()->tokens)->begin);
     while (c)
     {
-        printf("Token %d: %s\n", i, ((t_token *)(c->content))->token);
+        printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->content))->token, ((t_token *)(c->content))->type);
         c = c->next;
         i++;
     }
 }
 
+int add_space(char *s)
+{
+    if (*s == '|' || !*s)
+        return (0);
+    else if (((t_token *)array(minishell()->tokens)->end->content)->type == PIPE)
+        return (0);
+    return (1);
+}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -104,15 +112,17 @@ int main(int argc, char **argv, char **envp)
                 symbol = temp_tree->content;
                 symbol->state(&temp, 1);
             }
-            else
+            if (*temp != ' ')
                 non_symbol_state(&temp, 1);
-            if (!*temp)
-                break ;
-            if (!array(minishell()->symbols)->search_tree(root, temp))
+            while (*temp == ' ' || (add_space(temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
+                temp++;
+            if (*temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
                 temp++;
         }
         print_tokens();
 		free(str);
+        array(minishell()->tokens)->destroy();
+        minishell()->tokens = creat_array();
     }
 //
 //

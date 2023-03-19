@@ -11,11 +11,6 @@ int ft_isalnum(char c)
     return (0);
 }
 
-//int **compatibility(void)
-//{
-//
-//}
-
 char    *aux_state(char **s, char *lex, t_dict *p_sym)
 {
     char    *temp;
@@ -45,7 +40,7 @@ void    *var_state(char **s, int add)
     char    *variable;
     char    *temp;
 
-    p_sym = ((t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s)->content);
+    p_sym = ((t_dict *)array(minishell()->symbols)->search_tree(NULL, *s)->content);
     temp = *s + 1;
     (*s)++;
     while (**s && ft_isalnum(**s))
@@ -72,7 +67,7 @@ void    *infile_state(char **s, int add)
     (*s)++;
     while (**s && **s == ' ')
         (*s)++;
-    while (**s && **s != ' ')
+    while (**s && **s != ' ' && **s != '|')
     {
         infile = aux_state(s, infile, p_sym);
         if (!**s)
@@ -131,7 +126,7 @@ void    *non_symbol_state(char **s, int add)
     t_dict  *symbol;
 
     temp = ft_calloc(1);
-    while (**s && **s != ' ')
+    while (**s && **s != ' ' && **s != '|')
     {
         symbol = (t_dict *)array(minishell()->symbols)->search_tree(NULL, *s);
         temp_free = temp;
@@ -151,3 +146,11 @@ void    *non_symbol_state(char **s, int add)
         array(minishell()->tokens)->add(c_token(temp, CMD));
     return (temp);
 }
+
+//void    *heredoc_state(char **s, int add)
+//{
+//    char    *here;
+//
+//    here = ft_calloc(0);
+//    while
+//}

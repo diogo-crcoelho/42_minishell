@@ -99,7 +99,7 @@ void    init_symbols(void)
 	key[1] = 0;
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), IN))->content))->state = infile_state;
 	key[0] = '>';
-	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), OUT))->content))->state = var_state;
+	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), OUT))->content))->state = infile_state;
 	key[0] = '"';
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), STR))->content))->state = str_state;
 	key[0] = 39;

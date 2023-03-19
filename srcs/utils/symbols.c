@@ -63,7 +63,7 @@ int *init_comp(int type)
 {
     int *comp;
 
-    comp = ft_calloc(5 * sizeof(int));
+    comp = ft_calloc(10 * sizeof(int));
     if (type == VAR || type == LSTR)
         return (comp);
     comp[0] = 1;

@@ -14,9 +14,9 @@ typedef struct s_env t_env;
 
 enum e_type{
     VAR,
-	IN,
+    IN,
     OUT,
-	APP,
+    APP,
     STR,
     LSTR,
     HERE,

@@ -113,7 +113,8 @@ void    *lstr_state(char **s, int add)
     while (**s && **s != 39)
         (*s)++;
     lstr = strings().copy_n(temp, *s - temp);
-    (*s)++;
+    if (**s)
+        (*s)++;
     if (add)
         array(minishell()->tokens)->add(c_token(lstr, type));
     return (lstr);
@@ -133,7 +134,7 @@ void    *non_symbol_state(char **s, int add)
         if (symbol)
         {
             symbol = ((t_tree *)(symbol))->content;
-            temp = strings().join(temp, symbol->state(s, 1), "");
+            temp = strings().join(temp, symbol->state(s, 0), "");
         }
         else
             temp = strings().append(temp, **s);

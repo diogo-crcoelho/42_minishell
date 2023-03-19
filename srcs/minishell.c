@@ -80,6 +80,30 @@ int add_space(char *s)
     return (1);
 }
 
+void    lex(char **temp)
+{
+    t_dict *symbol;
+
+    while (**temp)
+    {
+        symbol = (t_dict *)array(minishell()->symbols)->search_tree(NULL, *temp);
+        if (symbol) {
+            symbol = ((t_tree *)symbol)->content;
+            symbol->state(temp, 1);
+            continue ;
+        }
+        else if (**temp && **temp != ' ')
+            non_symbol_state(temp, 1);
+        while (**temp == ' ' || (add_space(*temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
+            (*temp)++;
+        if (**temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
+            (*temp)++;
+    }
+    print_tokens();
+    array(minishell()->tokens)->destroy();
+    minishell()->tokens = creat_array();
+}
+
 int main(int argc, char **argv, char **envp)
 {
     if (argc != 1)
@@ -93,9 +117,9 @@ int main(int argc, char **argv, char **envp)
     init_minishell(envp);
 	char *str;
 	char *temp;
-    t_dict *symbol;
-    t_tree *temp_tree;
-    t_tree *root = array(minishell()->symbols)->root;
+//    t_dict *symbol;
+//    t_tree *temp_tree;
+//    t_tree *root = array(minishell()->symbols)->root;
 	signals_hand();
     export("C=TH");
 
@@ -105,24 +129,25 @@ int main(int argc, char **argv, char **envp)
 		if (!str)
 			ft_exit(0);
         temp = str;
-        while (*temp)
-        {
-            temp_tree = array(minishell()->symbols)->search_tree(root, temp);
-            if (temp_tree) {
-                symbol = temp_tree->content;
-                symbol->state(&temp, 1);
-            }
-            if (*temp != ' ')
-                non_symbol_state(&temp, 1);
-            while (*temp == ' ' || (add_space(temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
-                temp++;
-            if (*temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
-                temp++;
-        }
-        print_tokens();
+        lex(&temp);
+//        while (*temp)
+//        {
+//            temp_tree = array(minishell()->symbols)->search_tree(root, temp);
+//            if (temp_tree) {
+//                symbol = temp_tree->content;
+//                symbol->state(&temp, 1);
+//            }
+//            if (*temp && *temp != ' ')
+//                non_symbol_state(&temp, 1);
+//            while (*temp == ' ' || (add_space(temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
+//                temp++;
+//            if (*temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
+//                temp++;
+//        }
+//        print_tokens();
 		free(str);
-        array(minishell()->tokens)->destroy();
-        minishell()->tokens = creat_array();
+//        array(minishell()->tokens)->destroy();
+//        minishell()->tokens = creat_array();
     }
 //
 //

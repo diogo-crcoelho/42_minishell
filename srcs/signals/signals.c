@@ -30,9 +30,9 @@ void ctrl_c(int sig)
 
 void ctrl_bs(int sig)
 {
-	(void)sig;
-	write(1, "", 0);
-	rl_redisplay();
+	if (SIGQUIT == sig)
+	    SIG_IGN;
+//	rl_redisplay();
 }
 
 

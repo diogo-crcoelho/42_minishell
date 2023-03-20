@@ -135,6 +135,7 @@ void    *non_symbol_state(char **s, int add)
         {
             symbol = ((t_tree *)(symbol))->content;
             temp = strings().join(temp, symbol->state(s, 0), "");
+            continue ;
         }
         else
             temp = strings().append(temp, **s);

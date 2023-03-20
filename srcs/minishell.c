@@ -43,6 +43,8 @@
  *
  */
 
+void print_cmds(void);
+
 t_mini 	*minishell(void)
 {
 	static t_mini a;
@@ -84,24 +86,20 @@ void    lex(char **temp)
 {
     t_dict *symbol;
 
-    while (**temp)
-    {
-        symbol = (t_dict *)array(minishell()->symbols)->search_tree(NULL, *temp);
+    while (**temp) {
+        symbol = (t_dict *) array(minishell()->symbols)->search_tree(NULL, *temp);
         if (symbol) {
-            symbol = ((t_tree *)symbol)->content;
+            symbol = ((t_tree *) symbol)->content;
             symbol->state(temp, 1);
-            continue ;
-        }
-        else if (**temp && **temp != ' ')
+            continue;
+        } else if (**temp && **temp != ' ')
             non_symbol_state(temp, 1);
         while (**temp == ' ' || (add_space(*temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
             (*temp)++;
         if (**temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
             (*temp)++;
+//        print_tokens();
     }
-    print_tokens(); //substituir pela funcao que executa
-    array(minishell()->tokens)->destroy();
-    minishell()->tokens = creat_array();
 }
 
 int main(int argc, char **argv, char **envp)
@@ -126,6 +124,12 @@ int main(int argc, char **argv, char **envp)
 			ft_exit(0);
         temp = str;
         lex(&temp);
+        delexer(minishell()->tokens);
+         print_cmds();
+        array(minishell()->tokens)->destroy();
+        minishell()->tokens = creat_array();
+        array(minishell()->cmds)->destroy();
+        minishell()->cmds = creat_array();
 		free(str);
     }
 

@@ -30,7 +30,6 @@
 typedef 	void	(*t_func)();
 //t_func func = (void *) printf;
 
-
 void    pwd();
 void    env();
 void    unset(char *var);

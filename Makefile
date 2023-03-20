@@ -19,7 +19,7 @@ LIBS = -lreadline
 SRCS =	minishell.c \
 		libs/list/lst_utils.c libs/list/list_utils_2.c libs/list/list_utils_3.c libs/list/list_utils_4.c\
 		libs/strs/strings.c libs/strs/strings_utils1.c libs/strs/ft_split.c libs/strs/strings_utils2.c \
-		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/env.c\
+		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/delexer.c parsing/env.c\
 		builtins/pwd.c builtins/env.c builtins/cd.c builtins/export.c builtins/unset.c \
 		builtins/echo.c builtins/exit.c \
 		utils/symbols.c utils/tokens.c \

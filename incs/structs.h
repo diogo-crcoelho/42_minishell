@@ -23,7 +23,6 @@ enum e_type{
     CMD,
     PIPE,
     SPC,
-
 };
 
 struct s_mini{

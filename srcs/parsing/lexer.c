@@ -153,25 +153,20 @@ void    *non_symbol_state(char **s, int add)
 
 void    check_tilde(char **s)
 {
-    int     i;
     char    *tilde;
     t_token *token;
 
+    tilde = ((t_env *)array(minishell()->env)->search_tree(0, "HOME")->content)->splitted[1];
     token = (t_token *)array(minishell()->tokens)->end;
     if (token)
         token = ((t_elems *)token)->content;
-    else
+    else if (**s == '~' && (*(*s +1) == ' ' || *(*s +1) == '|' || *(*s +1) == '/'))
+        array(minishell()->tokens)->add(c_token(strings().copy(tilde), VAR));
+    if ((token->type != SPC && token->type != PIPE) || **s != '~')
         return ;
-    i = 0;
-    if (!*(*s + i) && (*(*s + i) != ' ' || *(*s + i++) != '|'))
-        return ;
-    if (!*(*s + i) && (*(*s + i++) != '~'))
-        return ;
-    if (*(*s + i) && (*(*s + i) != ' ' || *(*s + i++) != '|'))
-        return ;
-    *s = *s + i;
-    tilde = ((t_env *)array(minishell()->env)->search_tree(0, "HOME")->content)->splitted[1];
-    array(minishell()->tokens)->add(c_token(strings().copy(tilde), VAR));
+    if (*(*s +1) == ' ' || *(*s +1) == '|' || *(*s +1) == '/')
+        array(minishell()->tokens)->add(c_token(strings().copy(tilde), VAR));
+    *s += 2;
 }
 
 //void    *heredoc_state(char **s, int add)

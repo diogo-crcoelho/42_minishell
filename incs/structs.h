@@ -23,7 +23,7 @@ enum e_type{
     CMD,
     PIPE,
     SPC,
-
+    BLTIN
 };
 
 struct s_mini{
@@ -59,6 +59,7 @@ struct s_cmd{
 	int		fd[2];
     int     fd_red[2];
 	int		pid;
+    void    *bin;
 };
 
 

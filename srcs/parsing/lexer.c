@@ -160,7 +160,7 @@ void    check_tilde(char **s)
     token = (t_token *)array(minishell()->tokens)->end;
     if (token)
         token = ((t_elems *)token)->content;
-    else if
+    else
         return ;
     i = 0;
     if (!*(*s + i) && (*(*s + i) != ' ' || *(*s + i++) != '|'))

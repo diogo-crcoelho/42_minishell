@@ -13,6 +13,10 @@ void filler(t_token *token)
         ((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
     else if ((OUT == token->type))
         ((t_cmd *)tmp->content)->fd_red[1] = open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+    else if ((APP == token->type))
+        ((t_cmd *)tmp->content)->fd_red[1] = open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
+//    else if ((BLTIN == token->type))
+//        ((t_cmd *)tmp->content)->bin = estrutra_bin;
     else if (IN != token->type)
     {
         clean = strings().join(((t_cmd *)tmp->content)->path, token->token, "");
@@ -36,7 +40,8 @@ void delexer(void)
             filler(((t_token *)tmp->content));
             tmp = tmp->next;
         }
-        ((t_cmd *)cmds->content)->args = strings().split(((t_cmd *)cmds->content)->path, ' ');
+        if (((t_cmd *)cmds->content)->path)
+            ((t_cmd *)cmds->content)->args = strings().split(((t_cmd *)cmds->content)->path, ' ');
         free(((t_cmd *)cmds->content)->path);
         if (tmp)
             tmp = tmp->next;
@@ -47,17 +52,17 @@ void delexer(void)
 void print_cmds(void)
 {
     t_elems *tmp;
-    t_cmd  *ttt;
+    t_cmd  *temp;
 
     tmp = (array(minishell()->cmds)->begin);
     while (tmp)
     {
-        ttt = (t_cmd *)tmp->content;
-        printf("Infile: %i\n", ttt->fd_red[0]);
-        printf("Outfile: %i\n", ttt->fd_red[1]);
+        temp = (t_cmd *)tmp->content;
+        printf("Infile: %i\n", temp->fd_red[0]);
+        printf("Outfile: %i\n", temp->fd_red[1]);
         printf("cmd: ");
-        while (*(ttt->args))
-            printf("%s ", *(ttt->args)++);
+        while ((temp->args) && *(temp->args))
+            printf("%s ", *(temp->args)++);
         printf("\n");
         printf("========\n");
         tmp = tmp->next;

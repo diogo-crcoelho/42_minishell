@@ -101,7 +101,7 @@ void    lex(char **temp)
             (*temp)++;
         if (**temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
             (*temp)++;
-        check_tilde(temp);
+//        check_tilde(temp);
     }
     print_tokens();
 }

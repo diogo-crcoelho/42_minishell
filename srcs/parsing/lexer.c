@@ -46,7 +46,7 @@ void    *var_state(char **s, int add)
     while (**s && ft_isalnum(**s))
         (*s)++;
     temp = strings().copy_n(temp, *s - temp);
-    if (array(minishell()->env)->search_tree(array(minishell()->env)->root, temp))
+    if (array(minishell()->env)->search_tree(NULL, temp))
         variable = strings().copy(((t_env *)array(minishell()->env)->search_tree(array(minishell()->env)->root, temp)->content)->splitted[1]);
     else
         variable = ft_calloc(1);
@@ -65,6 +65,8 @@ void    *infile_state(char **s, int add)
     p_sym = ((t_dict *)array(minishell()->symbols)->search_tree(array(minishell()->symbols)->root, *s)->content);
     infile = ft_calloc(1);
     (*s)++;
+    if (p_sym->value == HERE || p_sym->value == APP)
+        (*s)++;
     while (**s && **s == ' ')
         (*s)++;
     while (**s && **s != ' ' && **s != '|')
@@ -147,6 +149,29 @@ void    *non_symbol_state(char **s, int add)
     if (add)
         array(minishell()->tokens)->add(c_token(temp, CMD));
     return (temp);
+}
+
+void    check_tilde(char **s)
+{
+    int     i;
+    char    *tilde;
+    t_token *token;
+
+    token = (t_token *)array(minishell()->tokens)->end;
+    if (token)
+        token = ((t_elems *)token)->content;
+    else if
+        return ;
+    i = 0;
+    if (!*(*s + i) && (*(*s + i) != ' ' || *(*s + i++) != '|'))
+        return ;
+    if (!*(*s + i) && (*(*s + i++) != '~'))
+        return ;
+    if (*(*s + i) && (*(*s + i) != ' ' || *(*s + i++) != '|'))
+        return ;
+    *s = *s + i;
+    tilde = ((t_env *)array(minishell()->env)->search_tree(0, "HOME")->content)->splitted[1];
+    array(minishell()->tokens)->add(c_token(strings().copy(tilde), VAR));
 }
 
 //void    *heredoc_state(char **s, int add)

@@ -44,8 +44,12 @@ int     comp_symbols_search(void *c1, void *c2)
     out_tree[1] = 0;
     out_tree[2] = 0;
 	in_tree = ((t_dict *)c1)->key;
-	if (((char *)c2)[0] == '<' && ((char *)c2)[1] == '<')
-		out_tree[1] = '<';
+    if (((char *)c2)[0] == '<' && ((char *)c2)[1] == '<')
+        out_tree[1] = '<';
+    else if (((char *)c2)[0] == '>' && ((char *)c2)[1] == '>')
+    {
+        out_tree[1] = '>';
+    }
 	out_tree[0] = ((char *)c2)[0];
     return (hash(in_tree) - hash(out_tree));
 }
@@ -94,7 +98,10 @@ void    init_symbols(void)
     array(minishell()->symbols)->cmp = comp_symbols_build;
     key[0] = '<';
     key[1] = '<';
-	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), HERE))->content))->state = var_state;
+	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), HERE))->content))->state = infile_state;
+    key[0] = '>';
+    key[1] = '>';
+    ((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), APP))->content))->state = infile_state;
 	key[0] = '<';
 	key[1] = 0;
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), IN))->content))->state = infile_state;

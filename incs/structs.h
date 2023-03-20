@@ -22,7 +22,8 @@ enum e_type{
     HERE,
     CMD,
     PIPE,
-    SPC
+    SPC,
+
 };
 
 struct s_mini{

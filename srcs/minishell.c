@@ -86,20 +86,24 @@ void    lex(char **temp)
 {
     t_dict *symbol;
 
-    while (**temp) {
+    while (**temp)
+    {
         symbol = (t_dict *) array(minishell()->symbols)->search_tree(NULL, *temp);
-        if (symbol) {
+        if (symbol)
+        {
             symbol = ((t_tree *) symbol)->content;
             symbol->state(temp, 1);
             continue;
-        } else if (**temp && **temp != ' ')
+        }
+        else if (**temp && **temp != ' ')
             non_symbol_state(temp, 1);
         while (**temp == ' ' || (add_space(*temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
             (*temp)++;
         if (**temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
             (*temp)++;
-//        print_tokens();
+        check_tilde(temp);
     }
+    print_tokens();
 }
 
 int main(int argc, char **argv, char **envp)
@@ -107,8 +111,6 @@ int main(int argc, char **argv, char **envp)
     if (argc != 1)
         exit(1);
 
-//
-//
     (void)argv;
     (void)envp;
     init_minishell(envp);
@@ -125,7 +127,7 @@ int main(int argc, char **argv, char **envp)
         temp = str;
         lex(&temp);
         delexer(minishell()->tokens);
-         print_cmds();
+        print_cmds();
         array(minishell()->tokens)->destroy();
         minishell()->tokens = creat_array();
         array(minishell()->cmds)->destroy();

@@ -89,19 +89,20 @@ void    lex(char **temp)
     while (**temp)
     {
         symbol = (t_dict *) array(minishell()->symbols)->search_tree(NULL, *temp);
+        if(check_tilde(temp))
+            continue ;
         if (symbol)
         {
             symbol = ((t_tree *) symbol)->content;
             symbol->state(temp, 1);
             continue;
         }
-        else if (**temp && **temp != ' ')
+        else if (**temp && **temp != ' ' && **temp != '|')
             non_symbol_state(temp, 1);
         while (**temp == ' ' || (add_space(*temp) && !array(minishell()->tokens)->add(c_token(" ", SPC))))
             (*temp)++;
         if (**temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
             (*temp)++;
-//        check_tilde(temp);
     }
     print_tokens();
 }

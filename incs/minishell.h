@@ -70,7 +70,7 @@ void    *lstr_state(char **s, int add);
 void    *str_state(char **s, int add);
 void    *non_symbol_state(char **s, int add);
 void    *outfile_state(char **s, int add);
-void    check_tilde(char **s);
+int    check_tilde(char **s);
 
 //symbols
 int     comp_symbols_search(void *c1, void *c2);

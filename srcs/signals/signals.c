@@ -16,12 +16,16 @@
 void ctrl_c(int sig)
 {
 	(void)sig;
-	write(2,"^C\n", 3);
 	if (minishell()->inter)
-		ft_exit(130);
-	rl_replace_line("", 1);
+    {
+        minishell()->exit_status = 130;
+        return ;
+    }
+    write(2,"^C\n", 3);
+    rl_replace_line("", 1);
 	rl_on_new_line();
 	rl_redisplay();
+    return ;
 	
 }
 

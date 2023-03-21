@@ -6,8 +6,7 @@
 
 int	dup_and_close(t_cmd *cmd)
 {
-    if (!cmd->fd_red[1])
-        if (dup2(cmd->fd_red[1], 1) < 0)
+    if (dup2(cmd->fd_red[1], 1) < 0)
             return (-1);
     close(cmd->fd_red[1]);
     if (dup2(cmd->fd_red[0], 0) < 0)
@@ -46,13 +45,13 @@ void parse_paths(t_cmd *cmd)
         teste = strings().join(paths[i++], cmd->args[0], "/");
         if (access(teste, F_OK) == 0)
         {
-            printf("%s\n", teste);
 //            array(paths)->destroy();
             cmd->path = teste;
             return;
         }
         free(teste);
     }
+    cmd->path = cmd->args[0];
 }
 //void	execute(t_cmd *elem)
 //{
@@ -104,11 +103,10 @@ void	execute(t_elems *elem)
 
     cmd = (t_cmd *)elem->content;
     parse_paths(cmd);
-    printf("%s\n", cmd->path);
-//    if (-1 == cmd->fd_red[0])
-//        cmd->fd_red[0] = treat_files(0, cmd->infile);
-//    if (-1 == cmd->fd_red[1])
-//        treat_files(1, cmd->outfile);
+    if (-1 == cmd->fd_red[0])
+        cmd->fd_red[0] = treat_files(0, cmd->infile);
+    if (-1 == cmd->fd_red[1])
+        treat_files(1, cmd->outfile);
 //    if (!elem->next)
 //    {
 //        while (array(minishell()->cmds)->size--)
@@ -120,15 +118,18 @@ void	execute(t_elems *elem)
         exit(-1);
     else if (!cmd->pid)
     {
+//        if (dup_and_close(cmd) >= 0)
+//        {
+            minishell()->inter = 1;
+            execve(cmd->path, cmd->args, (char **)array(minishell()->env)->to_array());
+            error_handle(cmd->path);
+            exit(127);
+//        }
 
-            printf("%s--%s--%s\n", cmd->path, cmd->args[0], (char *)minishell()->env);
-            execve(cmd->path, cmd->args, minishell()->env);
-
-        error_handle(cmd->path);
-        exit(127);
     }
-//    close(cmd->fd_red[0]);
-//    close(cmd->fd_red[1]);
+    minishell()->inter = 0;
+    close(cmd->fd_red[0]);
+    close(cmd->fd_red[1]);
     waitpid(-1, 0, 0);
 //    execute(elem->next);
 }

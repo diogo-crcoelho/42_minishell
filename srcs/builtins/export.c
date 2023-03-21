@@ -23,6 +23,15 @@ int cmp(void *cont1, void *cont2, int size)
     return (0);
 }
 
+void export_empty(t_tree *root)
+{
+    if (root->left)
+        export_empty(root->left);
+    printf("declare +x %s\n",((t_env *)root->content)->total);
+    if (root->right)
+        export_empty(root->right);
+}
+
 void export(char *var)
 {
     t_elems *temp;
@@ -31,6 +40,11 @@ void export(char *var)
     splitted = env_split(var, '=');
     temp = array(minishell()->env)->search(cmp, splitted[0], strings().len(var, 0));
     array(minishell()->env)->cmp = cmp_env;
+    if (!var)
+    {
+        export_empty(array(minishell()->env)->root);
+        return;
+    }
     if (strings().alnum(splitted[0]))
         ft_exit(1);
     if (!temp)

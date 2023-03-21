@@ -14,6 +14,7 @@
 
 //TODO
 
+void	pipex();
 
 //ideias a propor ao Miguel
 //
@@ -114,25 +115,26 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
     (void)envp;
     init_minishell(envp);
-	char *str;
-	char *temp;
+//	char *str;
+//	char *temp;
 	signals_hand();
     export("C=TH");
-
-    while (1)
-    {
-		str = readline("not bash>");
-		if (!str)
-			ft_exit(0);
-        temp = str;
-        lex(&temp);
-        delexer(minishell()->tokens);
-        print_cmds();
-        array(minishell()->tokens)->destroy();
-        minishell()->tokens = creat_array();
-        array(minishell()->cmds)->destroy();
-        minishell()->cmds = creat_array();
-		free(str);
-    }
+    export (NULL);
+//    while (1)
+//    {
+//		str = readline("not bash>");
+//		if (!str)
+//			ft_exit(0);
+//        temp = str;
+//        lex(&temp);
+//        delexer(minishell()->tokens);
+//        pipex();
+////        print_cmds();
+//        array(minishell()->tokens)->destroy();
+//        minishell()->tokens = creat_array();
+//        array(minishell()->cmds)->destroy();
+//        minishell()->cmds = creat_array();
+//		free(str);
+//    }
 
 }

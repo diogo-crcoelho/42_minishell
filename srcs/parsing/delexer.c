@@ -9,11 +9,11 @@ void filler(t_token *token)
     char *clean;
 
     tmp = array(minishell()->cmds)->end;
-    if ((IN == token->type) && !((t_cmd *)tmp->content)->fd_red[0])
+    if ((IN == token->type) && !((t_cmd *)tmp->content)->fd_red[0] && (((t_cmd *)tmp->content)->infile = strings().copy(token->token)))
         ((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
-    else if ((OUT == token->type))
+    else if ((OUT == token->type) && (((t_cmd *)tmp->content)->infile = strings().copy(token->token)))
         ((t_cmd *)tmp->content)->fd_red[1] = open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-    else if ((APP == token->type))
+    else if ((APP == token->type) && (((t_cmd *)tmp->content)->infile = strings().copy(token->token)))
         ((t_cmd *)tmp->content)->fd_red[1] = open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
 //    else if ((BLTIN == token->type))
 //        ((t_cmd *)tmp->content)->bin = estrutra_bin;

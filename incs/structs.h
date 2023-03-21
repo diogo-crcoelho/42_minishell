@@ -58,6 +58,8 @@ struct s_cmd{
 	char	**args;
 	int		fd[2];
     int     fd_red[2];
+    char    *infile;
+    char    *outfile;
 	int		pid;
     void    *bin;
 };

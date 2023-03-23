@@ -184,10 +184,18 @@ int    check_tilde(char **s)
     return (0);
 }
 
-//void    *heredoc_state(char **s, int add)
-//{
-//    char    *here;
-//
-//    here = ft_calloc(0);
-//    while
-//}
+void    *heredoc_state(char **s, int add)
+{
+    char    *here;
+
+    *s += 2;
+    while (**s == ' ')
+        (*s)++;
+    here = *s;
+    while (**s && **s != ' ' && **s != '|')
+        (*s)++;
+    here = strings().copy_n(here, *s - here);
+    if (add)
+        array(minishell()->tokens)->add(c_token(here, HERE));
+    return (here);
+}

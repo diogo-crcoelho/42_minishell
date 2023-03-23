@@ -71,6 +71,7 @@ void    *str_state(char **s, int add);
 void    *non_symbol_state(char **s, int add);
 void    *outfile_state(char **s, int add);
 int    check_tilde(char **s);
+void    *heredoc_state(char **s, int add);
 
 //symbols
 int     comp_symbols_search(void *c1, void *c2);

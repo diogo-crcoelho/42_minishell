@@ -98,7 +98,7 @@ void    init_symbols(void)
     array(minishell()->symbols)->cmp = comp_symbols_build;
     key[0] = '<';
     key[1] = '<';
-	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), HERE))->content))->state = infile_state;
+	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), HERE))->content))->state = heredoc_state;
     key[0] = '>';
     key[1] = '>';
     ((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), APP))->content))->state = infile_state;

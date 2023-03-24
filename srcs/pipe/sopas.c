@@ -94,7 +94,7 @@ int 	treat_files(int fd, char *av)
         printf("Couldn't open %s\n", av);
         exit(1);
     }
-    return -42;
+    return (-42);
 }
 
 void	execute(t_elems *elem)

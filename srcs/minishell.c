@@ -105,7 +105,7 @@ void    lex(char **temp)
         if (**temp == '|' && array(minishell()->tokens)->add(c_token("|", PIPE)))
             (*temp)++;
     }
-    print_tokens();
+//    print_tokens();
 }
 
 int main(int argc, char **argv, char **envp)
@@ -119,7 +119,6 @@ int main(int argc, char **argv, char **envp)
 	char *str;
 	char *temp;
     export("C=TH");
-//    export (NULL);
     while (1)
     {
         signals_hand();
@@ -128,9 +127,9 @@ int main(int argc, char **argv, char **envp)
 			ft_exit(0);
         temp = str;
         lex(&temp);
-        delexer(minishell()->tokens);
+        delexer();
+        print_cmds();
         pipex();
-//        print_cmds();
         array(minishell()->tokens)->destroy();
         minishell()->tokens = creat_array();
         array(minishell()->cmds)->destroy();

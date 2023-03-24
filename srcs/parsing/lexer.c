@@ -189,10 +189,10 @@ void    *heredoc_state(char **s, int add)
     char    *here;
 
     *s += 2;
-    while (**s == ' ')
+    while (**s == ' ' || **s == '\t')
         (*s)++;
     here = *s;
-    while (**s && **s != ' ' && **s != '|')
+    while (**s && **s != ' ' && **s == '\t' && **s != '|')
         (*s)++;
     here = strings().copy_n(here, *s - here);
     if (add)

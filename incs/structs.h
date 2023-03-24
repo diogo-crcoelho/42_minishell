@@ -60,6 +60,7 @@ struct s_cmd{
     int     fd_red[2];
     char    *infile;
     char    *outfile;
+    int     app;
 	int		pid;
     void    *bin;
 };

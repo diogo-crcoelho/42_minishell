@@ -108,6 +108,12 @@ void    lex(char **temp)
 //    print_tokens();
 }
 
+void    destroy_minishell(void)
+{
+    array(minishell()->tokens)->destroy();
+    array(minishell()->cmds)->destroy();
+    array(minishell()->symbols)->destroy();
+}
 int main(int argc, char **argv, char **envp)
 {
     if (argc != 1)
@@ -136,5 +142,5 @@ int main(int argc, char **argv, char **envp)
         minishell()->cmds = creat_array();
 		free(str);
     }
-
+    destroy_minishell();
 }

@@ -51,7 +51,7 @@ void    *var_state(char **s, int add)
     else
         variable = ft_calloc(1);
     if (add)
-        array(minishell()->tokens)->add(c_token(variable, p_sym->value));
+        array(minishell()->tokens)->add(c_token(variable, p_sym->value))->del = del_token;
     free(temp);
     return (variable);
 }
@@ -76,7 +76,7 @@ void    *infile_state(char **s, int add)
             break ;
         (*s)++;
     }
-    array(minishell()->tokens)->add(c_token(infile, p_sym->value));
+    array(minishell()->tokens)->add(c_token(infile, p_sym->value))->del = del_token;
     return (infile);
 }
 
@@ -99,7 +99,7 @@ void    *str_state(char **s, int add)
     if (**s)
         (*s)++;
     if (add)
-        array(minishell()->tokens)->add(c_token(infile, p_sym->value));
+        array(minishell()->tokens)->add(c_token(infile, p_sym->value))->del = del_token;
     return (infile);
 }
 
@@ -118,7 +118,7 @@ void    *lstr_state(char **s, int add)
     if (**s)
         (*s)++;
     if (add)
-        array(minishell()->tokens)->add(c_token(lstr, type));
+        array(minishell()->tokens)->add(c_token(lstr, type))->del = del_token;
     return (lstr);
 }
 
@@ -147,7 +147,7 @@ void    *non_symbol_state(char **s, int add)
         (*s)++;
     }
     if (add)
-        array(minishell()->tokens)->add(c_token(temp, CMD));
+        array(minishell()->tokens)->add(c_token(temp, CMD))->del = del_token;
     return (temp);
 }
 
@@ -177,7 +177,7 @@ int    check_tilde(char **s)
         token = ((t_elems *)token)->content;
     if ((token->type == SPC || token->type == PIPE) && check_validity(*s))
     {
-        array(minishell()->tokens)->add(c_token(strings().copy(tilde), VAR));
+        array(minishell()->tokens)->add(c_token(strings().copy(tilde), VAR))->del = del_token;
         (*s)++;
         return (1);
     }
@@ -196,6 +196,6 @@ void    *heredoc_state(char **s, int add)
         (*s)++;
     here = strings().copy_n(here, *s - here);
     if (add)
-        array(minishell()->tokens)->add(c_token(here, HERE));
+        array(minishell()->tokens)->add(c_token(here, HERE))->del = del_token;
     return (here);
 }

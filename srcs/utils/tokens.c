@@ -4,6 +4,12 @@
 
 #include "../../incs/minishell.h"
 
+void    del_token(void *token)
+{
+    free(((t_token *)token)->token);
+    free(token);
+}
+
 t_token *c_token(char *s, int type)
 {
     t_token *new;

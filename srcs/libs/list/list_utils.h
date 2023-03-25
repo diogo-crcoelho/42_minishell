@@ -46,6 +46,7 @@ struct s_array{
 	void	(*destroy)(void);
 	t_elems *(*search)(int (*cmp)(void *cont, void *buf, int size),void *buf, int size);
 	void	**(*to_array)(void);
+    void    (*destroy_array)(void);
     t_tree  *root;
     void    (*build_tree)(void);
     t_tree  *(*add_leaf)(void *content);

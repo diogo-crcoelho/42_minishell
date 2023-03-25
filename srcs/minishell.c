@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:31:16 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/20 13:21:08 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:56:35 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int main(int argc, char **argv, char **envp)
         temp = str;
         lex(&temp);
         delexer();
-        print_cmds();
+        // print_cmds();
         pipex();
         array(minishell()->tokens)->destroy();
         minishell()->tokens = creat_array();

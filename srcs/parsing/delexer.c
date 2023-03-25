@@ -3,6 +3,22 @@
 //
 // Created by dcarvalh on 3/15/23.
 //
+void    del_cmd(void *cmd)
+{
+    int i;
+
+    i = -1;
+    if (((t_cmd *)cmd)->outfile)
+        free(((t_cmd *)cmd)->outfile);
+    if (((t_cmd *)cmd)->infile)
+        free(((t_cmd *)cmd)->infile);
+    while (((t_cmd *)cmd)->args[++i])
+        free(((t_cmd *)cmd)->args[i]);
+    free(((t_cmd *)cmd)->path);
+    free(cmd);
+}
+
+
 void filler(t_token *token)
 {
     t_elems *tmp;
@@ -32,7 +48,7 @@ void delexer(void)
     tmp = array(minishell()->tokens)->begin;
     while(tmp)
     {
-        array(minishell()->cmds)->add(ft_calloc(sizeof (t_cmd)));
+        array(minishell()->cmds)->add(ft_calloc(sizeof (t_cmd)))->del = del_cmd;
         cmds = array(minishell()->cmds)->end;
         while (tmp && PIPE != ((t_token *)tmp->content)->type)
         {

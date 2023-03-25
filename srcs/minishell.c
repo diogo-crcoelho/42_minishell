@@ -113,6 +113,7 @@ void    destroy_minishell(void)
     array(minishell()->tokens)->destroy();
     array(minishell()->cmds)->destroy();
     array(minishell()->symbols)->destroy();
+    array(minishell()->env)->destroy();
 }
 int main(int argc, char **argv, char **envp)
 {

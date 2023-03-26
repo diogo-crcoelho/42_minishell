@@ -5,20 +5,12 @@
 typedef 	void *(*t_func)();
 
 
-char *ttt(void *t)
+int  ttt(void *t)
 {
-    char **test = (char **)t;
-    while (*test)
-    {
-        printf("%s\n", *test++);
-    }
+    return (long int)t;
 }
 int main()
 {
-//    char *test[] = { "1", "2", NULL};
-    t_func a = (void *){
+    printf("%d\n", ttt((void *)4654316516351653));
 
-    };
-    t_func func = (void *) write;
-    t_func tt = (void *)ttt;
 }

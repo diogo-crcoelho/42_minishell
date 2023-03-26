@@ -32,6 +32,7 @@ typedef 	void	(*t_func)();
 unsigned long hash(char *str);
 
 //builtins
+void    init_builtins(void);
 int     pwd(void* content);
 int     env(void* content);
 int     unset(void *content);

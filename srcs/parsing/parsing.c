@@ -10,4 +10,6 @@ void	init_minishell(char **envp)
 	minishell()->cmds = creat_array();
 	init_tokens();
 	init_symbols();
+    init_builtins();
+
 }

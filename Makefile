@@ -21,7 +21,7 @@ SRCS =	minishell.c \
 		libs/strs/strings.c libs/strs/strings_utils1.c libs/strs/ft_split.c libs/strs/strings_utils2.c \
 		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/delexer.c parsing/env.c\
 		builtins/pwd.c builtins/env.c builtins/cd.c builtins/export.c builtins/unset.c \
-		builtins/echo.c builtins/exit.c \
+		builtins/echo.c builtins/exit.c builtins/builtins.c\
 		utils/symbols.c utils/tokens.c utils/env.c\
 		signals/signals.c \
 		pipe/sopas.c \

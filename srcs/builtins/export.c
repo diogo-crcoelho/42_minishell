@@ -67,4 +67,5 @@ int    export(void* content)
     free(splitted[0]);
     free (splitted);
     array(minishell()->env)->cmp = comp_var;
+    return (0);
 }

@@ -7,6 +7,7 @@
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
+typedef struct s_built	t_built;
 typedef struct s_mini	t_mini;
 typedef struct s_dict	t_dict;
 typedef struct s_cmd	t_cmd;
@@ -36,6 +37,7 @@ struct					s_mini
 	char				*prev_path;
 	void				*tokens;
 	void				*symbols;
+	void				*builtins;
 };
 
 struct					s_env

@@ -6,6 +6,6 @@
 
 void	ft_exit(int exit_status)
 {
-	array(minishell()->env)->destroy();
+    destroy_minishell();
 	exit(exit_status);
 }

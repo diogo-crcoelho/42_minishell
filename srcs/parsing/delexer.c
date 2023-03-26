@@ -3,33 +3,45 @@
 //
 // Created by dcarvalh on 3/15/23.
 //
-void	filler(t_token *token)
+void	filler(t_token *token, t_elems *tmp)
 {
-	t_elems	*tmp;
-	char	*clean;
+    char	*clean;
 
-	tmp = array(minishell()->cmds)->end;
-	if ((IN == token->type) && !((t_cmd *)tmp->content)->fd_red[0]
-		&& (((t_cmd *)tmp->content)->infile = strings().copy(token->token)))
-		((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
-	else if ((OUT == token->type)
-			&& (((t_cmd *)tmp->content)->outfile = strings().copy(token->token)))
-		((t_cmd *)tmp->content)->fd_red[1] = open(token->token,
-				O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	else if ((APP == token->type)
-			&& (((t_cmd *)tmp->content)->outfile = strings().copy(token->token)))
-		((t_cmd *)tmp->content)->fd_red[1] = open(token->token,
-				O_WRONLY | O_APPEND | O_CREAT, 0644);
-	//    else if ((BLTIN == token->type))
-	//        ((t_cmd *)tmp->content)->bin = estrutra_bin;
-	else if (IN != token->type)
-	{
-		clean = strings().join(((t_cmd *)tmp->content)->path, token->token, "");
-		free(((t_cmd *)tmp->content)->path);
-		((t_cmd *)tmp->content)->path = clean;
-	}
+	if ((IN == token->type))
+    {
+        ((t_cmd *)tmp->content)->infile = strings().copy(token->token);
+        ((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
+        ((t_cmd *)tmp->content)->inf = 0;
+    }
+	if (OUT == token->type)
+    {
+        ((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
+        ((t_cmd *)tmp->content)->fd_red[1] = open(token->token,O_WRONLY | O_TRUNC | O_CREAT, 0644);
+    }
+	if (APP == token->type)
+    {
+        ((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
+        ((t_cmd *)tmp->content)->fd_red[1] = open(token->token,O_WRONLY | O_APPEND | O_CREAT, 0644);
+    }
+    else if (IN != token->type)
+    {
+        clean = strings().join(((t_cmd *)tmp->content)->path, token->token, "");
+        free(((t_cmd *)tmp->content)->path);
+        ((t_cmd *)tmp->content)->path = clean;
+    }
 }
 
+void filler2(t_token *token)
+{
+//    char	*clean;
+    t_elems	*tmp;
+
+    tmp = array(minishell()->cmds)->end;
+    filler(token, tmp);
+//    if ()
+//        ;
+
+}
 void	delexer(void)
 {
 	t_elems	*tmp;
@@ -42,7 +54,7 @@ void	delexer(void)
 		cmds = array(minishell()->cmds)->end;
 		while (tmp && PIPE != ((t_token *)tmp->content)->type)
 		{
-			filler((t_token *)tmp->content);
+			filler2((t_token *)tmp->content);
 			tmp = tmp->next;
 		}
 		if (((t_cmd *)cmds->content)->path)

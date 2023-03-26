@@ -19,12 +19,12 @@ void	pipex(void);
 //ideias a propor ao Miguel
 //
 // comecar por retirar as aspas
-	-> guardar tudo o que esta dentro de aspas dentro de uma string.
+//	-> guardar tudo o que esta dentro de aspas dentro de uma string.
 //e so depois trtar dos valores dentro da string. $ e o caralho
 
 //So e considerado novo comando se estiver a seguir a uma pipe.
 //  echo echo ls,
-	so deve fazer echo como se fosse uma string e nao xecutar varios comandos.
+//	so deve fazer echo como se fosse uma string e nao xecutar varios comandos.
 
 // Cores fica sempre nice!!
 
@@ -132,17 +132,17 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	init_minishell(envp);
-	export("C=TH");
 	while (1)
 	{
-		signals_hand();
-		str = readline("not bash>");
-		if (!str)
-			ft_exit(0);
-		temp = str;
+        signals_hand();
+        str = readline("not bash>");
+        if (!str)
+            break ;
+        add_history(str);
+        temp = str;
 		lex(&temp);
 		delexer();
-		// print_cmds();
+//		 print_cmds();
 		pipex();
 		array(minishell()->tokens)->destroy();
 		minishell()->tokens = creat_array();

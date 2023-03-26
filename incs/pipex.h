@@ -34,4 +34,5 @@ void	parse_here_doc(int *fd_in, char *av, int *flag);
 
 //gnl
 char	*get_next_line(int fd);
+void	make_here_env(int argc, char **argv, t_envs *env);
 #endif

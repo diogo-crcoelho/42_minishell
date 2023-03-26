@@ -14,10 +14,10 @@
 # define MINIHSELL_H
 
 # include <fcntl.h>
+# include <stdio.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <sys/wait.h>
 # include <unistd.h>
 //#include "pipex.h"

@@ -175,8 +175,7 @@ int	check_tilde(char **s)
 	char	*tilde;
 	t_token	*token;
 
-	tilde = ((t_env *)array(minishell()->env)->search_tree(0,
-				"HOME")->content)->splitted[1];
+	tilde = ((t_env *)array(minishell()->env)->search_tree(0, "HOME")->content)->splitted[1];
 	token = (t_token *)array(minishell()->tokens)->end;
 	if (!token && check_validity(*s))
 	{

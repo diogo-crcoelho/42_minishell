@@ -78,6 +78,13 @@ int *init_comp(int type)
     return (comp);
 }
 
+void    del_symbol(void *content)
+{
+    free(((t_dict *)content)->key);
+    free(((t_dict *)content)->comp);
+    free(content);
+}
+
 t_dict  *c_dict(char *key, int value)
 {
 	t_dict  *new;
@@ -99,20 +106,27 @@ void    init_symbols(void)
     key[0] = '<';
     key[1] = '<';
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), HERE))->content))->state = heredoc_state;
+    array(minishell()->symbols)->end->del = del_symbol;
     key[0] = '>';
     key[1] = '>';
     ((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), APP))->content))->state = infile_state;
-	key[0] = '<';
+    array(minishell()->symbols)->end->del = del_symbol;
+    key[0] = '<';
 	key[1] = 0;
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), IN))->content))->state = infile_state;
+    array(minishell()->symbols)->end->del = del_symbol;
 	key[0] = '>';
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), OUT))->content))->state = infile_state;
+    array(minishell()->symbols)->end->del = del_symbol;
 	key[0] = '"';
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), STR))->content))->state = str_state;
+    array(minishell()->symbols)->end->del = del_symbol;
 	key[0] = 39;
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), LSTR))->content))->state = lstr_state;
+    array(minishell()->symbols)->end->del = del_symbol;
 	key[0] = '$';
 	((t_dict *)(array(minishell()->symbols)->add(c_dict(strings().copy(key), VAR))->content))->state = var_state;
+    array(minishell()->symbols)->end->del = del_symbol;
 	array(minishell()->symbols)->build_tree();
     array(minishell()->symbols)->cmp = comp_symbols_search;
 	free(key);

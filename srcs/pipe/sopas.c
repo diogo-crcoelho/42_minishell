@@ -42,6 +42,7 @@ void parse_paths(t_cmd *cmd)
     paths = strings().split(getenv("PATH"), ':');
     while (paths[i])
     {
+
         teste = strings().join(paths[i++], cmd->args[0], "/");
         if (access(teste, F_OK) == 0)
         {
@@ -80,59 +81,63 @@ void parse_paths(t_cmd *cmd)
 //    execute(elem->next, cmd->fd[0], env, ac);
 //}
 
-int 	treat_files(int fd, char *av)
+int 	treat_files(t_cmd *cmd)
 {
     int	fds[2];
 
-    if (0 == fd) {
-        perror(av);
+    if (-1 == cmd->fd_red[0]) {
+        perror(cmd->infile);
         pipe(fds);
         close(fds[1]);
         return (fds[0]);
     }
-    if (1 == fd) {
-        printf("Couldn't open %s\n", av);
+    if (-1 == cmd->fd_red[1]) {
+        printf("Couldn't open %s\n", cmd->outfile);
         exit(1);
     }
     return (-42);
 }
 
-void	execute(t_elems *elem)
-{
-    t_cmd	*cmd;
+// void	execute(t_elems *elem)
+// {
+//     t_cmd	*cmd;
 
-    cmd = (t_cmd *)elem->content;
-    parse_paths(cmd);
-    if (-1 == cmd->fd_red[0])
-        cmd->fd_red[0] = treat_files(0, cmd->infile);
-    if (-1 == cmd->fd_red[1])
-        treat_files(1, cmd->outfile);
-//    if (!elem->next)
-//    {
-//        while (array(minishell()->cmds)->size--)
-//            waitpid(-1, &minishell()->exit_status, 0);
-//        return ;
-//    }
-    cmd->pid = fork();
-    if (-1 == cmd->pid)
-        exit(-1);
-    else if (!cmd->pid)
-    {
-//        if (dup_and_close(cmd) >= 0)
-//        {
-            minishell()->inter = 1;
-            execve(cmd->path, cmd->args, (char **)array(minishell()->env)->to_array());
-            error_handle(cmd->path);
-            exit(127);
-//        }
+//     cmd = (t_cmd *)elem->content;
+//     parse_paths(cmd);
+//     if (-1 == cmd->fd_red[0])
+//         cmd->fd_red[0] = treat_files(0, cmd->infile);
+//     if (-1 == cmd->fd_red[1])
+//         treat_files(1, cmd->outfile);
+// //    if (!elem->next)
+// //    {
+// //        while (array(minishell()->cmds)->size--)
+// //            waitpid(-1, &minishell()->exit_status, 0);
+// //        return ;
+// //    }
+// char **tmp = (char **)array(minishell()->env)->to_array();
+//     cmd->pid = fork();
+//     if (-1 == cmd->pid)
+//         exit(-1);
+//     else if (!cmd->pid)
+//     {
+// //        if (dup_and_close(cmd) >= 0)
+// //        {
+//             minishell()->inter = 1;
+//             execve(cmd->path, cmd->args, tmp);
+// 			for (int i = 0; tmp[i]; i++)
+// 				free(tmp[i]);
+// 			free(tmp);
+//             error_handle(cmd->path);
+//             exit(127);
+// //        }
 
-    }
-    minishell()->inter = 0;
-    close(cmd->fd_red[0]);
-    close(cmd->fd_red[1]);
-    waitpid(-1, 0, 0);
-//    execute(elem->next);
-}
+//     }
+//     minishell()->inter = 0;
+//     close(cmd->fd_red[0]);
+//     close(cmd->fd_red[1]);
+//     waitpid(-1, 0, 0);
+// //    execute(elem->next);
+// }
 //void	pipex(int ac, char **av, char **env)
 //{
 //    int		fd_in;
@@ -161,10 +166,67 @@ void	execute(t_elems *elem)
 //        array(*cmds())->destroy();
 //    }
 //}
+void	run(t_elems *elem, char **env)
+{
+    t_cmd	*cmd;
+    cmd = (t_cmd *)elem->content;
+
+	if(-1 != dup2(cmd->fd_red[0], 0))
+	{
+		if (elem->next && !cmd->fd_red[1])
+		{
+			if (-1 == dup2(cmd->fd[1], 1))
+				ft_exit(-1);
+		}
+		else if (!elem->next)
+			if (cmd->fd_red[1])
+				if (-1 == dup2(cmd->fd_red[1], 1))
+					ft_exit(-1);
+		close(cmd->fd[0]);
+		close(cmd->fd[1]);
+		execve(cmd->path, cmd->args, env);
+	}
+	ft_exit(-1);
+}
+
+void	execute(t_elems *elem)
+{
+    t_cmd	*cmd;
+
+	char **tmp = (char **)array(minishell()->env)->to_array();
+	while (elem)
+	{
+	    cmd = (t_cmd *)elem->content;
+    	parse_paths(cmd);
+    	treat_files(cmd);
+		if (pipe(cmd->fd) < 0)
+			ft_exit(1); // dont know status code
+		cmd->pid = fork();
+		if (-1 == cmd->pid)
+			ft_exit(1);
+		if (0 == cmd->pid)
+			run(elem, tmp);
+		else
+		{
+    		minishell()->inter = 0;
+    		if (elem->next)
+			{
+				if (!((t_cmd *)elem->next->content)->fd_red[0])
+					((t_cmd *)elem->next->content)->fd_red[0] = dup(cmd->fd[0]);	
+			}
+			elem = elem->next;
+			close(cmd->fd[0]);
+    		close(cmd->fd[1]);
+		}
+		
+	}
+}
+
 
 void	pipex()
 {
-        execute(array(minishell()->cmds)->begin);
-//        array(minishell()->cmds)->destroy();
+    execute(array(minishell()->cmds)->begin);
+    while ((array(minishell()->cmds)->size)--)
+		waitpid(-1, &minishell()->exit_status, 0);
 }
 

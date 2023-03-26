@@ -44,8 +44,7 @@ void    init_minishell(char **envp);
 void    init_symbols(void);
 void    print_dict(t_elems *elem, void *o);
 
-void	del_elem(void *content);
-char    **env_split(char *str, char sep);
+
 
 int cmp(void *cont1, void *cont2, int size);
 void init_parse(const char *str);
@@ -53,14 +52,18 @@ void init_parse(const char *str);
 //env
 int cmp_env(void *cont1, void *cont2);
 int comp_var(void *c1, void *c2);
+void	create_env(char **envp);
+t_env	*create_content(char *total);
+char    **env_split(char *str, char sep);
+void	del_elem(void *content);
 
 //utils
 char	**env_split(char *str, char sep);
-t_env	*create_content(char *total);
 
 //tokens
 void    init_tokens(void);
 t_token *c_token(char *s, int type);
+void    del_token(void *token);
 
 //states
 void    *infile_state(char **s, int add);

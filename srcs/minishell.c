@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:31:16 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/02/20 13:21:08 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:56:35 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,12 @@ void    lex(char **temp)
 //    print_tokens();
 }
 
+void    destroy_minishell(void)
+{
+    array(minishell()->tokens)->destroy();
+    array(minishell()->cmds)->destroy();
+    array(minishell()->symbols)->destroy();
+}
 int main(int argc, char **argv, char **envp)
 {
     if (argc != 1)
@@ -128,7 +134,7 @@ int main(int argc, char **argv, char **envp)
         temp = str;
         lex(&temp);
         delexer();
-        print_cmds();
+        // print_cmds();
         pipex();
         array(minishell()->tokens)->destroy();
         minishell()->tokens = creat_array();
@@ -136,5 +142,5 @@ int main(int argc, char **argv, char **envp)
         minishell()->cmds = creat_array();
 		free(str);
     }
-
+    destroy_minishell();
 }

@@ -3,29 +3,24 @@
 //
 // Created by dcarvalh on 3/15/23.
 //
-void filler(t_token *token, int flag) // 01000 para trunc 02000 para appedn
+void filler(t_token *token)
 {
-    t_cmd *cmd;
+    t_elems *tmp;
     char *clean;
-
-    cmd = array(minishell()->cmds)->end->content;
-    if (IN == token->type)
-    {
-        cmd->infile = strings().copy(token->token);
-        cmd->fd_red[0] = open(token->token, O_RDONLY);
-    }
-    else if (OUT == token->type || APP == token->type)
-    {
-        cmd->outfile = strings().copy(token->token);
-        cmd->fd_red[1] = open(token->token, O_WRONLY | flag | O_CREAT, 0644);
-    }
+    tmp = array(minishell()->cmds)->end;
+    if ((IN == token->type) && !((t_cmd *)tmp->content)->fd_red[0] && (((t_cmd *)tmp->content)->infile = strings().copy(token->token)))
+        ((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
+    else if ((OUT == token->type) && (((t_cmd *)tmp->content)->outfile = strings().copy(token->token)))
+        ((t_cmd *)tmp->content)->fd_red[1] = open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+    else if ((APP == token->type) && (((t_cmd *)tmp->content)->outfile = strings().copy(token->token)))
+        ((t_cmd *)tmp->content)->fd_red[1] = open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
 //    else if ((BLTIN == token->type))
-//        (tmp->bin = estrutra_bin;
-    else
+//        ((t_cmd *)tmp->content)->bin = estrutra_bin;
+    else if (IN != token->type)
     {
-        clean = strings().join(cmd->path, token->token, "");
-        free(cmd->path);
-        cmd->path = clean;
+        clean = strings().join(((t_cmd *)tmp->content)->path, token->token, "");
+        free(((t_cmd *)tmp->content)->path);
+        ((t_cmd *)tmp->content)->path = clean;
     }
 }
 
@@ -41,7 +36,7 @@ void delexer(void)
         cmds = array(minishell()->cmds)->end;
         while (tmp && PIPE != ((t_token *)tmp->content)->type)
         {
-            filler((t_token *)tmp->content, 0);
+            filler((t_token *)tmp->content);
             tmp = tmp->next;
         }
         if (((t_cmd *)cmds->content)->path)

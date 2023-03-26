@@ -4,19 +4,18 @@
 
 #include "../../incs/minishell.h"
 
-
-void second_parse(char *str)
+void	second_parse(char *str)
 {
-    printf("%s\n", str);
+	printf("%s\n", str);
 }
 
-void init_parse(const char *str)
+void	init_parse(const char *str)
 {
-    char **splitted;
-    int     i;
+	char	**splitted;
+	int		i;
 
-    i = -1;
-    splitted = strings().split(str, '|');
-    while (splitted[++i])
-        second_parse(strings().trim(splitted[i]));
+	i = -1;
+	splitted = strings().split(str, '|');
+	while (splitted[++i])
+		second_parse(strings().trim(splitted[i]));
 }

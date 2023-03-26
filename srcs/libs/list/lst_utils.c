@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:22:19 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/19 22:13:34 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/03/26 16:55:52 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list_utils.h"
 
-t_array	**__this(void);
-void    __del_from_tree(void *content);
-void    __destroy_tree(t_tree *root);
+t_array		**__this(void);
+void		__del_from_tree(void *content);
+void		__destroy_tree(t_tree *root);
 
 void	__del(t_elems *elem)
 {
-    if ((*__this())->root)
-        __del_from_tree(elem->content);
-    if ((*__this())->begin == elem)
+	if ((*__this())->root)
+		__del_from_tree(elem->content);
+	if ((*__this())->begin == elem)
 	{
 		(*__this())->begin = (*__this())->begin->next;
 		(*__this())->begin->prev = 0;
@@ -35,7 +35,6 @@ void	__del(t_elems *elem)
 		elem->del(elem->content);
 	free(elem);
 	(*__this())->size--;
-
 }
 
 void	__for_each(void (*func)(t_elems *elem, void *p), void *o)
@@ -73,8 +72,8 @@ t_elems	*__add(void *content)
 	}
 	(*__this())->end = new;
 	(*__this())->size++;
-    if ((*__this())->root)
-       (*__this())->add_leaf(content);
+	if ((*__this())->root)
+		(*__this())->add_leaf(content);
 	return (new);
 }
 
@@ -83,10 +82,10 @@ void	__destroy(void)
 	t_elems	*temp;
 	t_elems	*temp2;
 
-    if ((*__this())->root)
-    {
-        __destroy_tree((*__this())->root);
-    }
+	if ((*__this())->root)
+	{
+		__destroy_tree((*__this())->root);
+	}
 	temp = (*__this())->begin;
 	while (temp)
 	{

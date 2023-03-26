@@ -4,66 +4,68 @@
 
 #include "list_utils.h"
 
-t_tree  *find_leaf(t_tree *temp, void *content, int (*cmp)(void *cont1, void *cont2));
+t_tree	*find_leaf(t_tree *temp, void *content, int (*cmp)(void *cont1,
+				void *cont2));
 t_array	**__this(void);
 
-void    __del_root(void)
+void	__del_root(void)
 {
-    t_tree  *lower_leaf;
+	t_tree	*lower_leaf;
 
-    if ((*__this())->root->left && (*__this())->root->right)
-    {
-        lower_leaf = find_leaf((*__this())->root->right, (*__this())->root->content, (*__this())->cmp);
-        lower_leaf->right = (*__this())->root->left;
-        (*__this())->root->left->up = lower_leaf;
-        (*__this())->root = (*__this())->root->right;
-    }
-    else if ((*__this())->root->left)
-        (*__this())->root = (*__this())->root->left;
-    else if ((*__this())->root->right)
-        (*__this())->root = (*__this())->root->right;
+	if ((*__this())->root->left && (*__this())->root->right)
+	{
+		lower_leaf = find_leaf((*__this())->root->right,
+				(*__this())->root->content, (*__this())->cmp);
+		lower_leaf->right = (*__this())->root->left;
+		(*__this())->root->left->up = lower_leaf;
+		(*__this())->root = (*__this())->root->right;
+	}
+	else if ((*__this())->root->left)
+		(*__this())->root = (*__this())->root->left;
+	else if ((*__this())->root->right)
+		(*__this())->root = (*__this())->root->right;
 }
 
-void    __del_from_tree(void *content)
+void	__del_from_tree(void *content)
 {
-    t_tree  *to_del;
-    t_tree  *temp;
+	t_tree	*to_del;
+	t_tree	*temp;
 
-    to_del = find_leaf((*__this())->root, content, (*__this())->cmp);
-    if (to_del == (*__this())->root)
-        __del_root();
-    else if (!to_del->right && to_del->left)
-    {
-        to_del->up->left = to_del->left;
-        to_del->left->up = to_del->up;
-    }
-    else if (to_del->right && !to_del->left)
-    {
-        to_del->up->right = to_del->right;
-        to_del->right->up = to_del->up;
-    }
-    else if (to_del->right && to_del->left)
-    {
-        temp = to_del;
-        to_del = find_leaf(to_del->left, to_del->content, (*__this())->cmp);
-        temp->content = to_del->content;
-    }
-    free(to_del);
+	to_del = find_leaf((*__this())->root, content, (*__this())->cmp);
+	if (to_del == (*__this())->root)
+		__del_root();
+	else if (!to_del->right && to_del->left)
+	{
+		to_del->up->left = to_del->left;
+		to_del->left->up = to_del->up;
+	}
+	else if (to_del->right && !to_del->left)
+	{
+		to_del->up->right = to_del->right;
+		to_del->right->up = to_del->up;
+	}
+	else if (to_del->right && to_del->left)
+	{
+		temp = to_del;
+		to_del = find_leaf(to_del->left, to_del->content, (*__this())->cmp);
+		temp->content = to_del->content;
+	}
+	free(to_del);
 }
 
-void    __destroy_tree(t_tree *root)
+void	__destroy_tree(t_tree *root)
 {
-    if (root->left)
-        __destroy_tree(root->left);
-    if (root->right)
-        __destroy_tree(root->right);
-    if (!root->left && !root->right)
-    {
-        if (root->up && root == root->up->left)
-            root->up->left = NULL;
-        if (root->up && root == root->up->right)
-            root->up->right = NULL;
-        free(root);
-    }
-    return ;
+	if (root->left)
+		__destroy_tree(root->left);
+	if (root->right)
+		__destroy_tree(root->right);
+	if (!root->left && !root->right)
+	{
+		if (root->up && root == root->up->left)
+			root->up->left = NULL;
+		if (root->up && root == root->up->right)
+			root->up->right = NULL;
+		free(root);
+	}
+	return ;
 }

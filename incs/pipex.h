@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:14:07 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/20 09:07:34 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/03/26 16:55:12 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-
-
-
 
 //strs
 int		str_len(char *s);
@@ -38,4 +35,3 @@ void	parse_here_doc(int *fd_in, char *av, int *flag);
 //gnl
 char	*get_next_line(int fd);
 #endif
-

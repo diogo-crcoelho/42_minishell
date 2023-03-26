@@ -4,10 +4,10 @@
 
 #include "../../incs/minishell.h"
 
-void init_minishell(char **envp)
+void	init_minishell(char **envp)
 {
 	create_env(envp);
-    minishell()->cmds = creat_array();
-    init_tokens();
-    init_symbols();
+	minishell()->cmds = creat_array();
+	init_tokens();
+	init_symbols();
 }

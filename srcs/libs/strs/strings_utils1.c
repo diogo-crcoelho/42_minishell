@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 16:38:24 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/01/23 19:44:49 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/26 16:55:59 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	__strn_cmp(const char *str1, const char *str2, int n)
 	if (str1 && str2)
 		while (++i < n && (str1[i] || str2[i]))
 			if (str1[i] != str2[i])
-				return ((unsigned char )str1[i] - (unsigned char )str2[i]);
+				return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 	return (0);
 }
 
@@ -46,7 +46,7 @@ int	__strn_str(const char *haystack, const char *needle)
 	size_small = __str_len(needle, 0);
 	size_big = __str_len(haystack, 0);
 	if (size_big >= size_small)
-	{	
+	{
 		while (++i <= size_big - size_small)
 		{
 			if (!__strn_cmp(&haystack[i], needle, size_small))
@@ -68,14 +68,14 @@ static size_t	check_size(const char *str)
 	while (str[i] && str[i] == ' ')
 		++i;
 	while (str[size - 1] == ' ')
-		size --;
+		size--;
 	return (size - i);
 }
 
 char	*__str_trim(const char *str)
 {
 	int		size;
-	char		*res;
+	char	*res;
 	int		i;
 	int		j;
 

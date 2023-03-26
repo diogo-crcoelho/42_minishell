@@ -2,11 +2,11 @@
 
 void	echo(char **strs, int flag)
 {
-    int i;
+	int i;
 
-    i = -1;
-    while(strs[++i])
-        printf("%s", strs[i]);
-    if (flag)
-    		printf("\n");
+	i = -1;
+	while (strs[++i])
+		printf("%s", strs[i]);
+	if (flag)
+		printf("\n");
 }

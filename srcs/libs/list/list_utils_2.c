@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci@student.42lisboa.com <mvenanci    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:25:26 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/01/21 16:02:58 by mvenanci@st      ###   ########.fr       */
+/*   Updated: 2023/03/26 16:55:42 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_elems	*__add(void *content);
 void	__for_each(void (*func)(t_elems *elem, void *p), void *o);
 void	__del(t_elems *elem);
 void	**__to_array(void);
-void    __build_tree(void);
-t_tree   *__search_tree(t_tree *root, void *content);
-t_tree  *__add_leaf(void *content);
+void	__build_tree(void);
+t_tree	*__search_tree(t_tree *root, void *content);
+t_tree	*__add_leaf(void *content);
 
 t_array	**__this(void)
 {
@@ -41,7 +41,7 @@ void	*ft_calloc(size_t size)
 
 	ptr = malloc(size);
 	if (!ptr)
-		exit (!write(2, "Memmory error\n", 14));
+		exit(!write(2, "Memmory error\n", 14));
 	i = -1;
 	if (size != 0)
 		while (++i < size)
@@ -49,7 +49,8 @@ void	*ft_calloc(size_t size)
 	return (ptr);
 }
 
-t_elems *__search(int (*cmp)(void *cont, void *buf, int size),void *buf, int size)
+t_elems	*__search(int (*cmp)(void *cont, void *buf, int size), void *buf,
+		int size)
 {
 	t_elems	*temp;
 
@@ -58,7 +59,7 @@ t_elems *__search(int (*cmp)(void *cont, void *buf, int size),void *buf, int siz
 	{
 		if (!cmp(temp->content, buf, size))
 			return (temp);
-        temp = temp->next;
+		temp = temp->next;
 	}
 	return (NULL);
 }
@@ -74,8 +75,8 @@ void	*creat_array(void)
 	new->for_each = __for_each;
 	new->search = __search;
 	new->to_array = __to_array;
-    new->build_tree = __build_tree;
-    new->add_leaf = __add_leaf;
-    new->search_tree = __search_tree;
+	new->build_tree = __build_tree;
+	new->add_leaf = __add_leaf;
+	new->search_tree = __search_tree;
 	return (new);
 }

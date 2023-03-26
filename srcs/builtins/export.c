@@ -32,33 +32,38 @@ void export_empty(t_tree *root)
         export_empty(root->right);
 }
 
-void export(char *var)
+void    add_new(char *splitted, char *new)
 {
-    t_elems *temp;
-    char    **splitted;
+    free(splitted);
+    array(minishell()->env)->add(create_content(new))->del = del_elem;
+}
 
-    splitted = env_split(var, '=');
-    temp = array(minishell()->env)->search(cmp, splitted[0], strings().len(var, 0));
+void    change_var(t_tree *var, char *new, char *splitted)
+{
+    free(((t_env *)var->content)->splitted[1]);
+    ((t_env *)var->content)->splitted[1] = splitted;
+    free(((t_env *)var->content)->total);
+    ((t_env *)var->content)->total = strings().copy(new);
+}
+
+int    export(void* content)
+{
+    t_tree *temp;
+    char    **splitted;
+    int     exit_status;
+
+    exit_status = 1;
+    splitted = env_split((char *)content, '=');
+    temp = array(minishell()->env)->search_tree(NULL, splitted[0]);
     array(minishell()->env)->cmp = cmp_env;
-    if (!var)
-    {
+    if (!content)
         export_empty(array(minishell()->env)->root);
-        return;
-    }
-    if (strings().alnum(splitted[0]))
-        ft_exit(1);
-    if (!temp)
-    {
-        free(splitted[1]);
-        array(minishell()->env)->add(create_content(var))->del = del_elem;
-    }
+    else if (strings().alnum(splitted[0]))
+        ft_exit(&exit_status);
+    else if (!temp)
+        add_new(splitted[1], (char *)content);
     else
-    {
-        free(((t_env *)temp->content)->splitted[1]);
-        ((t_env *)temp->content)->splitted[1] = splitted[1];
-        free(((t_env *)temp->content)->total);
-        ((t_env *)temp->content)->total = strings().copy(var);
-    }
+        change_var(temp, (char *)content, splitted[1]);
     free(splitted[0]);
     free (splitted);
     array(minishell()->env)->cmp = comp_var;

@@ -30,19 +30,24 @@
 typedef 	void	(*t_func)();
 //t_func func = (void *) printf;
 
-void    pwd();
-void    env();
-void    unset(char *var);
-void    export(char *var);
-int     cd(char *path);
-void	echo(char **str, int flag);
+//general
+unsigned long hash(char *str);
 
+//builtins
+int     pwd(void* content);
+int     env(void* content);
+int     unset(void *content);
+int     export(void* content);
+int     cd(void *path);
+int 	echo(void *content);
+int	    ft_exit(void* content);
 
 
 t_mini 	*minishell(void);
 void    init_minishell(char **envp);
 void    init_symbols(void);
 void    print_dict(t_elems *elem, void *o);
+void    destroy_minishell(void);
 
 
 
@@ -80,8 +85,6 @@ void    *heredoc_state(char **s, int add);
 int     comp_symbols_search(void *c1, void *c2);
 int     comp_symbols_build(void *c1, void *c2);
 
-void	ft_exit(int exit_status);
-char    *expand(char *str);
 
 void signals_hand(void);
 int cmp_env(void *cont1, void *cont2);

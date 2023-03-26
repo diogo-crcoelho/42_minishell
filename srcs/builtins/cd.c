@@ -15,10 +15,12 @@
 // Podemos implementar o cd -...
 // like guradarmos na estrutura global o caminho atual sempre que chamarmos o cd
 
-int cd(char *path)
+int cd(void *content)
 {
     int err;
+    char    *path;
 
+    path = (char *)content;
     if (!strings().len(path, 0))
         path = strings().copy(getenv("HOME"));
     else

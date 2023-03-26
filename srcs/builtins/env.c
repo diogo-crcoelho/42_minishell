@@ -18,7 +18,9 @@ void print_each(t_elems *elem, void *o)
     printf("%s\n", ((t_env *)elem->content)->total);
 }
 
-void env()
+int env(void* content)
 {
+    (void)content;
     array(minishell()->env)->for_each(print_each, 0);
+    return (0);
 }

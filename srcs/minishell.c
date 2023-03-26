@@ -114,6 +114,7 @@ void    destroy_minishell(void)
     array(minishell()->cmds)->destroy();
     array(minishell()->symbols)->destroy();
     array(minishell()->env)->destroy();
+    array(minishell()->builtins)->destroy();
 }
 int main(int argc, char **argv, char **envp)
 {

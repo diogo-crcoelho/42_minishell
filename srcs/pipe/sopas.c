@@ -68,7 +68,7 @@ int	treat_files(t_cmd *cmd)
 	if (-1 == cmd->fd_red[1])
 	{
 		printf("Couldn't open %s\n", cmd->outfile);
-		exit(1);
+		ft_exit((void *)1);
 	}
 	return (-42);
 }
@@ -83,17 +83,17 @@ void	run(t_elems *elem, char **env)
 		if (elem->next && !cmd->fd_red[1])
 		{
 			if (-1 == dup2(cmd->fd[1], 1))
-				ft_exit(-1);
+				ft_exit((void *)-1);
 		}
 		else if (!elem->next)
 			if (cmd->fd_red[1])
 				if (-1 == dup2(cmd->fd_red[1], 1))
-					ft_exit(-1);
+					ft_exit((void *)-1);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 		execve(cmd->path, cmd->args, env);
 	}
-	ft_exit(-1);
+	ft_exit((void *)-1);
 }
 
 void	execute(t_elems *elem)
@@ -108,10 +108,10 @@ void	execute(t_elems *elem)
 		parse_paths(cmd);
 		treat_files(cmd);
 		if (pipe(cmd->fd) < 0)
-			ft_exit(1); // dont know status code
+			ft_exit((void *)1); // dont know status code
 		cmd->pid = fork();
 		if (-1 == cmd->pid)
-			ft_exit(1);
+			ft_exit((void *)1);
 		if (0 == cmd->pid)
 			run(elem, tmp);
 		else

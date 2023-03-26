@@ -4,8 +4,8 @@
 
 #include "../../incs/minishell.h"
 
-void	ft_exit(int exit_status)
+int	ft_exit(void* content)
 {
     destroy_minishell();
-	exit(exit_status);
+	exit((long)content);
 }

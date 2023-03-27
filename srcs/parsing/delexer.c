@@ -1,60 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   delexer.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/03/27 15:32:05 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-//
-// Created by dcarvalh on 3/15/23.
-//
-void    del_cmd(void *cmd)
+void	del_cmd(void *cmd)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    if (((t_cmd *)cmd)->outfile)
-        free(((t_cmd *)cmd)->outfile);
-    if (((t_cmd *)cmd)->infile)
-        free(((t_cmd *)cmd)->infile);
-    while (((t_cmd *)cmd)->args[++i])
-        free(((t_cmd *)cmd)->args[i]);
-    free(((t_cmd *)cmd)->path);
-    free(cmd);
+	i = -1;
+	if (((t_cmd *)cmd)->outfile)
+		free(((t_cmd *)cmd)->outfile);
+	if (((t_cmd *)cmd)->infile)
+		free(((t_cmd *)cmd)->infile);
+	while (((t_cmd *)cmd)->args[++i])
+		free(((t_cmd *)cmd)->args[i]);
+	free(((t_cmd *)cmd)->path);
+	free(cmd);
 }
 
 void	filler(t_token *token, t_elems *tmp)
 {
 	if ((IN == token->type))
-    {
-        ((t_cmd *)tmp->content)->infile = strings().copy(token->token);
-        ((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
-    }
+	{
+		((t_cmd *)tmp->content)->infile = strings().copy(token->token);
+		((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
+	}
 	if (OUT == token->type)
-    {
-        ((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
-        ((t_cmd *)tmp->content)->fd_red[1] = open(token->token,O_WRONLY | O_TRUNC | O_CREAT, 0644);
-    }
+	{
+		((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
+		((t_cmd *)tmp->content)->fd_red[1] = \
+			open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	}
 	if (APP == token->type)
-    {
-        ((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
-        ((t_cmd *)tmp->content)->fd_red[1] = open(token->token,O_WRONLY | O_APPEND | O_CREAT, 0644);
-    }
-
+	{
+		((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
+		((t_cmd *)tmp->content)->fd_red[1] = \
+			open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	}
 }
 
-void filler2(t_token *token)
+void	filler2(t_token *token)
 {
-   char	*clean;
-    t_elems	*tmp;
+	char	*clean;
+	t_elems	*tmp;
 
-    tmp = array(minishell()->cmds)->end;
-    filler(token, tmp);
+	tmp = array(minishell()->cmds)->end;
+	filler(token, tmp);
 	if (HERE == token->type)
 		here_doc((t_cmd *)tmp->content, strings().append(token->token, '\n'));
 	else if (IN != token->type)
-    {
-        clean = strings().join(((t_cmd *)tmp->content)->path, token->token, "");
-        free(((t_cmd *)tmp->content)->path);
-        ((t_cmd *)tmp->content)->path = clean;
-    }
-
+	{
+		clean = strings().join(((t_cmd *)tmp->content)->path, token->token, "");
+		free(((t_cmd *)tmp->content)->path);
+		((t_cmd *)tmp->content)->path = clean;
+	}
 }
+
 void	delexer(void)
 {
 	t_elems	*tmp;
@@ -71,7 +81,8 @@ void	delexer(void)
 			tmp = tmp->next;
 		}
 		if (((t_cmd *)cmds->content)->path)
-			((t_cmd *)cmds->content)->args = strings().split(((t_cmd *)cmds->content)->path,
+			((t_cmd *)cmds->content)->args = strings().\
+				split(((t_cmd *)cmds->content)->path,
 					' ');
 		free(((t_cmd *)cmds->content)->path);
 		if (tmp)
@@ -81,8 +92,8 @@ void	delexer(void)
 
 void	print_cmds(void)
 {
-	t_elems *tmp;
-	t_cmd *temp;
+	t_elems	*tmp;
+	t_cmd	*temp;
 
 	tmp = (array(minishell()->cmds)->begin);
 	while (tmp)

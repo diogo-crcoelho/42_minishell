@@ -15,7 +15,11 @@ int	echo(void *content)
         flag = 1;
     }
     while(strs[++i])
+    {
         printf("%s", strs[i]);
+        if (strs[i + 1])
+            printf(" ");
+    }
     if (!flag)
         printf("\n");
     return (0);

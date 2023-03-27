@@ -35,7 +35,6 @@ int	built(t_elems *elem)
 	if (array(minishell()->cmds)->size <= 1)
 	{
 		exe_buil((t_cmd *)elem->content);
-		elem = elem->next;
 		return 1;
 	}
 	return 0;

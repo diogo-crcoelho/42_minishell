@@ -92,6 +92,7 @@ void	run(t_elems *elem, char **env)
 			if (cmd->fd_red[1])
 				if (-1 == dup2(cmd->fd_red[1], 1))
 					ft_exit((void *)-1);
+        execve(cmd->path, cmd->args, env);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 		minishell()->inter = 1;
@@ -112,27 +113,27 @@ void	execute(t_elems *elem)
 		treat_files(cmd);
 		if (pipe(cmd->fd) < 0)
 			ft_exit((void *)1); // dont know status code
-		cmd->pid = fork();
-		if (-1 == cmd->pid)
-			ft_exit((void *)1);
-		if (!built(elem))
-		{
+        if (!built(elem))
+        {
+		    cmd->pid = fork();
+		    if (-1 == cmd->pid)
+			    ft_exit((void *)1);
 			if (0 == cmd->pid)
-			run(elem, tmp);
-		else
-		{
-			minishell()->inter = 0;
-			if (elem->next)
-			{
-				if (!((t_cmd *)elem->next->content)->fd_red[0])
-					((t_cmd *)elem->next->content)->fd_red[0] = dup(cmd->fd[0]);
-			}
-			elem = elem->next;
-			close(cmd->fd[0]);
-			close(cmd->fd[1]);
-		}
-		}
-	}
+                run(elem, tmp);
+		    else
+		    {
+			    minishell()->inter = 0;
+			    if (elem->next)
+			    {
+				    if (!((t_cmd *)elem->next->content)->fd_red[0])
+					    ((t_cmd *)elem->next->content)->fd_red[0] = dup(cmd->fd[0]);
+			    }
+		    }
+        }
+        elem = elem->next;
+        close(cmd->fd[0]);
+        close(cmd->fd[1]);
+    }
 }
 
 void	pipex(void)

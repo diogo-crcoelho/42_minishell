@@ -78,6 +78,9 @@ void	run(t_elems *elem, char **env)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)elem->content;
+	if (!cmd->args || !strings().len(cmd->args[0], 0))
+		ft_exit((void *)-1);
+	parse_paths(cmd);
 	if (-1 != dup2(cmd->fd_red[0], 0))
 	{
 		if (elem->next && !cmd->fd_red[1])
@@ -105,7 +108,6 @@ void	execute(t_elems *elem)
 	while (elem)
 	{
 		cmd = (t_cmd *)elem->content;
-		parse_paths(cmd);
 		treat_files(cmd);
 		if (pipe(cmd->fd) < 0)
 			ft_exit((void *)1); // dont know status code

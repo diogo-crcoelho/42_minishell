@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:55 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:49:05 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/28 00:17:08 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,32 @@ int	export(void *cont)
 {
 	t_tree	*temp;
 	char	**splitted;
-	int		exit_status;
+	char	**vars;
+	char	*err;
+	int		i;
 
-	exit_status = 1;
-	splitted = env_split((char *)cont, '=');
-	temp = array(m()->env)->search_tree(NULL, splitted[0]);
-	array(m()->env)->cmp = cmp_env;
+	i = -1;
+	vars = (char **)cont;
+	while (vars[++i])
+	{
+		splitted = env_split(vars[i], '=');
+		temp = array(m()->env)->search_tree(NULL, splitted[0]);
+		array(m()->env)->cmp = cmp_env;
+		if (s().alnum(splitted[0]))
+		{
+			err = s().join("export: ", ": not a valid identifier\n", vars[i]);
+			cona(err);
+			free(err);
+		}
+		else if (!temp)
+			add_new(splitted[1], vars[i]);
+		else
+			change_var(temp, vars[i], splitted[1]);
+		free(splitted[0]);
+		free (splitted);
+		array(m()->env)->cmp = comp_var;
+	}
 	if (!s().len(cont, 0))
 		export_empty(array(m()->env)->root);
-	else if (!s().alnum(splitted[0]))
-		ft_exit(&exit_status);
-	else if (!temp)
-		add_new(splitted[1], (char *)cont);
-	else
-		change_var(temp, (char *)cont, splitted[1]);
-	free(splitted[0]);
-	free (splitted);
-	array(m()->env)->cmp = comp_var;
 	return (0);
 }

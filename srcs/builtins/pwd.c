@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 13:43:29 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/27 15:49:36 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/27 22:26:48 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,4 @@ int	pwd(void *cont)
 	(void)cont;
 	printf("%s\n", getcwd(str, PATH_MAX));
 	return (0);
-}
+}	

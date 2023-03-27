@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 20:37:43 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/27 15:47:23 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/28 00:19:10 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,18 @@ void	print_each(t_elems *elem, void *o)
 
 int	env(void *cont)
 {
-	(void)cont;
+	char	**vars;
+	char	*err;
+
+	
+	vars = (char **)cont;
+	if (vars[0])
+	{
+		err = s().join("env: ", ": No such file or directory\n", vars[0]);
+		cona(err);
+		free(err);
+		return (127);
+	}
 	(array(m()->env))->for_each(print_each, 0);
 	return (0);
 }

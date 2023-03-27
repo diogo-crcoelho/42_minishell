@@ -205,9 +205,9 @@ void	*heredoc_state(char **s, int add)
 	while (**s == ' ' || **s == '\t')
 		(*s)++;
 	here = *s;
-	while (**s && **s != ' ' && **s == '\t' && **s != '|')
+	while (**s && **s != ' ' && **s != '\t' && **s != '|')
 		(*s)++;
-	here = strings().copy_n(here, *s - here);
+	here = strings().copy_n(here, (*s - here));
 	if (add)
 		array(minishell()->tokens)->add(c_token(here, HERE))->del = del_token;
 	return (here);

@@ -20,13 +20,10 @@ void    del_cmd(void *cmd)
 
 void	filler(t_token *token, t_elems *tmp)
 {
-    char	*clean;
-
 	if ((IN == token->type))
     {
         ((t_cmd *)tmp->content)->infile = strings().copy(token->token);
         ((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
-        ((t_cmd *)tmp->content)->inf = 0;
     }
 	if (OUT == token->type)
     {
@@ -38,23 +35,24 @@ void	filler(t_token *token, t_elems *tmp)
         ((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
         ((t_cmd *)tmp->content)->fd_red[1] = open(token->token,O_WRONLY | O_APPEND | O_CREAT, 0644);
     }
-    else if (IN != token->type)
+
+}
+
+void filler2(t_token *token)
+{
+   char	*clean;
+    t_elems	*tmp;
+
+    tmp = array(minishell()->cmds)->end;
+    filler(token, tmp);
+	if (HERE == token->type)
+		here_doc((t_cmd *)tmp->content, strings().append(token->token, '\n'));
+	else if (IN != token->type)
     {
         clean = strings().join(((t_cmd *)tmp->content)->path, token->token, "");
         free(((t_cmd *)tmp->content)->path);
         ((t_cmd *)tmp->content)->path = clean;
     }
-}
-
-void filler2(t_token *token)
-{
-//    char	*clean;
-    t_elems	*tmp;
-
-    tmp = array(minishell()->cmds)->end;
-    filler(token, tmp);
-//    if ()
-//        ;
 
 }
 void	delexer(void)

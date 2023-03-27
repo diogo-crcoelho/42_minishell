@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:41:56 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/26 16:55:07 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/27 03:09:17 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #include "../srcs/libs/list/list_utils.h"
 #include "../srcs/libs/strs/ft_strings.h"
 #include "structs.h"
+#include "pipex.h"
+
 
 typedef 	void	(*t_func)();
 //t_func func = (void *) printf;

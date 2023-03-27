@@ -6,7 +6,7 @@
 #    By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 20:44:34 by dcarvalh          #+#    #+#              #
-#    Updated: 2023/03/25 13:36:56 by dcarvalh         ###   ########.fr        #
+#    Updated: 2023/03/27 03:09:53 by dcarvalh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS =	minishell.c \
 		builtins/echo.c builtins/exit.c builtins/builtins.c\
 		utils/symbols.c utils/tokens.c utils/env.c\
 		signals/signals.c \
-		pipe/sopas.c \
+		pipe/sopas.c pipe/gnl.c pipe/here_doc.c\
 
 B_SRCS = 
 

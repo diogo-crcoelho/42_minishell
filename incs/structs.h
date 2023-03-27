@@ -75,7 +75,6 @@ struct					s_cmd
 	int					app;
 	int					pid;
 	void				*bin;
-    int                 inf;
 };
 
 #endif //INC_42_MINISHELL_STRUCTS_H

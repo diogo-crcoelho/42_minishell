@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 10:14:07 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/03/26 16:55:12 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/27 03:08:32 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ void	parse_here_doc(int *fd_in, char *av, int *flag);
 
 //gnl
 char	*get_next_line(int fd);
-void	make_here_env(int argc, char **argv, t_envs *env);
+void	here_doc(t_cmd *cmd, char *eof);
 #endif

@@ -10,23 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incs/minishell.h"
 void exe_buil(t_cmd *cmd)
 {
-	t_elems *ll;
+	t_tree *ll;
 	t_built *tt;
 
-	ll = array(m()->b)->begin;
-	while (ll)
-	{
-		tt = (t_built *)ll->cont;
-		if (!s().equal(cmd->args[0], tt->key))
-		{
-			m()->exit_status = tt->b(&cmd->args[1]);
-			return ;
-		}	
-		ll = ll->next;
-	}
+	ll = array(m()->b)->search_tree(NULL, (void *)cmd->args[0]);
+    if (!ll)
+        return ;
+    for (int i = 0; cmd->args[i]; i++)
+        printf("%s", cmd->args[i]);
+
+    printf("\n");
+    tt = (t_built *)ll->cont;
+    m()->exit_status = tt->b(&cmd->args[1]);
+
 }
 
 

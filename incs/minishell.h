@@ -53,6 +53,8 @@ void    destroy_m(void);
 
 int				cmp(void *cont1, void *cont2, int size);
 void			init_parse(const char *str);
+void            cona(char *err);
+
 
 //env
 int				cmp_env(void *cont1, void *cont2);

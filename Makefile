@@ -13,7 +13,7 @@
 
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 LIBS = -lreadline
 
 SRCS =	minishell.c \
@@ -22,7 +22,7 @@ SRCS =	minishell.c \
 		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/lexer_2.c parsing/delexer.c parsing/env.c\
 		builtins/pwd.c builtins/env.c builtins/cd.c builtins/export.c builtins/unset.c \
 		builtins/echo.c builtins/exit.c builtins/builtins.c\
-		utils/symbols.c  utils/tokens.c utils/env.c utils/symbols_2.c\
+		utils/utils_1.c utils/symbols.c  utils/tokens.c utils/env.c utils/symbols_2.c\
 		signals/signals.c \
 		pipe/sopas.c pipe/gnl.c pipe/here_doc.c pipe/built.c\
 		# pipe/sopas_2.c

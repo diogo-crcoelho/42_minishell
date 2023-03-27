@@ -152,6 +152,7 @@ int	main(int argc, char **argv, char **envp)
 		temp = str;
 		lex(&temp);
 		delexer();
+//        print_cmds();
 		pipex();
 		reload();
 		free(str);

@@ -12,9 +12,11 @@
 
 #include "../../incs/minishell.h"
 
-t_elems	*search(void *buf, int size)
+void cona(char *err)
 {
-	char	*var;
-
-	var = ((char **)buf)[0];
+//    long xx;
+//
+//    xx = (long)m()->exit_status;
+    write(2, err, s().len(err, 0));
+//    ft_exit((void *)xx);
 }

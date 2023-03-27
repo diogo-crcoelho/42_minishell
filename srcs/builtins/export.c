@@ -32,7 +32,7 @@ void	export_empty(t_tree *root)
 {
 	if (root->left)
 		export_empty(root->left);
-	printf("declare +x %s\n",((t_env *)root->cont)->total);
+	printf("declare -x %s\n",((t_env *)root->cont)->total);
 	if (root->right)
 		export_empty(root->right);
 }
@@ -61,9 +61,9 @@ int	export(void *cont)
 	splitted = env_split((char *)cont, '=');
 	temp = array(m()->env)->search_tree(NULL, splitted[0]);
 	array(m()->env)->cmp = cmp_env;
-	if (!cont)
+	if (!s().len(cont, 0))
 		export_empty(array(m()->env)->root);
-	else if (s().alnum(splitted[0]))
+	else if (!s().alnum(splitted[0]))
 		ft_exit(&exit_status);
 	else if (!temp)
 		add_new(splitted[1], (char *)cont);

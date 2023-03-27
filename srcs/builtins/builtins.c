@@ -11,6 +11,15 @@
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+int	comp_build_tree(void *c1, void *c2)
+{
+    char	*in_tree;
+    char	*out_tree;
+
+    in_tree = ((t_dict *)c1)->key;
+    out_tree = (char *)c2;
+    return (hash(in_tree) - hash(out_tree));
+}
 
 void	del_b(void *b)
 {
@@ -45,4 +54,7 @@ void	init_b(void)
 	array(m()->b)->end->del = del_b;
 	((t_built *)array(m()->b)->add(c_b(s().copy("exit")))->cont)->b = ft_exit;
 	array(m()->b)->end->del = del_b;
+    array(m()->b)->build_tree();
+    array(m()->b)->cmp = comp_build_tree;
+
 }

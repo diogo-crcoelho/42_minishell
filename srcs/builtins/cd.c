@@ -20,13 +20,18 @@ int	cd(void *cont)
 	int		err;
 	char	*path;
 
-	path = (char *)cont;
-	if (!s().len(path, 0))
+	path = ((char **)cont)[0];
+    if (((char **)cont)[1])
+    {
+        cona("cd: too many arguments\n");
+        return 1;
+    }
+    if (!s().len(path, 0))
 		path = s().copy(getenv("HOME"));
 	else
 		path = s().copy(path);
 	err = chdir(path);
 	if (path)
 		free(path);
-	return (err);
+    return err;
 }

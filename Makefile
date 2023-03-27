@@ -6,7 +6,7 @@
 #    By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 20:44:34 by dcarvalh          #+#    #+#              #
-#    Updated: 2023/03/27 15:20:20 by dcarvalh         ###   ########.fr        #
+#    Updated: 2023/03/27 16:02:48 by dcarvalh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS =	minishell.c \
 		builtins/echo.c builtins/exit.c builtins/builtins.c\
 		utils/symbols.c utils/tokens.c utils/env.c\
 		signals/signals.c \
-		pipe/sopas.c pipe/gnl.c pipe/here_doc.c\
+		pipe/sopas.c pipe/gnl.c pipe/here_doc.c pipe/built.c\
 
 B_SRCS = 
 
@@ -72,8 +72,6 @@ re: fclean all
 r: re
 	make clean
 	./minishell
-	#valgrind --leak-check=full ./minishell #| grep entrou | wc -l
-
 
 norm_M:
 	@$(echo) "$(C_RED)$(BG_YELLOW)[Norminette]$(C_RESET)"

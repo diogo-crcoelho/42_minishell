@@ -6,7 +6,7 @@
 /*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:33:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:34:15 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:55:45 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,28 +59,28 @@ char	*ft_itoa(int n)
 
 char	*expand(char *str)
 {
-	t_elems *teste;
-	int i;
+	t_elems	*teste;
+	int		i;
 
-	if (!strings().equal_n(str, "~", 1))
-		return (strings().join(getenv("HOME"), &str[1], 0));
-	else if (!strings().equal_n(str, "$", 1) && (str[1]) != '?')
+	if (!s().equal_n(str, "~", 1))
+		return (s().join(getenv("HOME"), &str[1], 0));
+	else if (!s().equal_n(str, "$", 1) && (str[1]) != '?')
 	{
-		i = strings().alnum(&str[1]);
+		i = s().alnum(&str[1]);
 		if (!i)
-			i = strings().len(&str[1], 0);
-		teste = array(minishell()->env)->search(cmp, str + 1, i);
+			i = s().len(&str[1], 0);
+		teste = array(m()->env)->search(cmp, str + 1, i);
 		if (teste)
 		{
 			if (str[++i])
-				return (strings().join(((t_env *)teste->content)->splitted[1],
+				return (s().join(((t_env *)teste->cont)->splitted[1],
 						&str[i], 0));
-			return (strings().copy(((t_env *)teste->content)->splitted[1]));
+			return (s().copy(((t_env *)teste->cont)->splitted[1]));
 		}
 		else
-			return (strings().copy(""));
+			return (s().copy(""));
 	}
-	else if (!strings().equal_n(str, "$", 1))
-		return (ft_itoa(minishell()->exit_status));
-	return (strings().copy(str));
+	else if (!s().equal_n(str, "$", 1))
+		return (ft_itoa(m()->exit_status));
+	return (s().copy(str));
 }

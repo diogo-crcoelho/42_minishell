@@ -1,11 +1,19 @@
-//
-// Created by mvenanci on 2/13/23.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 15:47:30 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/03/27 15:47:52 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-int ft_exit(void* content)
+int	ft_exit(void *cont)
 {
-    destroy_minishell();
-	exit((long)content);
+	destroy_m();
+	exit((long)cont);
 }

@@ -1,13 +1,20 @@
-//
-// Created by mvenanci on 2/12/23.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 16:08:13 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/03/27 16:08:28 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-t_elems *search(void *buf, int size)
+t_elems	*search(void *buf, int size)
 {
-	char *var;
+	char	*var;
 
 	var = ((char **)buf)[0];
-
 }

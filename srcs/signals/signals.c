@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:54:53 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/26 16:56:26 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:00:47 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 void	ctrl_c(int sig)
 {
 	(void)sig;
-	if (minishell()->inter)
+	if (m()->inter)
 	{
-		minishell()->exit_status = 130;
+		m()->exit_status = 130;
 		return ;
 	}
 	write(2, "^C\n", 3);
@@ -32,7 +32,6 @@ void	ctrl_bs(int sig)
 {
 	if (SIGQUIT == sig)
 		SIG_IGN;
-	//	rl_redisplay();
 }
 
 void	signals_hand(void)

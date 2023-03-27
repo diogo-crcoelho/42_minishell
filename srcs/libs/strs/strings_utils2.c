@@ -1,6 +1,14 @@
-//
-// Created by dcarvalh on 2/16/23.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   s_utils1.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 16:38:24 by dcarvalh          #+#    #+#             */
+/*   Updated: 2023/03/26 16:55:59 by dcarvalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_strings.h"
 
@@ -31,15 +39,15 @@ int	__isal_num(char *str)
 	return (0);
 }
 
-char	*__append(char *s, char c)
+char	*__append(char *str, char c)
 {
 	char	*new;
 	int		i;
 
 	i = -1;
-	new = ft_calloc(strings().len(s, 0) + 2);
-	while (s[++i])
-		new[i] = s[i];
+	new = ft_calloc(s().len(str, 0) + 2);
+	while (str[++i])
+		new[i] = str[i];
 	new[i] = c;
 	return (new);
 }

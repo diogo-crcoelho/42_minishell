@@ -6,7 +6,7 @@
 /*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:32:05 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:50:17 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ void	filler(t_token *token, t_elems *tmp)
 {
 	if ((IN == token->type))
 	{
-		((t_cmd *)tmp->content)->infile = strings().copy(token->token);
-		((t_cmd *)tmp->content)->fd_red[0] = open(token->token, O_RDONLY);
+		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
+		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
 	}
 	if (OUT == token->type)
 	{
-		((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
-		((t_cmd *)tmp->content)->fd_red[1] = \
+		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
+		((t_cmd *)tmp->cont)->fd_red[1] = \
 			open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
 	if (APP == token->type)
 	{
-		((t_cmd *)tmp->content)->outfile = strings().copy(token->token);
-		((t_cmd *)tmp->content)->fd_red[1] = \
+		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
+		((t_cmd *)tmp->cont)->fd_red[1] = \
 			open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	}
 }
@@ -53,15 +53,15 @@ void	filler2(t_token *token)
 	char	*clean;
 	t_elems	*tmp;
 
-	tmp = array(minishell()->cmds)->end;
+	tmp = array(m()->cmds)->end;
 	filler(token, tmp);
 	if (HERE == token->type)
-		here_doc((t_cmd *)tmp->content, strings().append(token->token, '\n'));
+		here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
 	else if (IN != token->type)
 	{
-		clean = strings().join(((t_cmd *)tmp->content)->path, token->token, "");
-		free(((t_cmd *)tmp->content)->path);
-		((t_cmd *)tmp->content)->path = clean;
+		clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "");
+		free(((t_cmd *)tmp->cont)->path);
+		((t_cmd *)tmp->cont)->path = clean;
 	}
 }
 
@@ -70,21 +70,21 @@ void	delexer(void)
 	t_elems	*tmp;
 	t_elems	*cmds;
 
-	tmp = array(minishell()->tokens)->begin;
+	tmp = array(m()->tokens)->begin;
 	while (tmp)
 	{
-		array(minishell()->cmds)->add(ft_calloc(sizeof(t_cmd)));
-		cmds = array(minishell()->cmds)->end;
-		while (tmp && PIPE != ((t_token *)tmp->content)->type)
+		array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)));
+		cmds = array(m()->cmds)->end;
+		while (tmp && PIPE != ((t_token *)tmp->cont)->type)
 		{
-			filler2((t_token *)tmp->content);
+			filler2((t_token *)tmp->cont);
 			tmp = tmp->next;
 		}
-		if (((t_cmd *)cmds->content)->path)
-			((t_cmd *)cmds->content)->args = strings().\
-				split(((t_cmd *)cmds->content)->path,
+		if (((t_cmd *)cmds->cont)->path)
+			((t_cmd *)cmds->cont)->args = s().\
+				split(((t_cmd *)cmds->cont)->path,
 					' ');
-		free(((t_cmd *)cmds->content)->path);
+		free(((t_cmd *)cmds->cont)->path);
 		if (tmp)
 			tmp = tmp->next;
 	}
@@ -95,10 +95,10 @@ void	print_cmds(void)
 	t_elems	*tmp;
 	t_cmd	*temp;
 
-	tmp = (array(minishell()->cmds)->begin);
+	tmp = (array(m()->cmds)->begin);
 	while (tmp)
 	{
-		temp = (t_cmd *)tmp->content;
+		temp = (t_cmd *)tmp->cont;
 		printf("Infile: %i\n", temp->fd_red[0]);
 		printf("Outfile: %i\n", temp->fd_red[1]);
 		printf("cmd: ");

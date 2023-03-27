@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   m.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -46,7 +46,7 @@ void	pipex(void);
 
 void	print_cmds(void);
 
-t_mini	*minishell(void)
+t_mini	*m(void)
 {
 	static t_mini	a;
 
@@ -60,7 +60,7 @@ int	cmp_env(void *cont1, void *cont2)
 
 	s1 = ((t_env *)cont1)->total;
 	s2 = ((t_env *)cont2)->total;
-	return (strings().equal(s1, s2));
+	return (s().equal(s1, s2));
 }
 
 void	print_tokens(void)
@@ -69,11 +69,11 @@ void	print_tokens(void)
 	int		i;
 
 	i = 0;
-	c = (array(minishell()->tokens)->begin);
+	c = (array(m()->tokens)->begin);
 	while (c)
 	{
-		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->content))->token,
-				((t_token *)(c->content))->type);
+		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->cont))->token, \
+			((t_token *)(c->cont))->type);
 		c = c->next;
 		i++;
 	}
@@ -83,7 +83,7 @@ int	add_space(char *s)
 {
 	if (*s == '|' || !*s)
 		return (0);
-	else if (((t_token *)array(minishell()->tokens)->end->content)->type == PIPE)
+	else if (((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
 		return (0);
 	return (1);
 }
@@ -94,36 +94,44 @@ void	lex(char **temp)
 
 	while (**temp)
 	{
-		symbol = (t_dict *)array(minishell()->symbols)->search_tree(NULL,
+		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL,
 				*temp);
 		if (check_tilde(temp))
 			continue ;
 		if (symbol)
 		{
-			symbol = ((t_tree *)symbol)->content;
+			symbol = ((t_tree *)symbol)->cont;
 			symbol->state(temp, 1);
 			continue ;
 		}
 		else if (**temp && **temp != ' ' && **temp != '|')
 			non_symbol_state(temp, 1);
 		while (**temp == ' ' || (add_space(*temp)
-				&& !array(minishell()->tokens)->add(c_token(" ", SPC))))
+				&& !array(m()->tokens)->add(c_token(" ", SPC))))
 			(*temp)++;
-		if (**temp == '|' && array(minishell()->tokens)->add(c_token("|",
+		if (**temp == '|' && array(m()->tokens)->add(c_token("|",
 					PIPE)))
 			(*temp)++;
 	}
-	//    print_tokens();
 }
 
-void	destroy_minishell(void)
+void	destroy_m(void)
 {
-    array(minishell()->tokens)->destroy();
-    array(minishell()->cmds)->destroy();
-    array(minishell()->symbols)->destroy();
-    array(minishell()->env)->destroy();
-    array(minishell()->builtins)->destroy();
+	array(m()->tokens)->destroy();
+	array(m()->cmds)->destroy();
+	array(m()->symbols)->destroy();
+	array(m()->env)->destroy();
+	array(m()->b)->destroy();
 }
+
+void	reload(void)
+{
+	array(m()->tokens)->destroy();
+	m()->tokens = creat_array();
+	array(m()->cmds)->destroy();
+	m()->cmds = creat_array();
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
@@ -133,24 +141,20 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	(void)argv;
 	(void)envp;
-	init_minishell(envp);
+	init_m(envp);
 	while (1)
 	{
-        signals_hand();
-        str = readline("not bash>");
-        if (!str)
-            break ;
-        add_history(str);
-        temp = str;
+		signals_hand();
+		str = readline("not bash>");
+		if (!str)
+			break ;
+		add_history(str);
+		temp = str;
 		lex(&temp);
 		delexer();
-//		 print_cmds();
 		pipex();
-		array(minishell()->tokens)->destroy();
-		minishell()->tokens = creat_array();
-		array(minishell()->cmds)->destroy();
-		minishell()->cmds = creat_array();
+		reload();
 		free(str);
 	}
-	destroy_minishell();
+	destroy_m();
 }

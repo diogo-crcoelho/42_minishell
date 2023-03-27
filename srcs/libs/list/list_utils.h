@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 21:03:30 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/03/26 16:55:50 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:43:39 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ typedef struct s_array	t_array;
 
 struct					s_elems
 {
-	void				*content;
-	void				(*del)(void *content);
+	void				*cont;
+	void				(*del)(void *cont);
 	t_elems				*next;
 	t_elems				*prev;
 };
 
 struct					s_tree
 {
-	void				*content;
-	void				(*del)(void *content);
+	void				*cont;
+	void				(*del)(void *cont);
 	t_tree				*left;
 	t_tree				*right;
 	t_tree				*up;
@@ -43,7 +43,7 @@ struct					s_array
 	t_elems				*begin;
 	t_elems				*end;
 	int					size;
-	t_elems				*(*add)(void *content);
+	t_elems				*(*add)(void *cont);
 	void				(*remove)(t_elems *elem_to_del);
 	void				(*for_each)(void (*func)(t_elems *elem, void *o),
 							void *o);
@@ -54,8 +54,8 @@ struct					s_array
 	void				(*destroy_array)(void);
 	t_tree				*root;
 	void				(*build_tree)(void);
-	t_tree				*(*add_leaf)(void *content);
-	t_tree				*(*search_tree)(t_tree *root, void *content);
+	t_tree				*(*add_leaf)(void *cont);
+	t_tree				*(*search_tree)(t_tree *root, void *cont);
 	int					(*cmp)(void *cont1, void *cont2);
 };
 

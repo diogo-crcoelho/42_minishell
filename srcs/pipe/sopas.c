@@ -94,6 +94,7 @@ void	run(t_elems *elem, char **env)
 					ft_exit((void *)-1);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
+		minishell()->inter = 1;
 		execve(cmd->path, cmd->args, env);
 	}
 	ft_exit((void *)-1);
@@ -114,7 +115,9 @@ void	execute(t_elems *elem)
 		cmd->pid = fork();
 		if (-1 == cmd->pid)
 			ft_exit((void *)1);
-		if (0 == cmd->pid)
+		if (!built(elem))
+		{
+			if (0 == cmd->pid)
 			run(elem, tmp);
 		else
 		{
@@ -127,6 +130,7 @@ void	execute(t_elems *elem)
 			elem = elem->next;
 			close(cmd->fd[0]);
 			close(cmd->fd[1]);
+		}
 		}
 	}
 }

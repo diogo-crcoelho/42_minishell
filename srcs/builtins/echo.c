@@ -9,7 +9,7 @@ int	echo(void *content)
     strs = (char **)content;
     i = -1;
     flag = 0;
-    if (!strings().equal(*strs, "-n"))
+    if (!strings().equal_n(*strs, "-n", 2))
     {
         ++i;
         flag = 1;

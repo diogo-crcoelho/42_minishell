@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 00:41:56 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/27 03:09:17 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:57:57 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int     export(void* content);
 int     cd(void *path);
 int 	echo(void *content);
 int	    ft_exit(void* content);
-
+int	built(t_elems *elem);
 
 t_mini 	*minishell(void);
 void    init_minishell(char **envp);

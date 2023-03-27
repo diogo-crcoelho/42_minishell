@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strings.h                                       :+:      :+:    :+:   */
+/*   ft_s.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_STRINGS_H
-# define FT_STRINGS_H
+#ifndef FT_s_H
+# define FT_s_H
 
 # include "../list/list_utils.h"
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
 
-typedef struct s_strings
+typedef struct s_s
 {
 	int		(*len)(const char *, char c);
 	char	*(*copy)(const char *);
@@ -31,8 +31,8 @@ typedef struct s_strings
 	char	*(*join)(char *, char *, char *);
 	int		(*alnum)(char *);
 	char	*(*append)(char *s, char c);
-}			t_strings;
+}			t_s;
 
-t_strings	strings(void);
+t_s	s(void);
 
 #endif

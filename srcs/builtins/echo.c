@@ -1,20 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 15:46:10 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/03/27 15:46:45 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incs/minishell.h"
 
-int	echo(void *content)
+int	echo(void *cont)
 {
-    int     i;
-    int     flag;
-    char    **strs;
+	int		i;
+	int		flag;
+	char	**strs;
 
-    strs = (char **)content;
+    strs = (char **)cont;
     i = -1;
-    flag = 0;
-    if (!strings().equal_n(*strs, "-n", 2))
+    if (!s().equal_n(*strs, "-n", 2))
     {
         ++i;
         flag = 1;
     }
-    while(strs[++i])
+    flag = 0;
+    while (strs[++i])
     {
         printf("%s", strs[i]);
         if (strs[i + 1])

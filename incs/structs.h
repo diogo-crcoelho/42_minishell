@@ -2,8 +2,8 @@
 // Created by mvenanci on 2/13/23.
 //
 
-#ifndef INC_42_MINISHELL_STRUCTS_H
-# define INC_42_MINISHELL_STRUCTS_H
+#ifndef INC_42_m_STRUCTS_H
+# define INC_42_m_STRUCTS_H
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
@@ -37,7 +37,7 @@ struct					s_mini
 	char				*prev_path;
 	void				*tokens;
 	void				*symbols;
-	void				*builtins;
+	void				*b;
 };
 
 struct					s_env
@@ -56,7 +56,7 @@ struct					s_dict
 
 struct s_built{
     char    *key;
-    int     (*builtin)(void *);
+    int     (*b)(void *);
 };
 
 struct s_token{
@@ -76,4 +76,4 @@ struct					s_cmd
 	int					pid;
 };
 
-#endif //INC_42_MINISHELL_STRUCTS_H
+#endif //INC_42_m_STRUCTS_H

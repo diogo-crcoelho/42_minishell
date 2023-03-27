@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   m.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIHSELL_H
-# define MINIHSELL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include <fcntl.h>
 # include <stdio.h>
@@ -20,11 +20,10 @@
 # include <readline/readline.h>
 # include <sys/wait.h>
 # include <unistd.h>
-//#include "pipex.h"
-#include "../srcs/libs/list/list_utils.h"
-#include "../srcs/libs/strs/ft_strings.h"
-#include "structs.h"
-#include "pipex.h"
+# include "../srcs/libs/list/list_utils.h"
+# include "../srcs/libs/strs/ft_strings.h"
+# include "structs.h"
+# include "pipex.h"
 
 
 typedef 	void	(*t_func)();
@@ -33,22 +32,22 @@ typedef 	void	(*t_func)();
 //general
 unsigned long hash(char *str);
 
-//builtins
-void    init_builtins(void);
-int     pwd(void* content);
-int     env(void* content);
-int     unset(void *content);
-int     export(void* content);
+//b
+void    init_b(void);
+int     pwd(void* cont);
+int     env(void* cont);
+int     unset(void *cont);
+int     export(void* cont);
 int     cd(void *path);
-int 	echo(void *content);
-int	    ft_exit(void* content);
+int 	echo(void *cont);
+int	    ft_exit(void* cont);
 int	built(t_elems *elem);
 
-t_mini 	*minishell(void);
-void    init_minishell(char **envp);
+t_mini 	*m(void);
+void    init_m(char **envp);
 void    init_symbols(void);
 void    print_dict(t_elems *elem, void *o);
-void    destroy_minishell(void);
+void    destroy_m(void);
 
 
 
@@ -59,9 +58,9 @@ void			init_parse(const char *str);
 int				cmp_env(void *cont1, void *cont2);
 int				comp_var(void *c1, void *c2);
 void			create_env(char **envp);
-t_env			*create_content(char *total);
+t_env			*create_cont(char *total);
 char			**env_split(char *str, char sep);
-void			del_elem(void *content);
+void			del_elem(void *cont);
 
 //utils
 char			**env_split(char *str, char sep);
@@ -85,12 +84,19 @@ void			*heredoc_state(char **s, int add);
 //symbols
 int				comp_symbols_search(void *c1, void *c2);
 int				comp_symbols_build(void *c1, void *c2);
-
+void			init_symbols(void);
+int				*init_comp(int type);
+int				comp_symbols_search(void *c1, void *c2);
+int				comp_symbols_build(void *c1, void *c2);
 
 void			signals_hand(void);
 int				cmp_env(void *cont1, void *cont2);
 
 void			export_empty(t_tree *root);
 void			delexer(void);
+
+//pipex
+int	treat_files(t_cmd *cmd);
+void	run(t_elems *elem, char **env);
 
 #endif

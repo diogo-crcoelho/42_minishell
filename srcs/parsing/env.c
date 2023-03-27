@@ -1,6 +1,14 @@
-//
-// Created by miguel on 20-02-2023.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 15:50:24 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/03/27 15:51:05 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
@@ -11,5 +19,5 @@ int	comp_var(void *c1, void *c2)
 
 	in_tree = ((t_env *)c1)->splitted[0];
 	out_tree = c2;
-	return (strings().equal(in_tree, out_tree));
+	return (s().equal(in_tree, out_tree));
 }

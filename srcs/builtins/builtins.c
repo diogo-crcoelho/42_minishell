@@ -1,40 +1,48 @@
-//
-// Created by miguel on 26-03-2023.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 15:39:40 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/03/27 15:42:46 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void    del_builtin(void *builtin)
+void	del_b(void *b)
 {
-    free(((t_built *)builtin)->key);
-    free(builtin);
+	free(((t_built *)b)->key);
+	free(b);
 }
 
-t_built *c_builtin(char *key)
+t_built	*c_b(char *key)
 {
-    t_built *new;
+	t_built	*new;
 
-    new = ft_calloc(sizeof(t_built));
-    new->key = key;
-    return (new);
+	new = ft_calloc(sizeof(t_built));
+	new->key = key;
+	return (new);
 }
 
-void    init_builtins(void)
+void	init_b(void)
 {
-    minishell()->builtins = creat_array();
-    array(minishell()->builtins)->cmp = comp_symbols_build;
-    ((t_built *)array(minishell()->builtins)->add(c_builtin(strings().copy("pwd")))->content)->builtin = pwd;
-    array(minishell()->builtins)->end->del = del_builtin;
-    ((t_built *)array(minishell()->builtins)->add(c_builtin(strings().copy("env")))->content)->builtin = env;
-    array(minishell()->builtins)->end->del = del_builtin;
-    ((t_built *)array(minishell()->builtins)->add(c_builtin(strings().copy("unset")))->content)->builtin = unset;
-    array(minishell()->builtins)->end->del = del_builtin;
-    ((t_built *)array(minishell()->builtins)->add(c_builtin(strings().copy("export")))->content)->builtin = export;
-    array(minishell()->builtins)->end->del = del_builtin;
-    ((t_built *)array(minishell()->builtins)->add(c_builtin(strings().copy("cd")))->content)->builtin = cd;
-    array(minishell()->builtins)->end->del = del_builtin;
-    ((t_built *)array(minishell()->builtins)->add(c_builtin(strings().copy("echo")))->content)->builtin = echo;
-    array(minishell()->builtins)->end->del = del_builtin;
-    ((t_built *)array(minishell()->builtins)->add(c_builtin(strings().copy("exit")))->content)->builtin = ft_exit;
-    array(minishell()->builtins)->end->del = del_builtin;
+	m()->b = creat_array();
+	array(m()->b)->cmp = comp_symbols_build;
+	((t_built *)array(m()->b)->add(c_b(s().copy("pwd")))->cont)->b = pwd;
+	array(m()->b)->end->del = del_b;
+	((t_built *)array(m()->b)->add(c_b(s().copy("env")))->cont)->b = env;
+	array(m()->b)->end->del = del_b;
+	((t_built *)array(m()->b)->add(c_b(s().copy("unset")))->cont)->b = unset;
+	array(m()->b)->end->del = del_b;
+	((t_built *)array(m()->b)->add(c_b(s().copy("export")))->cont)->b = export;
+	array(m()->b)->end->del = del_b;
+	((t_built *)array(m()->b)->add(c_b(s().copy("cd")))->cont)->b = cd;
+	array(m()->b)->end->del = del_b;
+	((t_built *)array(m()->b)->add(c_b(s().copy("echo")))->cont)->b = echo;
+	array(m()->b)->end->del = del_b;
+	((t_built *)array(m()->b)->add(c_b(s().copy("exit")))->cont)->b = ft_exit;
+	array(m()->b)->end->del = del_b;
 }

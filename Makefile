@@ -6,12 +6,12 @@
 #    By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 20:44:34 by dcarvalh          #+#    #+#              #
-#    Updated: 2023/03/27 16:02:48 by dcarvalh         ###   ########.fr        #
+#    Updated: 2023/03/27 15:20:20 by dcarvalh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME = minishell
+NAME = m
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 LIBS = -lreadline
@@ -19,12 +19,12 @@ LIBS = -lreadline
 SRCS =	minishell.c \
 		libs/list/lst_utils.c libs/list/list_utils_2.c libs/list/list_utils_3.c libs/list/list_utils_4.c\
 		libs/strs/strings.c libs/strs/strings_utils1.c libs/strs/ft_split.c libs/strs/strings_utils2.c \
-		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/delexer.c parsing/env.c\
+		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/lexer_2.c parsing/delexer.c parsing/env.c\
 		builtins/pwd.c builtins/env.c builtins/cd.c builtins/export.c builtins/unset.c \
 		builtins/echo.c builtins/exit.c builtins/builtins.c\
-		utils/symbols.c utils/tokens.c utils/env.c\
+		utils/symbols.c utils/symbols_2.c utils/tokens.c utils/env.c\
 		signals/signals.c \
-		pipe/sopas.c pipe/gnl.c pipe/here_doc.c pipe/built.c\
+		pipe/sopas.c pipe/sopas_2.c pipe/gnl.c pipe/here_doc.c\
 
 B_SRCS = 
 
@@ -71,7 +71,9 @@ re: fclean all
 
 r: re
 	make clean
-	./minishell
+	./m
+	#valgrind --leak-check=full ./m #| grep entrou | wc -l
+
 
 norm_M:
 	@$(echo) "$(C_RED)$(BG_YELLOW)[Norminette]$(C_RESET)"

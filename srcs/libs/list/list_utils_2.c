@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 23:25:26 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/03/26 16:55:42 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:43:39 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list_utils.h"
 
 void	__destroy(void);
-t_elems	*__add(void *content);
+t_elems	*__add(void *cont);
 void	__for_each(void (*func)(t_elems *elem, void *p), void *o);
 void	__del(t_elems *elem);
 void	**__to_array(void);
 void	__build_tree(void);
-t_tree	*__search_tree(t_tree *root, void *content);
-t_tree	*__add_leaf(void *content);
+t_tree	*__search_tree(t_tree *root, void *cont);
+t_tree	*__add_leaf(void *cont);
 
 t_array	**__this(void)
 {
@@ -57,7 +57,7 @@ t_elems	*__search(int (*cmp)(void *cont, void *buf, int size), void *buf,
 	temp = (*__this())->begin;
 	while (temp)
 	{
-		if (!cmp(temp->content, buf, size))
+		if (!cmp(temp->cont, buf, size))
 			return (temp);
 		temp = temp->next;
 	}

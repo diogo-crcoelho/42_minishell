@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:22:19 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/03/26 16:55:52 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/27 15:43:39 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "list_utils.h"
 
 t_array		**__this(void);
-void		__del_from_tree(void *content);
+void		__del_from_tree(void *cont);
 void		__destroy_tree(t_tree *root);
 
 void	__del(t_elems *elem)
 {
 	if ((*__this())->root)
-		__del_from_tree(elem->content);
+		__del_from_tree(elem->cont);
 	if ((*__this())->begin == elem)
 	{
 		(*__this())->begin = (*__this())->begin->next;
@@ -32,7 +32,7 @@ void	__del(t_elems *elem)
 			elem->next->prev = elem->prev;
 	}
 	if (elem->del)
-		elem->del(elem->content);
+		elem->del(elem->cont);
 	free(elem);
 	(*__this())->size--;
 }
@@ -49,20 +49,20 @@ void	__for_each(void (*func)(t_elems *elem, void *p), void *o)
 	}
 }
 
-static void	default_content_destroy(void *content)
+static void	default_cont_destroy(void *cont)
 {
-	free(content);
+	free(cont);
 }
 
-t_elems	*__add(void *content)
+t_elems	*__add(void *cont)
 {
 	t_elems	*new;
 
-	if (!content)
+	if (!cont)
 		return (NULL);
 	new = ft_calloc(sizeof(t_elems));
-	new->del = default_content_destroy;
-	new->content = content;
+	new->del = default_cont_destroy;
+	new->cont = cont;
 	if (!(*__this())->begin)
 		(*__this())->begin = new;
 	else
@@ -73,7 +73,7 @@ t_elems	*__add(void *content)
 	(*__this())->end = new;
 	(*__this())->size++;
 	if ((*__this())->root)
-		(*__this())->add_leaf(content);
+		(*__this())->add_leaf(cont);
 	return (new);
 }
 
@@ -91,7 +91,7 @@ void	__destroy(void)
 	{
 		temp2 = temp->next;
 		if (temp->del)
-			temp->del(temp->content);
+			temp->del(temp->cont);
 		free(temp);
 		temp = temp2;
 	}

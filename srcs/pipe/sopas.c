@@ -1,6 +1,14 @@
-//
-// Created by dcarvalh on 3/20/23.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sopas.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/03/27 15:58:01 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
@@ -39,10 +47,10 @@ void	parse_paths(t_cmd *cmd)
 	int		i;
 
 	i = 0;
-	paths = strings().split(getenv("PATH"), ':');
+	paths = s().split(getenv("PATH"), ':');
 	while (paths[i])
 	{
-		teste = strings().join(paths[i++], cmd->args[0], "/");
+		teste = s().join(paths[i++], cmd->args[0], "/");
 		if (access(teste, F_OK) == 0)
 		{
 			//            array(paths)->destroy();
@@ -77,8 +85,8 @@ void	run(t_elems *elem, char **env)
 {
 	t_cmd	*cmd;
 
-	cmd = (t_cmd *)elem->content;
-	if (!cmd->args || !strings().len(cmd->args[0], 0))
+	cmd = (t_cmd *)elem->cont;
+	if (!cmd->args || !s().len(cmd->args[0], 0))
 		ft_exit((void *)-1);
 	parse_paths(cmd);
 	if (-1 != dup2(cmd->fd_red[0], 0))
@@ -92,10 +100,9 @@ void	run(t_elems *elem, char **env)
 			if (cmd->fd_red[1])
 				if (-1 == dup2(cmd->fd_red[1], 1))
 					ft_exit((void *)-1);
-        execve(cmd->path, cmd->args, env);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
-		minishell()->inter = 1;
+		m()->inter = 1;
 		execve(cmd->path, cmd->args, env);
 	}
 	ft_exit((void *)-1);
@@ -106,10 +113,10 @@ void	execute(t_elems *elem)
 	t_cmd	*cmd;
 	char	**tmp;
 
-	tmp = (char **)array(minishell()->env)->to_array();
+	tmp = (char **)array(m()->env)->to_array();
 	while (elem)
 	{
-		cmd = (t_cmd *)elem->content;
+		cmd = (t_cmd *)elem->cont;
 		treat_files(cmd);
 		if (pipe(cmd->fd) < 0)
 			ft_exit((void *)1); // dont know status code
@@ -122,11 +129,11 @@ void	execute(t_elems *elem)
                 run(elem, tmp);
 		    else
 		    {
-			    minishell()->inter = 0;
+			    m()->inter = 0;
 			    if (elem->next)
 			    {
-				    if (!((t_cmd *)elem->next->content)->fd_red[0])
-					    ((t_cmd *)elem->next->content)->fd_red[0] = dup(cmd->fd[0]);
+				    if (!((t_cmd *)elem->next->cont)->fd_red[0])
+					    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
 			    }
 		    }
         }
@@ -138,7 +145,7 @@ void	execute(t_elems *elem)
 
 void	pipex(void)
 {
-	execute(array(minishell()->cmds)->begin);
-	while ((array(minishell()->cmds)->size)--)
-		waitpid(-1, &minishell()->exit_status, 0);
+	execute(array(m()->cmds)->begin);
+	while ((array(m()->cmds)->size)--)
+		waitpid(-1, &m()->exit_status, 0);
 }

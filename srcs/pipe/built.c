@@ -16,13 +16,13 @@ void exe_buil(t_cmd *cmd)
 	t_elems *ll;
 	t_built *tt;
 
-	ll = array(minishell()->builtins)->begin;
+	ll = array(m()->b)->begin;
 	while (ll)
 	{
-		tt = (t_built *)ll->content;
-		if (!strings().equal(cmd->args[0], tt->key))
+		tt = (t_built *)ll->cont;
+		if (!s().equal(cmd->args[0], tt->key))
 		{
-			minishell()->exit_status = tt->builtin(&cmd->args[1]);
+			m()->exit_status = tt->b(&cmd->args[1]);
 			return ;
 		}	
 		ll = ll->next;
@@ -32,9 +32,9 @@ void exe_buil(t_cmd *cmd)
 
 int	built(t_elems *elem)
 {
-	if (array(minishell()->cmds)->size <= 1)
+	if (array(m()->cmds)->size <= 1)
 	{
-		exe_buil((t_cmd *)elem->content);
+		exe_buil((t_cmd *)elem->cont);
 		return 1;
 	}
 	return 0;

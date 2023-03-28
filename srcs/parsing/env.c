@@ -12,13 +12,4 @@
 
 #include "../../incs/minishell.h"
 
-int	comp_var(void *c1, void *c2)
-{
-	char	*in_tree;
-	char	*out_tree;
 
-	in_tree = ((t_env *)c1)->splitted[0];
-	out_tree = (char *)c2;
-    printf("%s -- %s\n", in_tree, out_tree);
-	return (hash(in_tree) - hash(out_tree));
-}

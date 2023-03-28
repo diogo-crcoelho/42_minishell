@@ -30,6 +30,7 @@ t_tree	*find_leaf(t_tree *temp, void *cont, int (*cmp)(void *cont1,
 	int		val;
 
 	val = cmp(temp->cont, cont);
+    leaf = NULL;
 	if (val < 0 && temp->right)
 		leaf = find_leaf(temp->right, cont, cmp);
 	else if (val < 0 && !temp->right)

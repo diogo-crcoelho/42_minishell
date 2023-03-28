@@ -19,14 +19,17 @@ int	unset(void *cont)
 	int		i;
 
 	i = -1;
-	vars = (char **)cont;
-	while (vars[++i])
+    vars = (char **)cont;
+    array(m()->env)->cmp = cmp_env;
+    while (vars[++i])
 	{
-		// array(m()->env)->cmp = cmp_env;
 		temp = array(m()->env)->search(comp_var, vars[i]);
-		if (temp)
-			array(m()->env)->remove(temp);
+        if (temp)
+        {
+            array(m()->env)->remove(temp);
+        }
 	}
+    array(m()->env)->cmp = comp_var;
 	free(m()->a_env);
 	m()->a_env = (char **)array(m()->env)->to_array();
 	return (0);

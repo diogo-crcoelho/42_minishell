@@ -12,21 +12,21 @@
 
 #include "../../incs/minishell.h"
 
-int	    cmp(void *cont1, void *cont2, int size)
-{
-	int		i;
-	char	*str1;
-	char	*str2;
-
-	str1 = ((t_env *)cont1)->splitted[0];
-	str2 = (char *)cont2;
-	i = -1;
-	if (str1 && str2)
-		while (++i < size && (str1[i] && str2[i]))
-			if (str1[i] != str2[i])
-				return ((unsigned char )str1[i] - (unsigned char )str2[i]);
-	return (0);
-}
+//int	    cmp(void *cont1, void *cont2, int size)
+//{
+//	int		i;
+//	char	*str1;
+//	char	*str2;
+//
+//	str1 = ((t_env *)cont1)->splitted[0];
+//	str2 = (char *)cont2;
+//	i = -1;
+//	if (str1 && str2)
+//		while (++i < size && (str1[i] && str2[i]))
+//			if (str1[i] != str2[i])
+//				return ((unsigned char )str1[i] - (unsigned char )str2[i]);
+//	return (0);
+//}
 
 void	export_empty(t_tree *root)
 {

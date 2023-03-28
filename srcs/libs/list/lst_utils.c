@@ -17,7 +17,7 @@ void		__del_from_tree(void *cont);
 void		__destroy_tree(t_tree *root);
 
 void	__del(t_elems *elem)
-{	
+{
 	if ((*__this())->root)
 		__del_from_tree(elem->cont);
 	if ((*__this())->begin == elem)

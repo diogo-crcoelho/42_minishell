@@ -12,6 +12,26 @@
 
 #include "../../incs/minishell.h"
 
+int	cmp_env(void *cont1, void *cont2)
+{
+    char	*s1;
+    char	*s2;
+
+    s1 = ((t_env *)cont1)->splitted[0];
+    s2 = ((t_env *)cont2)->splitted[0];
+    return (s().equal(s1, s2));
+}
+
+int	comp_var(void *c1, void *c2)
+{
+    char	*in_tree;
+    char	*out_tree;
+
+    in_tree = ((t_env *)c1)->splitted[0];
+    out_tree = (char *)c2;
+    return (s().equal(in_tree, out_tree));
+}
+
 void	del_elem(void *cont)
 {
 	char	**vars;

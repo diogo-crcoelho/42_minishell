@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:22:19 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/03/27 15:43:39 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:47:56 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		__del_from_tree(void *cont);
 void		__destroy_tree(t_tree *root);
 
 void	__del(t_elems *elem)
-{
+{	
 	if ((*__this())->root)
 		__del_from_tree(elem->cont);
 	if ((*__this())->begin == elem)

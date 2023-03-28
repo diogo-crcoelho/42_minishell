@@ -18,6 +18,7 @@ int	comp_var(void *c1, void *c2)
 	char	*out_tree;
 
 	in_tree = ((t_env *)c1)->splitted[0];
-	out_tree = c2;
-	return (s().equal(in_tree, out_tree));
+	out_tree = (char *)c2;
+    printf("%s -- %s\n", in_tree, out_tree);
+	return (hash(in_tree) - hash(out_tree));
 }

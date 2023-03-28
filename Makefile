@@ -71,7 +71,7 @@ re: fclean all
 
 r: re
 	make clean
-	./m
+	./minishell
 	#valgrind --leak-check=full ./m #| grep entrou | wc -l
 
 

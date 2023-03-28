@@ -14,18 +14,16 @@
 
 int	unset(void *cont)
 {
-	t_elems	*temp;
+	t_elems *temp;
 	char	**vars;
 	int		i;
 
 	i = -1;
 	vars = (char **)cont;
-	
 	while (vars[++i])
 	{
 		// array(m()->env)->cmp = cmp_env;
-
-		temp = array(m()->env)->search(cmp, vars[i], s().len(vars[i], 0));
+		temp = array(m()->env)->search(comp_var, vars[i]);
 		if (temp)
 			array(m()->env)->remove(temp);
 	}
@@ -33,5 +31,3 @@ int	unset(void *cont)
 	m()->a_env = (char **)array(m()->env)->to_array();
 	return (0);
 }
-
-

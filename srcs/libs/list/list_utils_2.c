@@ -49,15 +49,14 @@ void	*ft_calloc(size_t size)
 	return (ptr);
 }
 
-t_elems	*__search(int (*cmp)(void *cont, void *buf, int size), void *buf,
-		int size)
+t_elems	*__search(int (*cmp)(void *cont, void *buf), void *buf)
 {
 	t_elems	*temp;
 
 	temp = (*__this())->begin;
 	while (temp)
 	{
-		if (!cmp(temp->cont, buf, size))
+		if (!cmp(temp->cont, buf))
 			return (temp);
 		temp = temp->next;
 	}

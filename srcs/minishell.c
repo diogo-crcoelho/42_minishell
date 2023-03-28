@@ -58,9 +58,9 @@ int	cmp_env(void *cont1, void *cont2)
 	char	*s1;
 	char	*s2;
 
-	s1 = ((t_env *)cont1)->total;
-	s2 = ((t_env *)cont2)->total;
-	return (s().equal(s1, s2));
+	s1 = ((t_env *)cont1)->splitted[0];
+	s2 = ((t_env *)cont2)->splitted[0];
+	return (hash(s1) - hash(s2));
 }
 
 void	print_tokens(void)
@@ -153,7 +153,7 @@ int	main(int argc, char **argv, char **envp)
 		temp = str;
 		lex(&temp);
 		delexer();
-       print_cmds();
+//       print_cmds();
 		pipex();
 		reload();
 		free(str);

@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-int	cmp(void *cont1, void *cont2, int size)
+int	    cmp(void *cont1, void *cont2, int size)
 {
 	int		i;
 	char	*str1;

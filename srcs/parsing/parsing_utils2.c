@@ -69,7 +69,7 @@ char	*expand(char *str)
 		i = s().alnum(&str[1]);
 		if (!i)
 			i = s().len(&str[1], 0);
-		teste = array(m()->env)->search(cmp, str + 1, i);
+		teste = array(m()->env)->search(comp_var, str + 1);
 		if (teste)
 		{
 			if (str[++i])

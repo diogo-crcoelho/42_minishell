@@ -145,7 +145,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		signals_hand();
-		str = readline("not bash>");
+		str = readline("not bash> ");
 		if (!str)
 			break ;
 		add_history(str);

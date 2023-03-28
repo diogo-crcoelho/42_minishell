@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/28 02:09:18 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:14:45 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	parse_paths(t_cmd *cmd)
 		teste = s().join(paths[i++], cmd->args[0], "/");
 		if (access(teste, F_OK) == 0)
 		{
-			//            array(paths)->destroy();
 			cmd->path = teste;
 			return ;
 		}
@@ -81,7 +80,7 @@ int	treat_files(t_cmd *cmd)
 	return (-42);
 }
 
-void	run(t_elems *elem, char **env)
+void	run(t_elems *elem)
 {
 	t_cmd	*cmd;
 
@@ -98,12 +97,12 @@ void	run(t_elems *elem, char **env)
 		}
 		else if (!elem->next)
 			if (cmd->fd_red[1])
-				if (-1 == dup2(cmd->fd_red[1], 1))
+					if (-1 == dup2(cmd->fd_red[1], 1))
 					ft_exit((void *)-1);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 		m()->inter = 1;
-		execve(cmd->path, cmd->args, env);
+		execve(cmd->path, cmd->args, m()->a_env);
 	}
 	ft_exit((void *)-1);
 }
@@ -111,9 +110,7 @@ void	run(t_elems *elem, char **env)
 void	execute(t_elems *elem)
 {
 	t_cmd	*cmd;
-	char	**tmp;
 
-	tmp = (char **)array(m()->env)->to_array();
 	while (elem)
 	{
 		cmd = (t_cmd *)elem->cont;
@@ -126,7 +123,7 @@ void	execute(t_elems *elem)
 		    if (-1 == cmd->pid)
 			    ft_exit((void *)1);
 			if (0 == cmd->pid)
-                run(elem, tmp);
+                run(elem);
 		    else
 		    {
 			    m()->inter = 0;

@@ -31,6 +31,7 @@ enum					e_type
 struct					s_mini
 {
 	void				*env;
+	char				**a_env;
 	void				*cmds;
 	int					inter;
 	int					exit_status;

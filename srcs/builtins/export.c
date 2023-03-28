@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:55 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/28 00:17:08 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:28:58 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	export(void *cont)
 		free (splitted);
 		array(m()->env)->cmp = comp_var;
 	}
+	free(m()->a_env);
+	m()->a_env = (char **)array(m()->env)->to_array();
 	if (!s().len(cont, 0))
 		export_empty(array(m()->env)->root);
 	return (0);

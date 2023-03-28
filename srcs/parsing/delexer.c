@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:50:17 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:00:51 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,24 @@ void	del_cmd(void *cmd)
 		free(((t_cmd *)cmd)->infile);
 	while (((t_cmd *)cmd)->args[++i])
 		free(((t_cmd *)cmd)->args[i]);
-	free(((t_cmd *)cmd)->path);
+	// free(((t_cmd *)cmd)->path);
 	free(cmd);
 }
 
-void	filler(t_token *token, t_elems *tmp)
+void	filler(t_token *token, t_elems *tmp, int *flag)
 {
-	if ((IN == token->type))
+	if ((IN == token->type) && ++(*flag))
 	{
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
 	}
-	if (OUT == token->type)
+	if (OUT == token->type && ++(*flag))
 	{
 		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[1] = \
 			open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
-	if (APP == token->type)
+	if (APP == token->type && ++(*flag))
 	{
 		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[1] = \
@@ -51,13 +51,15 @@ void	filler(t_token *token, t_elems *tmp)
 void	filler2(t_token *token)
 {
 	char	*clean;
+	int		flag;
 	t_elems	*tmp;
 
+	flag = 0;
 	tmp = array(m()->cmds)->end;
-	filler(token, tmp);
+	filler(token, tmp, &flag);
 	if (HERE == token->type)
 		here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
-	else if (IN != token->type)
+	else if (!flag && IN != token->type)
 	{
 		clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "");
 		free(((t_cmd *)tmp->cont)->path);
@@ -73,7 +75,7 @@ void	delexer(void)
 	tmp = array(m()->tokens)->begin;
 	while (tmp)
 	{
-		array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)));
+		array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)))->del = del_cmd;
 		cmds = array(m()->cmds)->end;
 		while (tmp && PIPE != ((t_token *)tmp->cont)->type)
 		{
@@ -94,7 +96,6 @@ void	print_cmds(void)
 {
 	t_elems	*tmp;
 	t_cmd	*temp;
-
 	tmp = (array(m()->cmds)->begin);
 	while (tmp)
 	{
@@ -102,8 +103,8 @@ void	print_cmds(void)
 		printf("Infile: %i\n", temp->fd_red[0]);
 		printf("Outfile: %i\n", temp->fd_red[1]);
 		printf("cmd: ");
-		while ((temp->args) && *(temp->args))
-			printf("%s ", *(temp->args)++);
+		for (int i = 0; temp->args[i]; i++)
+			printf("%s ", temp->args[i]);
 		printf("\n");
 		printf("========\n");
 		tmp = tmp->next;

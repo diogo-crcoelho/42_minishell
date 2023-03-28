@@ -122,6 +122,7 @@ void	destroy_m(void)
 	array(m()->symbols)->destroy();
 	array(m()->env)->destroy();
 	array(m()->b)->destroy();
+	free(m()->a_env);
 }
 
 void	reload(void)
@@ -152,7 +153,7 @@ int	main(int argc, char **argv, char **envp)
 		temp = str;
 		lex(&temp);
 		delexer();
-//        print_cmds();
+       print_cmds();
 		pipex();
 		reload();
 		free(str);

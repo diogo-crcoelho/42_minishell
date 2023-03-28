@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:00:37 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 16:01:54 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:14:03 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ void	create_env(char **envp)
 	array(m()->env)->cmp = cmp_env;
 	array(m()->env)->build_tree();
 	array(m()->env)->cmp = comp_var;
+	m()->a_env = (char **)array(m()->env)->to_array();
 }

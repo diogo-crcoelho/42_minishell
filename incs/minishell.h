@@ -41,7 +41,8 @@ int     export(void* cont);
 int     cd(void *path);
 int 	echo(void *cont);
 int	    ft_exit(void* cont);
-int	built(t_elems *elem);
+int		built(t_elems *elem);
+void	destroy_cmds(t_elems *elem);
 
 t_mini 	*m(void);
 void    init_m(char **envp);
@@ -54,6 +55,7 @@ void    destroy_m(void);
 int				cmp(void *cont1, void *cont2, int size);
 void			init_parse(const char *str);
 void            cona(char *err);
+void			free_pp(void *pp);
 
 
 //env
@@ -99,6 +101,5 @@ void			delexer(void);
 
 //pipex
 int	treat_files(t_cmd *cmd);
-void	run(t_elems *elem, char **env);
 
 #endif

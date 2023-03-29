@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:25 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/29 21:50:36 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:56:42 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	pipe_built(t_elems *elem)
 int	built(t_elems *elem)
 {
 	t_cmd *cmd;
-	
+
 	cmd = (t_cmd *)elem->cont;
 	if (array(m()->cmds)->size <= 1)
 		return (exe_buil((t_cmd *)elem->cont));
-	else
+	else if (array(m()->b)->search_tree(NULL, (void *)cmd->args[0]))
 	{
 	    cmd->pid = fork();
 	    if (-1 == cmd->pid)

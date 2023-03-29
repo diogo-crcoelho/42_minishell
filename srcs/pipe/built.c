@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:25 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/28 02:09:10 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/29 21:50:36 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,55 @@ int exe_buil(t_cmd *cmd)
 	return 1;
 }
 
+void	pipe_built(t_elems *elem)
+{
+	t_cmd	*cmd;
 
+	cmd = (t_cmd *)elem->cont;
+	if (!cmd->args || !s().len(cmd->args[0], 0))
+		ft_exit((void *)-1);
+	if (-1 != dup2(cmd->fd_red[0], 0))
+	{
+		if (elem->next && !cmd->fd_red[1])
+		{
+			if (-1 == dup2(cmd->fd[1], 1))
+				ft_exit((void *)-1);
+		}
+		else if (!elem->next)
+			if (cmd->fd_red[1])
+					if (-1 == dup2(cmd->fd_red[1], 1))
+					ft_exit((void *)-1);
+		close(cmd->fd[0]);
+		close(cmd->fd[1]);
+		m()->inter = 1;
+		m()->exit_status = exe_buil(cmd);
+	}
+	exit (m()->exit_status);
+}
 int	built(t_elems *elem)
 {
+	t_cmd *cmd;
+	
+	cmd = (t_cmd *)elem->cont;
 	if (array(m()->cmds)->size <= 1)
 		return (exe_buil((t_cmd *)elem->cont));
-	return 0;
+	else
+	{
+	    cmd->pid = fork();
+	    if (-1 == cmd->pid)
+		    ft_exit((void *)1);
+		if (0 == cmd->pid)
+            pipe_built(elem);
+		else
+		{
+		    m()->inter = 0;
+		    if (elem->next)
+			{
+		    	if (!((t_cmd *)elem->next->cont)->fd_red[0])
+		    	((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
+			}
+		}
+		return (1);
+	}
+	return(0);
 }

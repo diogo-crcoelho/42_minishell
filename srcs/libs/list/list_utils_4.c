@@ -57,6 +57,13 @@ void	__del_from_tree(void *cont)
 		to_del = find_leaf(to_del->left, to_del->cont, (*__this())->cmp);
 		temp->cont = to_del->cont;
 	}
+    else
+    {
+        if (to_del->up->right == to_del)
+            to_del->up->right = NULL;
+        else
+            to_del->up->left = NULL;
+    }
     free(to_del);
 }
 

@@ -27,7 +27,9 @@ int exe_buil(t_cmd *cmd)
 void	pipe_built(t_elems *elem)
 {
 	t_cmd	*cmd;
+    long    err;
 
+    err = 0;
 	cmd = (t_cmd *)elem->cont;
 	if (!cmd->args || !s().len(cmd->args[0], 0))
 		ft_exit((void *)-1);
@@ -46,8 +48,9 @@ void	pipe_built(t_elems *elem)
 		close(cmd->fd[1]);
 		m()->inter = 1;
 		m()->exit_status = exe_buil(cmd);
+        err = m()->exit_status;
 	}
-	exit (m()->exit_status);
+	ft_exit ((void *)err);
 }
 int	built(t_elems *elem)
 {

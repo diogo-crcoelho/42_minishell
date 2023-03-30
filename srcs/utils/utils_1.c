@@ -34,17 +34,3 @@ void	free_pp(void *pp)
 		free(freed);
 	freed = NULL;
 }
-
-void	destroy_cmds(t_elems *elem)
-{
-	t_cmd	*cmd;
-	t_elems	*tmp;
-
-	tmp = elem;
-	while (tmp)
-	{
-		cmd = (t_cmd *)elem->cont;
-		free_pp(cmd->args);
-		tmp = tmp->next;
-	}
-}

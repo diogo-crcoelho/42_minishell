@@ -16,34 +16,6 @@
 
 void	pipex(void);
 
-//ideias a propor ao Miguel
-//
-// comecar por retirar as aspas
-//	-> guardar tudo o que esta dentro de aspas dentro de uma string.
-//e so depois trtar dos valores dentro da string. $ e o caralho
-
-//So e considerado novo comando se estiver a seguir a uma pipe.
-//  echo echo ls,
-//	so deve fazer echo como se fosse uma string e nao xecutar varios comandos.
-
-// Cores fica sempre nice!!
-
-// Para discutir com o MIGUEL::
-//Sera que vale a pena estar a meter as condicoes do ~ do cd ouo qd virmos o til damos logo replace!!!
-
-//https://web.mit.edu/gnu/doc/html/rlman_2.html -> for keybindings etc
-
-// Caracteres a ter cuidado..
-/* |
- * ""
- * ''
- *
- * $ e ~
- *<< e >>
- *< e >
- *
- */
-
 void	print_cmds(void);
 
 t_mini	*m(void)

@@ -52,6 +52,7 @@ void	pipe_built(t_elems *elem)
 	}
 	ft_exit ((void *)err);
 }
+
 int	built(t_elems *elem)
 {
 	t_cmd *cmd;

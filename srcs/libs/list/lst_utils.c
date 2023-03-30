@@ -23,13 +23,15 @@ void	__del(t_elems *elem)
 	if ((*__this())->begin == elem)
 	{
 		(*__this())->begin = (*__this())->begin->next;
-		(*__this())->begin->prev = 0;
+		(*__this())->begin->prev = NULL;
 	}
 	else
 	{
 		elem->prev->next = elem->next;
 		if (elem->next)
 			elem->next->prev = elem->prev;
+		else
+			(*__this())->end = elem->prev;
 	}
 	if (elem->del)
 		elem->del(elem->cont);

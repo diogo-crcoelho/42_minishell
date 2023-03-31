@@ -21,9 +21,10 @@ void	del_cmd(void *cmd)
 		free(((t_cmd *)cmd)->outfile);
 	if (((t_cmd *)cmd)->infile)
 		free(((t_cmd *)cmd)->infile);
-	while (((t_cmd *)cmd)->args[++i])
+	while (((t_cmd *)cmd)->args && ((t_cmd *)cmd)->args[++i])
 		free(((t_cmd *)cmd)->args[i]);
-	free(((t_cmd *)cmd)->args);
+	if (((t_cmd *)cmd)->args)
+        free(((t_cmd *)cmd)->args);
 	// free(((t_cmd *)cmd)->path);
 	free(cmd);
 }

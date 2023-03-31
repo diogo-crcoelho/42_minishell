@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/31 14:56:57 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:17:35 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,43 @@ void	filler2(t_token *token)
 	}
 }
 
+void check_syntax()
+{
+	t_elems	*tmp;
+	t_elems	*end;
+	int f;
+	
+	f = 0;
+	tmp = array(m()->tokens)->begin;
+	end = array(m()->tokens)->end;
+	if (tmp && PIPE == ((t_token *)tmp->cont)->type)
+		f = 1;
+	if (end && PIPE == ((t_token *)end->cont)->type)
+		f = 1;
+	while (tmp)
+	{
+		if(PIPE == ((t_token *)tmp->cont)->type)
+		{
+			if(tmp->next && PIPE == ((t_token *)tmp->next->cont)->type)
+			{
+			f = 1;
+			break ;
+			}
+		}
+		tmp = tmp->next;
+	}
+	if (f && printf("Syntax error..."))
+		ft_exit((void *)1);
+		
+}
+
 void	delexer(void)
 {
 	t_elems	*tmp;
 	t_elems	*cmds;
-
+	
 	tmp = array(m()->tokens)->begin;
+	check_syntax();
 	while (tmp)
 	{
 		array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)))->del = del_cmd;

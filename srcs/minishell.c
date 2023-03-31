@@ -84,6 +84,7 @@ void	destroy_m(void)
 	array(m()->symbols)->destroy();
 	array(m()->env)->destroy();
 	array(m()->b)->destroy();
+	free(m()->prev_path);
 	free(m()->a_env);
 }
 

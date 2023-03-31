@@ -36,6 +36,7 @@ void	*non_symbol_state(char **str, int add)
 {
 	char	*temp;
 	char	*temp_free;
+	char	*temp_free_2;
 	t_dict	*symbol;
 
 	temp = ft_calloc(1);
@@ -46,7 +47,10 @@ void	*non_symbol_state(char **str, int add)
 		if (symbol)
 		{
 			symbol = ((t_tree *)(symbol))->cont;
-			temp = s().join(temp, symbol->state(str, 0), "");
+            temp_free_2 = symbol->state(str, 0);
+			temp = s().join(temp, temp_free_2, "");
+            free(temp_free);
+            free(temp_free_2);
 			continue ;
 		}
 		else

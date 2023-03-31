@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/28 14:00:51 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:56:57 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,11 @@ void	filler2(t_token *token)
 	filler(token, tmp, &flag);
 	if (HERE == token->type)
 		here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
+	if (SPC == token->type)
+		return ;
 	else if (!flag && IN != token->type)
 	{
-		clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "");
+		clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
 		free(((t_cmd *)tmp->cont)->path);
 		((t_cmd *)tmp->cont)->path = clean;
 	}
@@ -86,7 +88,7 @@ void	delexer(void)
 		if (((t_cmd *)cmds->cont)->path)
 			((t_cmd *)cmds->cont)->args = s().\
 				split(((t_cmd *)cmds->cont)->path,
-					' ');
+					27);
 		free(((t_cmd *)cmds->cont)->path);
 		if (tmp)
 			tmp = tmp->next;

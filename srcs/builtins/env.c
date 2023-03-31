@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 20:37:43 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/28 00:19:10 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/31 15:12:12 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	print_each(t_elems *elem, void *o)
 	(void)o;
 	printf("%s\n", ((t_env *)elem->cont)->total);
 }
+
+
 
 int	env(void *cont)
 {

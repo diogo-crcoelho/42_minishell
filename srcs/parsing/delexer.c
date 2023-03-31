@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/31 17:17:35 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:20:34 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	filler2(t_token *token)
 	}
 }
 
-void check_syntax()
+int check_syntax()
 {
 	t_elems	*tmp;
 	t_elems	*end;
@@ -102,9 +102,9 @@ void check_syntax()
 		}
 		tmp = tmp->next;
 	}
-	if (f && printf("Syntax error..."))
-		ft_exit((void *)1);
-		
+	if (f && printf("Syntax error...\n"))
+		return (1);
+	return 0;	
 }
 
 void	delexer(void)
@@ -113,23 +113,25 @@ void	delexer(void)
 	t_elems	*cmds;
 	
 	tmp = array(m()->tokens)->begin;
-	check_syntax();
-	while (tmp)
+	if (!check_syntax())
 	{
-		array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)))->del = del_cmd;
-		cmds = array(m()->cmds)->end;
-		while (tmp && PIPE != ((t_token *)tmp->cont)->type)
+		while (tmp)
 		{
-			filler2((t_token *)tmp->cont);
-			tmp = tmp->next;
-		}
-		if (((t_cmd *)cmds->cont)->path)
-			((t_cmd *)cmds->cont)->args = s().\
-				split(((t_cmd *)cmds->cont)->path,
-					27);
-		free(((t_cmd *)cmds->cont)->path);
-		if (tmp)
-			tmp = tmp->next;
+			array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)))->del = del_cmd;
+			cmds = array(m()->cmds)->end;
+			while (tmp && PIPE != ((t_token *)tmp->cont)->type)
+			{
+				filler2((t_token *)tmp->cont);
+				tmp = tmp->next;
+			}
+			if (((t_cmd *)cmds->cont)->path)
+				((t_cmd *)cmds->cont)->args = s().\
+					split(((t_cmd *)cmds->cont)->path,
+						27);
+			free(((t_cmd *)cmds->cont)->path);
+			if (tmp)
+				tmp = tmp->next;
+		}	
 	}
 }
 

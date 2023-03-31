@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:23 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:56:42 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:27:44 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	here_doc(t_cmd *cmd, char *eof)
 		write(1, "here_doc> ", 11);
 		str = get_next_line(1);
 		if (!str)
-			write(1, "\n", 1);
+			break ;
 		if (!s().equal(eof, str))
 		{
 			free(str);

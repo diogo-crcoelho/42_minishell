@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/28 15:14:45 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/31 17:31:40 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	run(t_elems *elem)
 		}
 		else if (!elem->next)
 			if (cmd->fd_red[1])
-					if (-1 == dup2(cmd->fd_red[1], 1))
+				if (-1 == dup2(cmd->fd_red[1], 1))
 					ft_exit((void *)-1);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);

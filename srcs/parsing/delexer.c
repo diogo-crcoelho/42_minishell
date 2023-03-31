@@ -32,17 +32,23 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 {
 	if ((IN == token->type) && ++(*flag))
 	{
+        if (((t_cmd *)tmp->cont)->fd_red[0])
+            free(((t_cmd *)tmp->cont)->infile);
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
 	}
 	if (OUT == token->type && ++(*flag))
 	{
+        if (((t_cmd *)tmp->cont)->fd_red[1])
+            free(((t_cmd *)tmp->cont)->outfile);
 		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[1] = \
 			open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
 	if (APP == token->type && ++(*flag))
 	{
+        if (((t_cmd *)tmp->cont)->fd_red[1])
+            free(((t_cmd *)tmp->cont)->outfile);
 		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[1] = \
 			open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);

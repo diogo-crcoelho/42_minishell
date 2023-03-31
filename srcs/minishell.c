@@ -114,6 +114,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(str);
 		temp = str;
 		lex(&temp);
+        print_tokens();
 		delexer();
 //       print_cmds();
 		pipex();

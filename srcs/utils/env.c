@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:00:37 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/28 15:51:17 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:15:22 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ t_env	*create_cont(char *total)
 
 void	create_env(char **envp)
 {
+	char str[PATH_MAX];
+	
 	m()->env = creat_array();
+	m()->prev_path = s().copy(getcwd(str, PATH_MAX));
 	while (*envp)
 		array(m()->env)->add(create_cont(*envp++))->del = del_elem;
 	array(m()->env)->to_array = to_array_mini;

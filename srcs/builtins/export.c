@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:55 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/28 15:53:43 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:30:15 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ int	export(void *cont)
 		else
 			change_var(temp, vars[i], splitted[1]);
 		free(splitted[0]);
-		free (splitted);
+		free(splitted);
 		array(m()->env)->cmp = comp_var;
 	}
 	free(m()->a_env);
 	m()->a_env = (char **)array(m()->env)->to_array();
-	if (!s().len(cont, 0))
+	if (!s().len(vars[0], 0))
 		export_empty(array(m()->env)->root);
 	return (0);
 }

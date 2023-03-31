@@ -40,7 +40,7 @@ void	*non_symbol_state(char **str, int add)
 	t_dict	*symbol;
 
 	temp = ft_calloc(1);
-	while (**str && **str != ' ' && **str != '|')
+	while (**str && **str != ' ' && **str != '|' && **str != '<' && **str != '>')
 	{
 		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL, *str);
 		temp_free = temp;

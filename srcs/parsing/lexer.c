@@ -84,7 +84,7 @@ void	*infile_state(char **str, int add)
 		(*str)++;
 	while (**str && **str == ' ')
 		(*str)++;
-	while (**str && **str != ' ' && **str != '|')
+	while (**str && **str != ' ' && **str != '|' && **str != '<' && **str != '>')
 	{
 		infile = aux_state(str, infile, p_sym);
 		if (!**str)

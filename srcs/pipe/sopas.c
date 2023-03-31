@@ -58,6 +58,7 @@ void	parse_paths(t_cmd *cmd)
 		}
 		free(teste);
 	}
+    free_pp(paths);
 	cmd->path = cmd->args[0];
 }
 

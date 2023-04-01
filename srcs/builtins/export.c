@@ -66,11 +66,13 @@ int	export(void *cont)
 		splitted = env_split(vars[i], '=');
 		temp = array(m()->env)->search_tree(NULL, splitted[0]);
 		array(m()->env)->cmp = cmp_env;
-		if (s().alnum(splitted[0]))
+		if (!s().len(splitted[0], 0) || s().alnum(splitted[0]) || !(__isalpha(splitted[0][0])))
 		{
 			err = s().join("export: ", ": not a valid identifier\n", vars[i]);
 			cona(err);
 			free(err);
+            free_pp(splitted);
+            array(m()->env)->cmp = comp_var;
             return (1);
 		}
 		else if (!temp)

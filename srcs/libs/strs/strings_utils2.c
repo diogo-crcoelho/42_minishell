@@ -12,7 +12,7 @@
 
 #include "ft_strings.h"
 
-static int	__isalpha(int c)
+int	__isalpha(int c)
 {
 	if (c < 65 || c > 122)
 		return (0);

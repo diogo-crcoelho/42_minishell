@@ -99,6 +99,7 @@ int				cmp_env(void *cont1, void *cont2);
 
 void			export_empty(t_tree *root);
 void			delexer(void);
+int	__isalpha(int c);
 
 //pipex
 int	treat_files(t_cmd *cmd);

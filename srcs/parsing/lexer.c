@@ -48,26 +48,29 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 void	*var_state(char **str, int add)
 {
 	t_dict	*p_sym;
-	char	*variable;
+	char	*var;
 	char	*temp;
 
-	p_sym = ((t_dict *)array(m()->symbols)->search_tree(NULL,
-				*str)->cont);
+	p_sym = ((t_dict *)array(m()->symbols)->search_tree(NULL, *str)->cont);
 	temp = *str + 1;
 	(*str)++;
-	while (**str && ft_isalnum(**str))
-		(*str)++;
-	temp = s().copy_n(temp, *str - temp);
-	if (array(m()->env)->search_tree(NULL, temp))
-		variable = s().copy(((t_env *)array(m()->env)->\
+    if (**str == '?' && (*str)++)
+        var = ft_itoa(m()->exit_status);
+    else
+    {
+        while (**str && ft_isalnum(**str))
+            (*str)++;
+        temp = s().copy_n(temp, *str - temp);
+        if (array(m()->env)->search_tree(NULL, temp))
+            var = s().copy(((t_env *)array(m()->env)->\
 			search_tree(array(m()->env)->root, temp)->cont)->splitted[1]);
-	else
-		variable = ft_calloc(1);
-	if (add)
-		(array(m()->tokens))->add(c_token(variable, p_sym->value))->\
-			del = del_token;
-	free(temp);
-	return (variable);
+        else
+            var = ft_calloc(1);
+        free(temp);
+    }
+    if (add)
+        (array(m()->tokens))->add(c_token(var, p_sym->value))->del = del_token;
+    return (var);
 }
 
 void	*infile_state(char **str, int add)

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/31 17:31:40 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/01 19:30:13 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	treat_files(t_cmd *cmd)
 	if (-1 == cmd->fd_red[1])
 	{
 		printf("Couldn't open %s\n", cmd->outfile);
-		ft_exit((void *)1);
+		s_exit(2);
 	}
 	return (-42);
 }
@@ -87,25 +87,25 @@ void	run(t_elems *elem)
 
 	cmd = (t_cmd *)elem->cont;
 	if (!cmd->args || !s().len(cmd->args[0], 0))
-		ft_exit((void *)-1);
+		s_exit(2);
 	parse_paths(cmd);
 	if (-1 != dup2(cmd->fd_red[0], 0))
 	{
 		if (elem->next && !cmd->fd_red[1])
 		{
 			if (-1 == dup2(cmd->fd[1], 1))
-				ft_exit((void *)-1);
+				s_exit(2);
 		}
 		else if (!elem->next)
 			if (cmd->fd_red[1])
 				if (-1 == dup2(cmd->fd_red[1], 1))
-					ft_exit((void *)-1);
+					s_exit(2);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 		m()->inter = 1;
 		execve(cmd->path, cmd->args, m()->a_env);
 	}
-	ft_exit((void *)-1);
+	s_exit(2);
 }
 
 void	execute(t_elems *elem)
@@ -116,13 +116,13 @@ void	execute(t_elems *elem)
 	{
 		cmd = (t_cmd *)elem->cont;
 		if (pipe(cmd->fd) < 0) {
-            ft_exit((void *)1);
+            s_exit(2);
         } // dont know status code
         if (!built(elem))
         {
             cmd->pid = fork();
             if (-1 == cmd->pid)
-                ft_exit((void *)1);
+                s_exit(2);
             if (0 == cmd->pid)
             {
                 treat_files(cmd);

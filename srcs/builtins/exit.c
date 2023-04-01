@@ -14,8 +14,26 @@ void	free_pp(void *pp);
 
 #include "../../incs/minishell.h"
 
+int s_exit(int sc)
+{
+    destroy_m();
+    exit(sc);
+}
+
 int	ft_exit(void *cont)
 {
+    char **vars;
+    int ret;
+
+    vars = (char **)cont;
+    if (vars[1])
+    {
+        cona("exit: too many arguments");
+        return 1;
+    }
+//    printf("%ld", (long)cont);
+    free_pp(cont);
+    ret = (int)((long)cont);
 	destroy_m();
-	exit((long)cont);
+	exit(ret);
 }

@@ -58,5 +58,7 @@ int	cd(void *cont)
 		g_path(old);
 	if (path)
 		free(path);
-    return err;
+    if (err && err++ && ++err)
+        cona(" No such file or directory");
+    return (err);
 }

@@ -115,16 +115,19 @@ void	execute(t_elems *elem)
 	while (elem)
 	{
 		cmd = (t_cmd *)elem->cont;
-		treat_files(cmd);
-		if (pipe(cmd->fd) < 0)
-			ft_exit((void *)1); // dont know status code
+		if (pipe(cmd->fd) < 0) {
+            ft_exit((void *)1);
+        } // dont know status code
         if (!built(elem))
         {
-		    cmd->pid = fork();
-		    if (-1 == cmd->pid)
-			    ft_exit((void *)1);
-			if (0 == cmd->pid)
+            cmd->pid = fork();
+            if (-1 == cmd->pid)
+                ft_exit((void *)1);
+            if (0 == cmd->pid)
+            {
+                treat_files(cmd);
                 run(elem);
+            }
 		    else
 		    {
 			    m()->inter = 0;

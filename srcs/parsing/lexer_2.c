@@ -73,13 +73,30 @@ int	check_validity(char *str)
 	return (0);
 }
 
+void    update_home(void)
+{
+    char   *home;
+
+    home = (char *)(array(m()->env)->search_tree(0, "HOME"));
+    if (home)
+    {
+        home = ((t_env *)((t_tree *)home)->cont)->splitted[1];
+        if (s().equal(m()->home, home))
+        {
+            if (m()->home)
+                free(m()->home);
+            m()->home = s().copy(home);
+        }
+    }
+}
+
 int	check_tilde(char **str)
 {
 	char	*tilde;
 	t_token	*token;
 
-	tilde = ((t_env *)array(m()->env)->\
-		search_tree(0, "HOME")->cont)->splitted[1];
+    update_home();
+	tilde = m()->home;
 	token = (t_token *)array(m()->tokens)->end;
 	if (!token && check_validity(*str))
 	{

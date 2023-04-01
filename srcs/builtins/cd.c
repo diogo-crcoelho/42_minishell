@@ -29,9 +29,8 @@ void g_path(char *old)
 	pwds[0] = s().join("OLDPWD=", old, "");
 	pwds[1] = s().join("PWD=", getcwd(str, PATH_MAX), "");
 	export (pwds);
-	free(pwds[0]);
-	free(pwds[1]);	
-	free(pwds);
+    free_pp(pwds);
+    free(old);
 }
 
 int	cd(void *cont)
@@ -41,9 +40,8 @@ int	cd(void *cont)
 	char	*old;
 	
 	path = ((char **)cont)[0];
-	printf("path %s..\n", path);
-	old = NULL;
-	old = s().copy(getcwd(old, PATH_MAX));
+    old = NULL;
+	old = getcwd(old, PATH_MAX);
     if (path && ((char **)cont)[1])
     {
         cona("cd: too many arguments\n");
@@ -60,6 +58,5 @@ int	cd(void *cont)
 		g_path(old);
 	if (path)
 		free(path);
-	free(old);
     return err;
 }

@@ -30,7 +30,7 @@ int	env(void *cont)
 	if (vars[0])
 	{
 		err = s().join("env: ", ": No such file or directory\n", vars[0]);
-		cona(err);
+		cona(err, 127);
 		free(err);
 		return (127);
 	}

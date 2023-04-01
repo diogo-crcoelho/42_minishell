@@ -46,7 +46,7 @@ int	cd(void *cont)
 	old = s().copy(getcwd(old, PATH_MAX));
     if (path && ((char **)cont)[1])
     {
-        cona("cd: too many arguments\n");
+        cona("cd: too many arguments\n", 0);
         return 1;
     }
     if (!s().len(path, 0))

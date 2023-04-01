@@ -79,7 +79,6 @@ void	lex(char **temp)
 
 void	destroy_m(void)
 {
-    printf("in modafucka");
 	array(m()->tokens)->destroy();
 	array(m()->cmds)->destroy();
 	array(m()->symbols)->destroy();
@@ -118,7 +117,7 @@ int	main(int argc, char **argv, char **envp)
 		lex(&temp);
 //        print_tokens();
 		delexer();
-       print_cmds();
+//       print_cmds();
 		pipex();
 		reload();
 		free(str);

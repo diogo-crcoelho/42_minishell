@@ -69,8 +69,9 @@ int	export(void *cont)
 		if (s().alnum(splitted[0]))
 		{
 			err = s().join("export: ", ": not a valid identifier\n", vars[i]);
-			cona(err, 1);
+			cona(err);
 			free(err);
+            return (1);
 		}
 		else if (!temp)
 			add_new(splitted[1], vars[i]);

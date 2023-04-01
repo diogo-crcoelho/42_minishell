@@ -12,13 +12,12 @@
 
 #include "../../incs/minishell.h"
 
-void cona(char *err, int sc)
+void cona(char *err)
 {
 //    long xx;
 //
 //    xx = (long)m()->exit_status;
     write(2, err, s().len(err, 0));
-    m()->exit_status = sc;
 //    ft_exit((void *)xx);
 }
 

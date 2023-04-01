@@ -54,7 +54,7 @@ void    destroy_m(void);
 
 int				cmp(void *cont1, void *cont2, int size);
 void			init_parse(const char *str);
-void            cona(char *err, int sc);
+void            cona(char *err);
 void			free_pp(void *pp);
 
 

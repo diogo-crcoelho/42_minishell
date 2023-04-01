@@ -143,7 +143,10 @@ void	execute(t_elems *elem)
 
 void	pipex(void)
 {
+    int size;
+
+    size = (array(m()->cmds)->size);
 	execute(array(m()->cmds)->begin);
-	while ((array(m()->cmds)->size)--)
+	while (size--)
 		waitpid(-1, &m()->exit_status, 0);
 }

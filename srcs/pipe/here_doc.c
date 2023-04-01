@@ -13,7 +13,7 @@
 //
 // Created by dcarvalh on 3/26/23.
 //
-#include "minishell.h"
+#include "../../incs/minishell.h"
 
 void	here_doc(t_cmd *cmd, char *eof)
 {
@@ -23,7 +23,7 @@ void	here_doc(t_cmd *cmd, char *eof)
 		ft_exit ((void *)1);
 	while (1)
 	{
-		write(1, "here_doc> ", 11);
+		write(1, "here_doc> ", 10);
 		str = get_next_line(1);
 		if (!str)
 			break ;

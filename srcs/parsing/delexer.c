@@ -67,7 +67,7 @@ void	filler2(t_token *token)
 	filler(token, tmp, &flag);
 	if (HERE == token->type)
 		here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
-	if (SPC == token->type)
+	else if (SPC == token->type)
 		return ;
 	else if (!flag && IN != token->type)
 	{

@@ -39,6 +39,7 @@ struct					s_mini
 	void				*tokens;
 	void				*symbols;
 	void				*b;
+    char                *home;
 };
 
 struct					s_env

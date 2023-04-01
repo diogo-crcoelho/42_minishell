@@ -56,7 +56,7 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 	}
 }
 
-void	filler2(t_token *token)
+void	filler2(t_token *token, int j)
 {
 	char	*clean;
 	int		flag;
@@ -68,10 +68,13 @@ void	filler2(t_token *token)
 	if (HERE == token->type)
 		here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
 	else if (SPC == token->type)
-		return ;
+        return ;
 	else if (!flag && IN != token->type)
 	{
-		clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
+        if (j)
+		    clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
+        else
+            clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "");
 		free(((t_cmd *)tmp->cont)->path);
 		((t_cmd *)tmp->cont)->path = clean;
 	}
@@ -111,6 +114,7 @@ void	delexer(void)
 {
 	t_elems	*tmp;
 	t_elems	*cmds;
+    int     j;
 	
 	tmp = array(m()->tokens)->begin;
 	if (!check_syntax())
@@ -121,7 +125,8 @@ void	delexer(void)
 			cmds = array(m()->cmds)->end;
 			while (tmp && PIPE != ((t_token *)tmp->cont)->type)
 			{
-				filler2((t_token *)tmp->cont);
+                j = (tmp->prev && SPC == ((t_token *)tmp->prev->cont)->type);
+				filler2((t_token *)tmp->cont, j);
 				tmp = tmp->next;
 			}
 			if (((t_cmd *)cmds->cont)->path)

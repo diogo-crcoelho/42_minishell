@@ -21,7 +21,7 @@ int	__isalpha(int c)
 	return (1);
 }
 
-static int	__isdigit(int c)
+int	__isdigit(int c)
 {
 	if (c < 48 || c > 57)
 		return (0);

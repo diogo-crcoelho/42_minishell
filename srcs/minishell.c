@@ -107,6 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	init_m(envp);
+//    ft_exit(s().split("223", 0));
 	while (1)
 	{
 		signals_hand();
@@ -118,7 +119,7 @@ int	main(int argc, char **argv, char **envp)
 		lex(&temp);
 //        print_tokens();
 		delexer();
-       print_cmds();
+//       print_cmds();
 		pipex();
 		reload();
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/01 19:30:13 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:59:00 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	dup_and_close(t_cmd *cmd)
 	close(cmd->fd_red[1]);
 	if (dup2(cmd->fd_red[0], 0) < 0)
 		return (-1);
+	close(cmd->fd_red[0]);
 	if (cmd->fd_red[0])
 		close(cmd->fd_red[0]);
 	return (1);
@@ -135,17 +136,18 @@ void	execute(t_elems *elem)
 			    {
 				    if (!((t_cmd *)elem->next->cont)->fd_red[0])
 					    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
+					close(cmd->fd[0]);
+        			close(cmd->fd[1]);
 			    }
 		    }
         }
         elem = elem->next;
-        close(cmd->fd[0]);
-        close(cmd->fd[1]);
+        
     }
 }
 
 void	pipex(void)
-{
+{	
     int size;
 
     size = (array(m()->cmds)->size);

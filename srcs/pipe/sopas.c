@@ -107,6 +107,7 @@ void	run(t_elems *elem)
 		m()->inter = 1;
 		execve(cmd->path, cmd->args, m()->a_env);
 	}
+    free(cmd->path);
 	s_exit(2);
 }
 

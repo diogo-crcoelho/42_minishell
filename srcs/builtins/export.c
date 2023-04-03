@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:55 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/31 16:30:15 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:34:47 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	export_empty(t_tree *root)
 {
 	if (root->left)
 		export_empty(root->left);
-	printf("declare -x %s\n",((t_env *)root->cont)->total);
+	printf("declare -x %s=\"%s\"\n",((t_env *)root->cont)->splitted[0], ((t_env *)root->cont)->splitted[1]);
 	if (root->right)
 		export_empty(root->right);
 }

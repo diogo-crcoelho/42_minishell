@@ -124,5 +124,5 @@ int	main(int argc, char **argv, char **envp)
 		reload();
 		free(str);
 	}
-	destroy_m();
+	s_exit(m()->exit_status);
 }

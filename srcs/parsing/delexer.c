@@ -99,8 +99,8 @@ int check_syntax()
 		{
 			if(tmp->next && PIPE == ((t_token *)tmp->next->cont)->type)
 			{
-			f = 1;
-			break ;
+			    f = 1;
+			    break ;
 			}
 		}
 		tmp = tmp->next;

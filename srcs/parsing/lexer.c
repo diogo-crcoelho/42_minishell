@@ -45,6 +45,8 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 	return (lex);
 }
 
+
+
 void	*var_state(char **str, int add)
 {
 	t_dict	*p_sym;

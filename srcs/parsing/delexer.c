@@ -25,7 +25,7 @@ void	del_cmd(void *cmd)
 		free(((t_cmd *)cmd)->args[i]);
 	if (((t_cmd *)cmd)->args)
         free(((t_cmd *)cmd)->args);
-	// free(((t_cmd *)cmd)->path);
+//	 free(((t_cmd *)cmd)->path);
 	free(cmd);
 }
 

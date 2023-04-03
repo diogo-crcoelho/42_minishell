@@ -55,6 +55,7 @@ void	parse_paths(t_cmd *cmd)
 		if (access(teste, F_OK) == 0)
 		{
 			cmd->path = teste;
+            free_pp(paths);
 			return ;
 		}
 		free(teste);

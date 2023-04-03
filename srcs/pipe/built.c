@@ -78,7 +78,7 @@ int	built(t_elems *elem)
 		    if (elem->next)
 			{
 		    	if (!((t_cmd *)elem->next->cont)->fd_red[0])
-		    	((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
+		    	    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
 			}
 		}
 		return (1);

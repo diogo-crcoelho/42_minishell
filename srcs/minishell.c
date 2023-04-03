@@ -93,6 +93,12 @@ void	reload(void)
 {
 	array(m()->tokens)->destroy();
 	m()->tokens = creat_array();
+//    t_elems *ele = array(m()->cmds)->begin;
+//    while (ele)
+//    {
+//        close(((t_cmd *)ele->cont)->fd_red[0]);
+//        ele = ele->next;
+//    }
 	array(m()->cmds)->destroy();
 	m()->cmds = creat_array();
 }

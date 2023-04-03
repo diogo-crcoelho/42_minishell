@@ -45,6 +45,8 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 	return (lex);
 }
 
+
+
 void	*var_state(char **str, int add)
 {
 	t_dict	*p_sym;
@@ -56,6 +58,8 @@ void	*var_state(char **str, int add)
 	(*str)++;
     if (**str == '?' && (*str)++)
         var = ft_itoa(m()->exit_status);
+    else if (!ft_isalnum(**str))
+        var = s().copy("$");
     else
     {
         while (**str && ft_isalnum(**str))

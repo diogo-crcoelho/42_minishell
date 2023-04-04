@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/04 14:19:13 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:33:36 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
 	}
-	if (OUT == token->type && ++(*flag))
+	if (OUT == token->type && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[1])
 	{
         if (((t_cmd *)tmp->cont)->fd_red[1])
             free(((t_cmd *)tmp->cont)->outfile);
@@ -46,7 +46,7 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 		((t_cmd *)tmp->cont)->fd_red[1] = \
 			open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	}
-	if (APP == token->type && ++(*flag))
+	if (APP == token->type && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[1])
 	{
         if (((t_cmd *)tmp->cont)->fd_red[1])
             free(((t_cmd *)tmp->cont)->outfile);

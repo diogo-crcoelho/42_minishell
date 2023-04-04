@@ -106,6 +106,6 @@ int s_exit(int sc);
 
 
 //pipex
-int	treat_files(t_cmd *cmd);
+void	treat_files(t_cmd *cmd);
 
 #endif

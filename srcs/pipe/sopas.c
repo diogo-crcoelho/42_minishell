@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/04 18:33:40 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:42:32 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,13 +145,15 @@ void	execute(t_elems *elem)
 					    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
 			    }
 		    }
-        }
-		close(cmd->fd[0]);
+        close(cmd->fd[0]);
+		close(cmd->fd_red[0]);
+		if (elem->prev)
+			close(((t_cmd *)elem->prev->cont)->fd[1]);
 		close(cmd->fd[1]);
-		if (cmd->infile)
-			close(cmd->fd_red[0]);
 		if (cmd->outfile)
 			close(cmd->fd_red[1]);
+		}
+		
         elem = elem->next;
     }
 }

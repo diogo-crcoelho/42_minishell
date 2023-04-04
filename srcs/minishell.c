@@ -127,3 +127,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	s_exit(m()->exit_status);
 }
+
+//cat <./minishell_tester/test_files/infile_big | ls

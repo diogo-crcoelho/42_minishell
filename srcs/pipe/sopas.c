@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/04 20:51:44 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/04 21:06:16 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	parse_paths(t_cmd *cmd)
 		free(teste);
 	}
     free_pp(paths);
-	cmd->path = cmd->args[0];
+	cmd->path = s().copy(cmd->args[0]);
 }
 
 void	treat_files(t_cmd *cmd)
@@ -145,7 +145,8 @@ void	execute(t_elems *elem)
 					    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
 			    }
 		    }
-			close(cmd->fd_red[0]);
+			if (cmd->infile || elem->prev)
+				close(cmd->fd_red[0]);
 			if (elem->prev)
 				close(((t_cmd *)elem->prev->cont)->fd[1]);
 			if (cmd->outfile)

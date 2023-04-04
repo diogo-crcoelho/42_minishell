@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:25 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/04 16:38:55 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/04 20:46:09 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@ int	built(t_elems *elem)
 		    	    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
 			}
 		}
+		close(cmd->fd_red[0]);
+		if (elem->prev)
+			close(((t_cmd *)elem->prev->cont)->fd[1]);
+		if (cmd->outfile)
+			close(cmd->fd_red[1]);
 		return (1);
 	}
 	return(0);

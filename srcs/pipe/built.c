@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:25 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/01 19:29:41 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:38:55 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int exe_buil(t_cmd *cmd)
 		return (0);
 	ll = array(m()->b)->search_tree(NULL, (void *)cmd->args[0]);
     if (!ll)
-        return 0;
+	   	return 0;
+	m()->c_count -= 1;
     tt = (t_built *)ll->cont;
     m()->exit_status = tt->b(&cmd->args[1]);
 	return 1;
@@ -49,7 +50,7 @@ void	pipe_built(t_elems *elem)
 					s_exit(2);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
-		m()->inter = 1;
+		
 		if (!cmd->args || !s().len(cmd->args[0], 0))
 			s_exit(2);
 		m()->exit_status = exe_buil(cmd);
@@ -63,6 +64,7 @@ int	built(t_elems *elem)
 	t_cmd *cmd;
 
 	cmd = (t_cmd *)elem->cont;
+	m()->inter = 1;
 	if (array(m()->cmds)->size <= 1)
 		return (exe_buil((t_cmd *)elem->cont));
 	else if (cmd->args && array(m()->b)->search_tree(NULL, (void *)cmd->args[0]))

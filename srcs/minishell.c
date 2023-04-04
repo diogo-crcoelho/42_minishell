@@ -123,6 +123,7 @@ int	main(int argc, char **argv, char **envp)
 		pipex();
 		reload();
 		free(str);
+		
 	}
 	s_exit(m()->exit_status);
 }

@@ -40,6 +40,7 @@ struct					s_mini
 	void				*symbols;
 	void				*b;
     char                *home;
+	int					c_count;
 };
 
 struct					s_env

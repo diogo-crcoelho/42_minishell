@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/31 17:20:34 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:19:13 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	del_cmd(void *cmd)
 
 void	filler(t_token *token, t_elems *tmp, int *flag)
 {
-	if ((IN == token->type) && ++(*flag))
+	if ((IN == token->type) && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[0])
 	{
         if (((t_cmd *)tmp->cont)->fd_red[0])
             free(((t_cmd *)tmp->cont)->infile);
@@ -138,6 +138,7 @@ void	delexer(void)
 				tmp = tmp->next;
 		}	
 	}
+	m()->c_count = (array(m()->cmds)->size);
 }
 
 void	print_cmds(void)

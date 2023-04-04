@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/03 19:12:31 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:36:41 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	treat_files(t_cmd *cmd)
 	if (-1 == cmd->fd_red[0])
 	{
 		perror(cmd->infile);
+		m()->exit_status = 2;
+		--m()->c_count;
 		pipe(fds);
 		close(fds[1]);
 		return (fds[0]);
@@ -104,7 +106,6 @@ void	run(t_elems *elem)
 					s_exit(2);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
-		m()->inter = 1;
 		execve(cmd->path, cmd->args, m()->a_env);
 	}
     free(cmd->path);
@@ -118,6 +119,7 @@ void	execute(t_elems *elem)
 	while (elem)
 	{
 		cmd = (t_cmd *)elem->cont;
+                treat_files(cmd);
 		if (pipe(cmd->fd) < 0) {
             s_exit(2);
         } // dont know status code
@@ -128,12 +130,10 @@ void	execute(t_elems *elem)
                 s_exit(2);
             if (0 == cmd->pid)
             {
-                treat_files(cmd);
                 run(elem);
             }
 		    else
 		    {
-			    m()->inter = 0;
 			    if (elem->next)
 			    {
 				    if (!((t_cmd *)elem->next->cont)->fd_red[0])
@@ -151,8 +151,13 @@ void	pipex(void)
 {	
     int size;
 
-    size = (array(m()->cmds)->size);
 	execute(array(m()->cmds)->begin);
-	while (size--)
+    size = m()->c_count;
+	// printf("%d\n", size);
+	while (size-- > 0)
+	{
 		waitpid(-1, &m()->exit_status, 0);
+		// printf("%d\n", m()->exit_status);
+	}
+	m()->inter = 0;
 }

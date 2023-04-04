@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:54:53 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/27 16:00:47 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/04 16:38:23 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,23 @@ void	ctrl_c(int sig)
 	(void)sig;
 	if (m()->inter)
 	{
-		m()->exit_status = 130;
+		write(1, "\n", 1);
 		return ;
 	}
 	write(2, "^C\n", 3);
 	rl_replace_line("", 1);
 	rl_on_new_line();
 	rl_redisplay();
-	return ;
+	m()->exit_status = 130;
 }
 
 void	ctrl_bs(int sig)
 {
-	if (SIGQUIT == sig)
+	(void)sig;
+	if (!m()->inter)
 		SIG_IGN;
+	else
+		printf("Quit (core dumped)\n");
 }
 
 void	signals_hand(void)

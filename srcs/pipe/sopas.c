@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/04 16:36:41 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/04 17:51:39 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,25 +64,25 @@ void	parse_paths(t_cmd *cmd)
 	cmd->path = cmd->args[0];
 }
 
-int	treat_files(t_cmd *cmd)
+void	treat_files(t_cmd *cmd)
 {
-	int	fds[2];
+	// int	fds[2];
 
 	if (-1 == cmd->fd_red[0])
 	{
 		perror(cmd->infile);
 		m()->exit_status = 2;
 		--m()->c_count;
-		pipe(fds);
-		close(fds[1]);
-		return (fds[0]);
+		// pipe(fds);
+		// close(fds[1]);
+		// close(fds[0]);
 	}
 	if (-1 == cmd->fd_red[1])
 	{
 		printf("Couldn't open %s\n", cmd->outfile);
 		s_exit(2);
 	}
-	return (-42);
+	return ;
 }
 
 void	run(t_elems *elem)
@@ -119,7 +119,7 @@ void	execute(t_elems *elem)
 	while (elem)
 	{
 		cmd = (t_cmd *)elem->cont;
-                treat_files(cmd);
+        treat_files(cmd);
 		if (pipe(cmd->fd) < 0) {
             s_exit(2);
         } // dont know status code

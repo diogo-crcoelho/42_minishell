@@ -51,7 +51,7 @@ void	parse_paths(t_cmd *cmd)
 	while (paths[i])
 	{
 		teste = s().join(paths[i++], cmd->args[0], "/");
-		if (access(teste, F_OK) == 0)
+		if (0 == access(teste, F_OK))
 		{
 			cmd->path = teste;
             free_pp(paths);
@@ -88,6 +88,33 @@ void	treat_files(t_cmd *cmd)
 	return ;
 }
 
+void befor_exit(t_cmd *cmd)
+{
+    char *err = NULL;
+
+    m()->exit_status = 127;
+    if (s().contains(cmd->args[0], "/") && access(cmd->args[0], F_OK))
+        err = s().join(cmd->args[0], "No such file or directory\n", ": ");
+    else
+    {
+        if (!access(cmd->args[0], F_OK))
+        {
+            if (0 != access(cmd->args[0], X_OK) && --(m()->exit_status))
+                err = s().join(cmd->args[0], "Permission denied\n", ": ");
+            else if (s().contains(cmd->args[0], "/") && opendir(cmd->args[0]) && --m()->exit_status)
+                err = s().join(cmd->args[0], "Is a directory\n", ": ");
+            else
+                err = s().join(cmd->args[0], "command not found\n", ": ");
+        }
+        else
+            err = s().join(cmd->args[0], "command not found\n", ": ");
+//        else
+
+    }
+    write(2, err, s().len(err, 0));
+    free (err);
+}
+
 void	run(t_elems *elem)
 {
 	t_cmd	*cmd;
@@ -97,7 +124,7 @@ void	run(t_elems *elem)
 	{
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
-		s_exit(2);
+		s_exit(0);
 	}
 	parse_paths(cmd);
 	if (-1 != dup2(cmd->fd_red[0], 0))
@@ -114,13 +141,12 @@ void	run(t_elems *elem)
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 		execve(cmd->path, cmd->args, m()->a_env);
-		write(2, cmd->args[0], s().len(cmd->args[0], 0));
-		write(2, ": command not found\n", s().len(": command not found\n", 0));
+        befor_exit(cmd);
 	}
 	close(cmd->fd[0]);
 	close(cmd->fd[1]);
     free(cmd->path);
-	s_exit(127);
+	s_exit(m()->exit_status);
 }
 
 void	execute(t_elems *elem)
@@ -177,7 +203,8 @@ void	pipex(void)
 	while (size-- > 0)
 	{
 		waitpid(-1, &(m()->exit_status), 0);
-        m()->exit_status /= 256;
+//        printf("\n--%d\n", WEXITSTATUS(m()->exit_status));
+        m()->exit_status = WEXITSTATUS(m()->exit_status);
 	}
 	m()->inter = 0;
 }

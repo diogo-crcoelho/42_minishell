@@ -22,6 +22,8 @@
 # include <wait.h>
 # include <errno.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <dirent.h>
 # include "../srcs/libs/list/list_utils.h"
 # include "../srcs/libs/strs/ft_strings.h"
 # include "structs.h"

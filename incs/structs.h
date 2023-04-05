@@ -60,7 +60,7 @@ struct					s_dict
 
 struct s_built{
     char    *key;
-    int     (*b)(void *);
+    int     (*b)(void *, int);
 };
 
 struct s_token{

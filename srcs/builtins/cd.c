@@ -28,17 +28,18 @@ void g_path(char *old)
 	pwds = ft_calloc((sizeof(char *) *3));
 	pwds[0] = s().join("OLDPWD=", old, "");
 	pwds[1] = s().join("PWD=", getcwd(str, PATH_MAX), "");
-	export (pwds);
+	export (pwds, 0);
     free_pp(pwds);
     free(old);
 }
 
-int	cd(void *cont)
+int	cd(void *cont, int fd)
 {
 	int		err;
 	char	*path;
 	char	*old;
-	
+
+    (void)fd;
 	path = ((char **)cont)[0];
     old = NULL;
 	old = getcwd(old, PATH_MAX);

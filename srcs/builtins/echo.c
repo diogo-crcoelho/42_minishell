@@ -12,7 +12,7 @@
 
 #include "../../incs/minishell.h"
 
-int	echo(void *cont)
+int	echo(void *cont, int fd)
 {
 	int		i;
 	int		flag;
@@ -30,11 +30,12 @@ int	echo(void *cont)
     }
     while (strs[++i])
     {
-        printf("%s", strs[i]);
+//        printf("%s", strs[i]);
+        write(fd, strs[i], s().len(strs[i], 0));
         if (strs[i + 1])
-            printf(" ");
+            write(fd, " ", 1);
     }
     if (!flag)
-        printf("\n");
+        write(fd, "\n", 1);
     return (0);
 }

@@ -11,20 +11,27 @@
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-int exe_buil(t_cmd *cmd)
+int exe_buil(t_elems *elem)
 {
+    t_cmd *cmd;
 	t_tree *ll;
 	t_built *tt;
 
+    cmd = (t_cmd *)elem->cont;
 	if (!cmd->args || !s().len(cmd->args[0], 0))
 		return (0);
 	ll = array(m()->b)->search_tree(NULL, (void *)cmd->args[0]);
     if (!ll)
 	   	return 0;
-	m()->c_count -= 1;
+//	m()->c_count -= 1;
     tt = (t_built *)ll->cont;
-    m()->exit_status = tt->b(&cmd->args[1]);
-	return 1;
+    if (!cmd->outfile)
+        cmd->fd_red[1] = 1;
+
+    m()->exit_status = tt->b(&cmd->args[1], cmd->fd_red[1]);
+    if (cmd->outfile)
+        close(cmd->fd_red[1]);
+    return 1;
 }
 
 void	pipe_built(t_elems *elem)
@@ -50,10 +57,8 @@ void	pipe_built(t_elems *elem)
 					s_exit(2);
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
-		
-		if (!cmd->args || !s().len(cmd->args[0], 0))
-			s_exit(2);
-		m()->exit_status = exe_buil(cmd);
+
+		m()->exit_status = exe_buil(elem);
         err = m()->exit_status;
 	}
 	s_exit(err);
@@ -64,16 +69,23 @@ int	built(t_elems *elem)
 	t_cmd *cmd;
 
 	cmd = (t_cmd *)elem->cont;
+    treat_files(cmd);
 	m()->inter = 1;
 	if (array(m()->cmds)->size <= 1)
-		return (exe_buil((t_cmd *)elem->cont));
+    {
+        return (exe_buil(elem));
+
+    }
 	else if (cmd->args && array(m()->b)->search_tree(NULL, (void *)cmd->args[0]))
 	{
 	    cmd->pid = fork();
 	    if (-1 == cmd->pid)
 		    s_exit(2);
 		if (0 == cmd->pid)
+        {
+
             pipe_built(elem);
+        }
 		else
 		{
 		    if (elem->next)

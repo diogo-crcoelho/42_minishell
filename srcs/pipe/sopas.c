@@ -74,8 +74,10 @@ void	treat_files(t_cmd *cmd)
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
 		free(err);
+        printf("--%d\n", cmd->err);
 		m()->exit_status = 1;
-		s_exit(1);
+        return ;
+//		s_exit(m()->exit_status);
 	}
 	if (-1 == cmd->fd_red[0] && cmd->ord > 0)
 	{
@@ -83,7 +85,9 @@ void	treat_files(t_cmd *cmd)
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
 		free(err);
+        printf("--%d\n", cmd->err);
 		m()->exit_status = 2;
+//        s_exit(m()->exit_status);
 	}
 	return ;
 }

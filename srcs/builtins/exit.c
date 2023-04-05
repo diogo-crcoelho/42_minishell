@@ -64,11 +64,13 @@ int parse_exit(long value)
     value = value % 256;
     return value;
 }
-int	ft_exit(void *cont)
+
+int	ft_exit(void *cont, int fd)
 {
     char **vars;
     int ret;
 
+    (void)fd;
     vars = (char **)cont;
     if (vars[1])
     {

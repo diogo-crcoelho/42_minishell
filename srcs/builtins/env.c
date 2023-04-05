@@ -15,17 +15,24 @@
 void	print_each(t_elems *elem, void *o)
 {
 	(void)o;
-	printf("%s\n", ((t_env *)elem->cont)->total);
+    char *err;
+    int fd;
+
+    fd = (int)((long)o);
+    err = s().append(((t_env *)elem->cont)->total, '\n');
+	write(fd, err, s().len(err, 0));
+    free(err);
 }
 
 
 
-int	env(void *cont)
+int	env(void *cont, int fd)
 {
 	char	**vars;
 	char	*err;
+    long fd1;
 
-	
+    fd1 = (long)fd;
 	vars = (char **)cont;
 	if (vars[0])
 	{
@@ -34,6 +41,6 @@ int	env(void *cont)
 		free(err);
 		return (127);
 	}
-	(array(m()->env))->for_each(print_each, 0);
+	(array(m()->env))->for_each(print_each, (void *)fd1);
 	return (0);
 }

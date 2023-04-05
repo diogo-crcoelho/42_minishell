@@ -12,11 +12,13 @@
 
 #include "../../incs/minishell.h"
 
-int	pwd(void *cont)
+int	pwd(void *cont, int fd)
 {
 	char	str[PATH_MAX];
 
 	(void)cont;
-	printf("%s\n", getcwd(str, PATH_MAX));
+
+    write(fd, getcwd(str, PATH_MAX), s().len(str, 0));
+    write(fd, "\n", 1);
 	return (0);
 }	

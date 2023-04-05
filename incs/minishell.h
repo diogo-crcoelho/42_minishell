@@ -38,13 +38,16 @@ unsigned long hash(char *str);
 
 //b
 void    init_b(void);
-int     pwd(void* cont);
-int     env(void* cont);
-int     unset(void *cont);
-int     export(void* cont);
-int     cd(void *path);
-int 	echo(void *cont);
-int	    ft_exit(void* cont);
+int     pwd(void* cont, int fd);
+int	    env(void *cont, int fd);
+
+int     unset(void *cont, int fd);
+int     export(void *cont, int fd);
+
+int     cd(void *path, int fd);
+int	    echo(void *cont, int fd);
+int     ft_exit(void *cont, int fd);
+
 int		built(t_elems *elem);
 void	destroy_cmds(t_elems *elem);
 
@@ -101,7 +104,7 @@ int				comp_symbols_build(void *c1, void *c2);
 void			signals_hand(void);
 int				cmp_env(void *cont1, void *cont2);
 
-void			export_empty(t_tree *root);
+void			export_empty(t_tree *root, int fd);
 void			delexer(void);
 int	__isalpha(int c);
 int	__isdigit(int c);

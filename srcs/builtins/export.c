@@ -28,13 +28,20 @@
 //	return (0);
 //}
 
-void	export_empty(t_tree *root)
+void	export_empty(t_tree *root, int fd)
 {
+    char *msg;
+    char *tmp;
+
 	if (root->left)
-		export_empty(root->left);
-	printf("declare -x %s=\"%s\"\n",((t_env *)root->cont)->splitted[0], ((t_env *)root->cont)->splitted[1]);
+		export_empty(root->left, fd);
+    tmp = s().join(((t_env *)root->cont)->splitted[0], ((t_env *)root->cont)->splitted[1], "=\"");
+    msg = s().join("declare -x ", "\"\n", tmp);
+    write(fd, msg, s().len(msg, 0));
+    free(msg);
+    free(tmp);
 	if (root->right)
-		export_empty(root->right);
+		export_empty(root->right, fd);
 }
 
 void	add_new(char *splitted, char *new)
@@ -51,7 +58,7 @@ void	change_var(t_tree *var, char *new, char *splitted)
 	((t_env *)var->cont)->total = s().copy(new);
 }
 
-int	export(void *cont)
+int	export(void *cont, int fd)
 {
 	t_tree	*temp;
 	char	**splitted;
@@ -86,6 +93,6 @@ int	export(void *cont)
 	free(m()->a_env);
 	m()->a_env = (char **)array(m()->env)->to_array();
 	if (!s().len(vars[0], 0))
-		export_empty(array(m()->env)->root);
+		export_empty(array(m()->env)->root, fd);
 	return (0);
 }

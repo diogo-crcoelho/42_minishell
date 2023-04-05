@@ -12,12 +12,13 @@
 
 #include "../../incs/minishell.h"
 
-int	unset(void *cont)
+int	unset(void *cont, int fd)
 {
 	t_elems *temp;
 	char	**vars;
 	int		i;
 
+    (void)fd;
 	i = -1;
     vars = (char **)cont;
     array(m()->env)->cmp = cmp_env;

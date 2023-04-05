@@ -76,14 +76,14 @@ int	built(t_elems *elem)
             pipe_built(elem);
 		else
 		{
-		    m()->inter = 0;
 		    if (elem->next)
 			{
 		    	if (!((t_cmd *)elem->next->cont)->fd_red[0])
 		    	    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
 			}
 		}
-		close(cmd->fd_red[0]);
+        if (cmd->infile || elem->prev)
+		    close(cmd->fd_red[0]);
 		if (elem->prev)
 			close(((t_cmd *)elem->prev->cont)->fd[1]);
 		if (cmd->outfile)

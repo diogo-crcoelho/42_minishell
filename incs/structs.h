@@ -40,6 +40,7 @@ struct					s_mini
 	void				*symbols;
 	void				*b;
     char                *home;
+
 	int					c_count;
 };
 
@@ -77,6 +78,8 @@ struct					s_cmd
 	char				*outfile;
 	int					app;
 	int					pid;
+	int					err;
+	int					ord;
 };
 
 #endif //INC_42_m_STRUCTS_H

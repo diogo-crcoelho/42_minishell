@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/04 18:10:19 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:18:14 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
             free(((t_cmd *)tmp->cont)->infile);
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
+		if (!(((t_cmd *)tmp->cont)->err) && ++((t_cmd *)tmp->cont)->ord)
+			((t_cmd *)tmp->cont)->err = errno;
 	}
 	if (OUT == token->type && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[1])
 	{
@@ -45,6 +47,8 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[1] = \
 			open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+		if (!(((t_cmd *)tmp->cont)->err) && --((t_cmd *)tmp->cont)->ord)
+			((t_cmd *)tmp->cont)->err = errno;
 	}
 	if (APP == token->type && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[1])
 	{
@@ -53,6 +57,8 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[1] = \
 			open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		if (!(((t_cmd *)tmp->cont)->err) && --((t_cmd *)tmp->cont)->ord)
+			((t_cmd *)tmp->cont)->err = errno;
 	}
 }
 
@@ -123,6 +129,8 @@ void	delexer(void)
 		{
 			array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)))->del = del_cmd;
 			cmds = array(m()->cmds)->end;
+			// ((t_cmd *)cmds->cont)->err = 0;
+			// ((t_cmd *)cmds->cont)->ord = 0;
 			while (tmp && PIPE != ((t_token *)tmp->cont)->type)
 			{
                 j = (tmp->prev && SPC == ((t_token *)tmp->prev->cont)->type);

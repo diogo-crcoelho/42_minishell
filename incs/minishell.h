@@ -19,6 +19,8 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <sys/wait.h>
+# include <wait.h>
+# include <errno.h>
 # include <unistd.h>
 # include "../srcs/libs/list/list_utils.h"
 # include "../srcs/libs/strs/ft_strings.h"

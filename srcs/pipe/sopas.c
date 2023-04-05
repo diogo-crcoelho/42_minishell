@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/04 21:06:16 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/05 16:52:20 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,25 @@ void	parse_paths(t_cmd *cmd)
 
 void	treat_files(t_cmd *cmd)
 {
-	// int	fds[2];
+	char *err;
 
-	if (-1 == cmd->fd_red[0])
+	if (-1 == cmd->fd_red[1] && cmd->ord < 0)
 	{
-		perror(cmd->infile);
-		m()->exit_status = 2;
-		// --m()->c_count;
-		// pipe(fds);
-		// close(fds[1]);
-		// close(fds[0]);
+		
+		err = s().join(cmd->outfile, strerror(cmd->err), ": ");
+		write(2, err, s().len(err, 0));
+		write(2, "\n", 1);
+		free(err);
+		m()->exit_status = 1;
+		s_exit(1);
 	}
-	if (-1 == cmd->fd_red[1])
+	if (-1 == cmd->fd_red[0] && cmd->ord > 0)
 	{
-		printf("Couldn't open %s\n", cmd->outfile);
-		s_exit(2);
+		err = s().join(cmd->infile, strerror(cmd->err), ": ");
+		write(2, err, s().len(err, 0));
+		write(2, "\n", 1);
+		free(err);
+		m()->exit_status = 2;
 	}
 	return ;
 }
@@ -110,11 +114,13 @@ void	run(t_elems *elem)
 		close(cmd->fd[0]);
 		close(cmd->fd[1]);
 		execve(cmd->path, cmd->args, m()->a_env);
+		write(2, cmd->args[0], s().len(cmd->args[0], 0));
+		write(2, ": command not found\n", s().len(": command not found\n", 0));
 	}
 	close(cmd->fd[0]);
 	close(cmd->fd[1]);
     free(cmd->path);
-	s_exit(2);
+	s_exit(127);
 }
 
 void	execute(t_elems *elem)
@@ -124,7 +130,6 @@ void	execute(t_elems *elem)
 	while (elem)
 	{
 		cmd = (t_cmd *)elem->cont;
-        treat_files(cmd);
 		if (pipe(cmd->fd) < 0) {
             s_exit(2);
         } // dont know status code
@@ -135,6 +140,7 @@ void	execute(t_elems *elem)
                 s_exit(2);
             if (0 == cmd->pid)
             {
+        		treat_files(cmd);
                 run(elem);
             }
 		    else
@@ -166,11 +172,12 @@ void	pipex(void)
 
 	execute(array(m()->cmds)->begin);
     size = m()->c_count;
-	// printf("%d\n", size);
+//    printf("%d\n", size);
+//    printf("\n--%d\n", m()->exit_status);
 	while (size-- > 0)
 	{
-		waitpid(-1, &m()->exit_status, 0);
-		// printf("%d\n", m()->exit_status);
+		waitpid(-1, &(m()->exit_status), 0);
+        m()->exit_status /= 256;
 	}
 	m()->inter = 0;
 }

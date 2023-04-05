@@ -17,6 +17,8 @@ void	free_pp(void *pp);
 int s_exit(int sc)
 {
     destroy_m();
+//	m()->exit_status = sc;
+//    printf("inside %d\n", sc);
     exit(sc);
 }
 

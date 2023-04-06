@@ -107,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	init_m(envp);
-//    ft_exit(s().split("223", 0));
+	printf("2-%s\n", ((char *)(array(m()->env)->search_tree(0, "SHLVL"))));
 	while (1)
 	{
 		signals_hand();

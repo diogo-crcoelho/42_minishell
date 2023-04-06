@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:54:53 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/06 20:18:05 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/06 22:16:01 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ctrl_bs(int sig)
 {
 	(void)sig;
 	if (!m()->inter)
-		(SIG_IGN);
+		SIG_IGN;
 	else
 		printf("Quit (core dumped)\n");
 }

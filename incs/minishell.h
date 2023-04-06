@@ -69,6 +69,7 @@ void			del_elem(void *cont);
 //utils
 char			**env_split(char *str, char sep);
 char			*ft_itoa(int n);
+long			s_atoi(char *str);
 
 //tokens
 void			init_tokens(void);

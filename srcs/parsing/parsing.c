@@ -34,5 +34,5 @@ void	init_m(char **envp)
 	init_tokens();
 	init_symbols();
 	init_b();
-	printf("%s\n", ((char *)(array(m()->env)->search_tree(0, "SHLVL"))));
+//	printf("%s\n", ((char *)(array(m()->env)->search_tree(0, "SHLVL"))));
 }

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/05 16:52:20 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:30:16 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	treat_files(t_cmd *cmd)
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
 		free(err);
-        printf("--%d\n", cmd->err);
+        // printf("--%d\n", cmd->err);
 		m()->exit_status = 1;
         return ;
 //		s_exit(m()->exit_status);
@@ -85,7 +85,7 @@ void	treat_files(t_cmd *cmd)
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
 		free(err);
-        printf("--%d\n", cmd->err);
+        // printf("--%d\n", cmd->err);
 		m()->exit_status = 2;
 //        s_exit(m()->exit_status);
 	}
@@ -170,7 +170,7 @@ void	execute(t_elems *elem)
                 s_exit(2);
             if (0 == cmd->pid)
             {
-        		treat_files(cmd);
+        		// treat_files(cmd);
                 run(elem);
             }
 		    else

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:25 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/04 20:46:09 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 13:38:12 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int exe_buil(t_elems *elem)
 	ll = array(m()->b)->search_tree(NULL, (void *)cmd->args[0]);
     if (!ll)
 	   	return 0;
-//	m()->c_count -= 1;
     tt = (t_built *)ll->cont;
     if (!cmd->outfile)
         cmd->fd_red[1] = 1;
@@ -73,8 +72,9 @@ int	built(t_elems *elem)
 	m()->inter = 1;
 	if (array(m()->cmds)->size <= 1)
     {
-        return (exe_buil(elem));
-
+        if (exe_buil(elem) && --m()->c_count)	
+			return (1);
+		return 0;
     }
 	else if (cmd->args && array(m()->b)->search_tree(NULL, (void *)cmd->args[0]))
 	{

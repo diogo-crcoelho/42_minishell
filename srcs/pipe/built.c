@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:25 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/06 13:38:12 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:35:41 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	built(t_elems *elem)
 	m()->inter = 1;
 	if (array(m()->cmds)->size <= 1)
     {
-        if (exe_buil(elem) && --m()->c_count)	
+        if (exe_buil(elem) && m()->c_count--)	
 			return (1);
 		return 0;
     }

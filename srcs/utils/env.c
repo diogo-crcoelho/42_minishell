@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:00:37 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/31 16:15:22 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 20:15:16 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 int	cmp_env(void *cont1, void *cont2)
 {
-    char	*s1;
-    char	*s2;
+	char	*s1;
+	char	*s2;
 
-    s1 = ((t_env *)cont1)->splitted[0];
-    s2 = ((t_env *)cont2)->splitted[0];
-    return (s().equal(s1, s2));
+	s1 = ((t_env *)cont1)->splitted[0];
+	s2 = ((t_env *)cont2)->splitted[0];
+	return (s().equal(s1, s2));
 }
 
 int	comp_var(void *c1, void *c2)
 {
-    char	*in_tree;
-    char	*out_tree;
+	char	*in_tree;
+	char	*out_tree;
 
-    in_tree = ((t_env *)c1)->splitted[0];
-    out_tree = (char *)c2;
-    return (s().equal(in_tree, out_tree));
+	in_tree = ((t_env *)c1)->splitted[0];
+	out_tree = (char *)c2;
+	return (s().equal(in_tree, out_tree));
 }
 
 void	del_elem(void *cont)
@@ -80,27 +80,3 @@ void	**to_array_mini(void)
 	return (arr);
 }
 
-t_env	*create_cont(char *total)
-{
-	t_env	*cont;
-
-	cont = ft_calloc(sizeof(t_env));
-	cont->splitted = env_split(total, '=');
-	cont->total = s().copy(total);
-	return (cont);
-}
-
-void	create_env(char **envp)
-{
-	char str[PATH_MAX];
-	
-	m()->env = creat_array();
-	m()->prev_path = s().copy(getcwd(str, PATH_MAX));
-	while (*envp)
-		array(m()->env)->add(create_cont(*envp++))->del = del_elem;
-	array(m()->env)->to_array = to_array_mini;
-	array(m()->env)->cmp = cmp_env;
-	array(m()->env)->build_tree();
-	array(m()->env)->cmp = comp_var;
-	m()->a_env = (char **)array(m()->env)->to_array();
-}

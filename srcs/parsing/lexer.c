@@ -6,7 +6,7 @@
 /*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:51:10 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:55:13 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/06 19:30:04 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,25 @@ void	*var_state(char **str, int add)
 	p_sym = ((t_dict *)array(m()->symbols)->search_tree(NULL, *str)->cont);
 	temp = *str + 1;
 	(*str)++;
-    if (**str == '?' && (*str)++)
-        var = ft_itoa(m()->exit_status);
-    else if (!ft_isalnum(**str))
-        var = s().copy("$");
-    else
-    {
-        while (**str && ft_isalnum(**str))
-            (*str)++;
-        temp = s().copy_n(temp, *str - temp);
-        if (array(m()->env)->search_tree(NULL, temp))
-            var = s().copy(((t_env *)array(m()->env)->\
+	if (**str == '?' && (*str)++)
+		var = ft_itoa(m()->exit_status);
+	else if (!ft_isalnum(**str))
+		var = s().copy("$");
+	else
+	{
+		while (**str && ft_isalnum(**str))
+			(*str)++;
+		temp = s().copy_n(temp, *str - temp);
+		if (array(m()->env)->search_tree(NULL, temp))
+			var = s().copy(((t_env *)array(m()->env)->\
 			search_tree(array(m()->env)->root, temp)->cont)->splitted[1]);
-        else
-            var = ft_calloc(1);
-        free(temp);
-    }
-    if (add)
-        (array(m()->tokens))->add(c_token(var, p_sym->value))->del = del_token;
-    return (var);
+		else
+			var = ft_calloc(1);
+		free(temp);
+	}
+	if (add)
+		(array(m()->tokens))->add(c_token(var, p_sym->value))->del = del_token;
+	return (var);
 }
 
 void	*infile_state(char **str, int add)
@@ -91,7 +91,8 @@ void	*infile_state(char **str, int add)
 		(*str)++;
 	while (**str && **str == ' ')
 		(*str)++;
-	while (**str && **str != ' ' && **str != '|' && **str != '<' && **str != '>')
+	while (**str && **str != ' ' && **str != '|' && *\
+		*str != '<' && **str != '>')
 	{
 		infile = aux_state(str, infile, p_sym);
 		if (!**str)
@@ -127,5 +128,3 @@ void	*str_state(char **str, int add)
 			del = del_token;
 	return (infile);
 }
-
-

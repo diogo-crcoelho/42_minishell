@@ -6,7 +6,7 @@
 /*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:47 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:55:26 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/06 19:18:58 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,33 +32,41 @@ void	*lstr_state(char **str, int add)
 	return (lstr);
 }
 
+void	*non_symbol_state_cut_lines(char *temp, char *temp_free, \
+		t_dict *symbol, char **str)
+{
+	char	*temp_free_2;
+
+	temp_free_2 = symbol->state(str, 0);
+	temp = s().join(temp, temp_free_2, "");
+	free(temp_free);
+	free(temp_free_2);
+	return (temp);
+}
+
 void	*non_symbol_state(char **str, int add)
 {
 	char	*temp;
 	char	*temp_free;
-	char	*temp_free_2;
 	t_dict	*symbol;
 
 	temp = ft_calloc(1);
-	while (**str && **str != ' ' && **str != '|' && **str != '<' && **str != '>')
+	while (**str && **str != ' ' && \
+		**str != '|' && **str != '<' && **str != '>')
 	{
 		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL, *str);
 		temp_free = temp;
 		if (symbol)
 		{
-			symbol = ((t_tree *)(symbol))->cont;
-            temp_free_2 = symbol->state(str, 0);
-			temp = s().join(temp, temp_free_2, "");
-            free(temp_free);
-            free(temp_free_2);
+			temp = non_symbol_state_cut_lines(temp, temp_free, \
+				((t_tree *)(symbol))->cont, str);
 			continue ;
 		}
 		else
 			temp = s().append(temp, **str);
 		free(temp_free);
-		if (!**str)
+		if (!**str || !(*str)++)
 			break ;
-		(*str)++;
 	}
 	if (add)
 		(array(m()->tokens))->add(c_token(temp, CMD))->del = del_token;
@@ -67,69 +75,26 @@ void	*non_symbol_state(char **str, int add)
 
 int	check_validity(char *str)
 {
-	if (*str == '~' && (*(str + 1) == ' ' || *(str + 1) == '|' || *(str + 1) == '/'
+	if (*str == '~' && (*(str + 1) == ' ' || \
+		*(str + 1) == '|' || *(str + 1) == '/'
 			|| !*(str + 1)))
 		return (1);
 	return (0);
 }
 
-void    update_home(void)
+void	update_home(void)
 {
-    char   *home;
+	char	*home;
 
-    home = (char *)(array(m()->env)->search_tree(0, "HOME"));
-    if (home)
-    {
-        home = ((t_env *)((t_tree *)home)->cont)->splitted[1];
-        if (s().equal(m()->home, home))
-        {
-            if (m()->home)
-                free(m()->home);
-            m()->home = s().copy(home);
-        }
-    }
-}
-
-int	check_tilde(char **str)
-{
-	char	*tilde;
-	t_token	*token;
-
-    update_home();
-	tilde = m()->home;
-	token = (t_token *)array(m()->tokens)->end;
-	if (!token && check_validity(*str))
+	home = (char *)(array(m()->env)->search_tree(0, "HOME"));
+	if (home)
 	{
-		(array(m()->tokens))->add(c_token(s().copy(tilde), VAR));
-		(*str)++;
-		return (1);
+		home = ((t_env *)((t_tree *)home)->cont)->splitted[1];
+		if (s().equal(m()->home, home))
+		{
+			if (m()->home)
+				free(m()->home);
+			m()->home = s().copy(home);
+		}
 	}
-	else if (!check_validity(*str))
-		return (0);
-	else if (token)
-		token = ((t_elems *)token)->cont;
-	if ((token->type == SPC || token->type == PIPE) && check_validity(*str))
-	{
-		(array(m()->tokens))->add(c_token(s().copy(tilde), VAR))->\
-			del = del_token;
-		(*str)++;
-		return (1);
-	}
-	return (0);
-}
-
-void	*heredoc_state(char **str, int add)
-{
-	char	*here;
-
-	*str += 2;
-	while (**str == ' ' || **str == '\t')
-		(*str)++;
-	here = *str;
-	while (**str && **str != ' ' && **str != '\t' && **str != '|')
-		(*str)++;
-	here = s().copy_n(here, (*str - here));
-	if (add)
-		(array(m()->tokens))->add(c_token(here, HERE))->del = del_token;
-	return (here);
 }

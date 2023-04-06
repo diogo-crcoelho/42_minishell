@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_s_H
-# define FT_s_H
+#ifndef FT_STRINGS_H
+# define FT_STRINGS_H
 
 # include "../list/list_utils.h"
 # include <stddef.h>

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sopas.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 15:35:46 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 20:08:20 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,18 @@ void	parse_paths(t_cmd *cmd)
 		if (0 == access(teste, F_OK))
 		{
 			cmd->path = teste;
-            free_pp(paths);
+			free_pp(paths);
 			return ;
 		}
 		free(teste);
 	}
-    free_pp(paths);
+	free_pp(paths);
 	cmd->path = s().copy(cmd->args[0]);
 }
 
 void	treat_files(t_cmd *cmd)
 {
-	char *err;
+	char	*err;
 
 	if (-1 == cmd->fd_red[1] && cmd->ord < 0)
 	{
@@ -73,10 +73,8 @@ void	treat_files(t_cmd *cmd)
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
 		free(err);
-        // printf("--%d\n", cmd->err);
 		m()->exit_status = 1;
-        return ;
-//		s_exit(m()->exit_status);
+		return ;
 	}
 	if (-1 == cmd->fd_red[0] && cmd->ord > 0)
 	{
@@ -84,124 +82,34 @@ void	treat_files(t_cmd *cmd)
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
 		free(err);
-        // printf("--%d\n", cmd->err);
 		m()->exit_status = 2;
-//        s_exit(m()->exit_status);
 	}
 	return ;
 }
 
-void befor_exit(t_cmd *cmd)
+void	befor_exit(t_cmd *cmd)
 {
-    char *err = NULL;
+	char	*err;
 
-    m()->exit_status = 127;
-    if (s().contains(cmd->args[0], "/") && access(cmd->args[0], F_OK))
-        err = s().join(cmd->args[0], "No such file or directory\n", ": ");
-    else
-    {
-        if (!access(cmd->args[0], F_OK))
-        {
-            if (0 != access(cmd->args[0], X_OK) && --(m()->exit_status))
-                err = s().join(cmd->args[0], "Permission denied\n", ": ");
-            else if (s().contains(cmd->args[0], "/") && opendir(cmd->args[0]) && --m()->exit_status)
-                err = s().join(cmd->args[0], "Is a directory\n", ": ");
-            else
-                err = s().join(cmd->args[0], "command not found\n", ": ");
-        }
-        else
-            err = s().join(cmd->args[0], "command not found\n", ": ");
-//        else
-
-    }
-    write(2, err, s().len(err, 0));
-    free (err);
-}
-
-void	run(t_elems *elem)
-{
-	t_cmd	*cmd;
-
-	cmd = (t_cmd *)elem->cont;
-	if (!cmd->args || !s().len(cmd->args[0], 0))
+	err = NULL;
+	m()->exit_status = 127;
+	if (s().contains(cmd->args[0], "/") && access(cmd->args[0], F_OK))
+		err = s().join(cmd->args[0], "No such file or directory\n", ": ");
+	else
 	{
-		close(cmd->fd[0]);
-		close(cmd->fd[1]);
-		s_exit(0);
-	}
-	parse_paths(cmd);
-	if (-1 != dup2(cmd->fd_red[0], 0))
-	{
-		if (elem->next && !cmd->fd_red[1])
+		if (!access(cmd->args[0], F_OK))
 		{
-			if (-1 == dup2(cmd->fd[1], 1))
-				s_exit(2);
+			if (0 != access(cmd->args[0], X_OK) && --(m()->exit_status))
+				err = s().join(cmd->args[0], "Permission denied\n", ": ");
+			else if (s().contains(cmd->args[0], "/") && \
+				opendir(cmd->args[0]) && --m()->exit_status)
+				err = s().join(cmd->args[0], "Is a directory\n", ": ");
+			else
+				err = s().join(cmd->args[0], "command not found\n", ": ");
 		}
-		else if (!elem->next)
-			if (cmd->fd_red[1])
-				if (-1 == dup2(cmd->fd_red[1], 1))
-					s_exit(2);
-		close(cmd->fd[0]);
-        close(cmd->fd_red[0]);
-        if (elem->prev)
-            close(((t_cmd *)elem->prev->cont)->fd[1]);
-        close(cmd->fd[1]);
-
-		execve(cmd->path, cmd->args, m()->a_env);
-        befor_exit(cmd);
+		else
+			err = s().join(cmd->args[0], "command not found\n", ": ");
 	}
-	close(cmd->fd[0]);
-	close(cmd->fd[1]);
-    free(cmd->path);
-	s_exit(m()->exit_status);
-}
-
-void	execute(t_elems *elem)
-{
-	t_cmd	*cmd;
-
-	while (elem)
-	{
-		cmd = (t_cmd *)elem->cont;
-		if (pipe(cmd->fd) < 0) {
-            s_exit(2);
-        } // dont know status code
-        if (!built(elem))
-        {
-            cmd->pid = fork();
-            if (-1 == cmd->pid)
-                s_exit(2);
-            if (0 == cmd->pid)
-                run(elem);
-		    else
-			    if (elem->next)
-				    if (!((t_cmd *)elem->next->cont)->fd_red[0])
-					    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
-			if (cmd->infile || elem->prev)
-				close(cmd->fd_red[0]);
-			if (elem->prev)
-				close(((t_cmd *)elem->prev->cont)->fd[1]);
-			if (cmd->outfile)
-				close(cmd->fd_red[1]);
-		}
-		close(cmd->fd[0]);
-		close(cmd->fd[1]);
-        elem = elem->next;
-    }
-}
-
-void	pipex(void)
-{	
-    int size;
-
-	execute(array(m()->cmds)->begin);
-    size = m()->c_count;
-//    printf("%d\n", size);
-//    printf("\n--%d\n", m()->exit_status);
-	while (size-- > 0)
-	{
-		waitpid(-1, &(m()->exit_status), 0);
-        m()->exit_status = WEXITSTATUS(m()->exit_status);
-	}
-	m()->inter = 0;
+	write(2, err, s().len(err, 0));
+	free (err);
 }

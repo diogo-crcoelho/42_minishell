@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 20:37:43 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/03/31 15:12:12 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:03:54 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	print_each(t_elems *elem, void *o)
 {
-	(void)o;
-    char *err;
-    int fd;
+	char	*err;
+	int		fd;
 
-    fd = (int)((long)o);
-    err = s().append(((t_env *)elem->cont)->total, '\n');
+	(void)o;
+	fd = (int)((long)o);
+	err = s().append(((t_env *)elem->cont)->total, '\n');
 	write(fd, err, s().len(err, 0));
-    free(err);
+	free(err);
 }
 
 
@@ -30,9 +30,9 @@ int	env(void *cont, int fd)
 {
 	char	**vars;
 	char	*err;
-    long fd1;
+	long	fd1;
 
-    fd1 = (long)fd;
+	fd1 = (long)fd;
 	vars = (char **)cont;
 	if (vars[0])
 	{

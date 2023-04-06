@@ -79,7 +79,7 @@ char	*__str_join(char *s1, char *s2, char *sep)
 
 t_s	s(void)
 {
-	static t_s string = {
+	static t_s	string = {
 		__str_len,
 		__str_dup,
 		__strn_dup,
@@ -92,5 +92,6 @@ t_s	s(void)
 		__isal_num,
 		__append,
 	};
+
 	return (string);
 }

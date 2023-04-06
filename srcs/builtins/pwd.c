@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 13:43:29 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/06 16:37:47 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:18:44 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	pwd(void *cont, int fd)
 
 	str = NULL;
 	str = getcwd(str, PATH_MAX);
-    write(fd, str, s().len(str, 0));
-    write(fd, "\n", 1);
+	write(fd, str, s().len(str, 0));
+	write(fd, "\n", 1);
 	free(str);
 	return (0);
 }	

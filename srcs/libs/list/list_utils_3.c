@@ -1,6 +1,14 @@
-//
-// Created by mvenanci on 2/13/23.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_utils_3.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/06 18:19:24 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/04/06 18:19:27 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "list_utils.h"
 
@@ -30,7 +38,7 @@ t_tree	*find_leaf(t_tree *temp, void *cont, int (*cmp)(void *cont1,
 	int		val;
 
 	val = cmp(temp->cont, cont);
-    leaf = NULL;
+	leaf = NULL;
 	if (val < 0 && temp->right)
 		leaf = find_leaf(temp->right, cont, cmp);
 	else if (val < 0 && !temp->right)

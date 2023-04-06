@@ -1,9 +1,17 @@
-//
-// Created by mvenanci on 2/13/23.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/06 17:59:42 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/04/06 18:00:51 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef INC_42_m_STRUCTS_H
-# define INC_42_m_STRUCTS_H
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
@@ -39,8 +47,7 @@ struct					s_mini
 	void				*tokens;
 	void				*symbols;
 	void				*b;
-    char                *home;
-
+	char				*home;
 	int					c_count;
 };
 
@@ -59,13 +66,13 @@ struct					s_dict
 };
 
 struct s_built{
-    char    *key;
-    int     (*b)(void *, int);
+	char	*key;
+	int		(*b)(void *, int);
 };
 
 struct s_token{
-    char    *token;
-    int     type;
+	char	*token;
+	int		type;
 };
 
 struct					s_cmd

@@ -29,41 +29,34 @@
 # include "structs.h"
 # include "pipex.h"
 
-
-typedef 	void	(*t_func)();
+typedef void	(*t_func)();
 //t_func func = (void *) printf;
 
 //general
-unsigned long hash(char *str);
-
-//b
-void    init_b(void);
-int     pwd(void* cont, int fd);
-int	    env(void *cont, int fd);
-
-int     unset(void *cont, int fd);
-int     export(void *cont, int fd);
-
-int     cd(void *path, int fd);
-int	    echo(void *cont, int fd);
-int     ft_exit(void *cont, int fd);
-
-int		built(t_elems *elem);
-void	destroy_cmds(t_elems *elem);
-
-t_mini 	*m(void);
-void    init_m(char **envp);
-void    init_symbols(void);
-void    print_dict(t_elems *elem, void *o);
-void    destroy_m(void);
-
-
-
-int				cmp(void *cont1, void *cont2, int size);
+unsigned long	hash(char *str);
 void			init_parse(const char *str);
-void            cona(char *err);
+void			cona(char *err);
 void			free_pp(void *pp);
 
+//builtins
+void			init_b(void);
+int				pwd(void *cont, int fd);
+int				env(void *cont, int fd);
+int				unset(void *cont, int fd);
+int				export(void *cont, int fd);
+int				cd(void *path, int fd);
+int				echo(void *cont, int fd);
+int				ft_exit(void *cont, int fd);
+int				built(t_elems *elem);
+void			destroy_cmds(t_elems *elem);
+void			export_empty(t_tree *root, int fd);
+
+t_mini			*m(void);
+void			init_m(char **envp);
+void			init_symbols(void);
+void			print_dict(t_elems *elem, void *o);
+void			destroy_m(void);
+int				cmp(void *cont1, void *cont2, int size);
 
 //env
 int				cmp_env(void *cont1, void *cont2);
@@ -75,7 +68,7 @@ void			del_elem(void *cont);
 
 //utils
 char			**env_split(char *str, char sep);
-char	        *ft_itoa(int n);
+char			*ft_itoa(int n);
 
 //tokens
 void			init_tokens(void);
@@ -92,6 +85,8 @@ void			*non_symbol_state(char **s, int add);
 void			*outfile_state(char **s, int add);
 int				check_tilde(char **s);
 void			*heredoc_state(char **s, int add);
+int				check_validity(char *str);
+void			update_home(void);
 
 //symbols
 int				comp_symbols_search(void *c1, void *c2);
@@ -103,16 +98,15 @@ int				comp_symbols_build(void *c1, void *c2);
 
 void			signals_hand(void);
 int				cmp_env(void *cont1, void *cont2);
-
-void			export_empty(t_tree *root, int fd);
 void			delexer(void);
-int	__isalpha(int c);
-int	__isdigit(int c);
-
-int s_exit(int sc);
-
+int				__isalpha(int c);
+int				__isdigit(int c);
+int				s_exit(int sc);
 
 //pipex
-void	treat_files(t_cmd *cmd);
-
+void			treat_files(t_cmd *cmd);
+void			built_cut_lines(t_cmd *cmd, t_elems *elem);
+void			befor_exit(t_cmd *cmd);
+void			parse_paths(t_cmd *cmd);
+void			**to_array_mini(void);
 #endif

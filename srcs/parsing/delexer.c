@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/05 15:18:14 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:58:37 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,42 @@ void	del_cmd(void *cmd)
 	while (((t_cmd *)cmd)->args && ((t_cmd *)cmd)->args[++i])
 		free(((t_cmd *)cmd)->args[i]);
 	if (((t_cmd *)cmd)->args)
-        free(((t_cmd *)cmd)->args);
-//	 free(((t_cmd *)cmd)->path);
+		free(((t_cmd *)cmd)->args);
 	free(cmd);
+}
+
+void	filler_cut_lines(t_token *token, t_elems *tmp)
+{
+	int	open_flags;
+
+	if (OUT == token->type)
+			open_flags = O_TRUNC;
+	else
+		open_flags = O_APPEND;
+	if (((t_cmd *)tmp->cont)->fd_red[1])
+		free(((t_cmd *)tmp->cont)->outfile);
+	((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
+	((t_cmd *)tmp->cont)->fd_red[1] = \
+		open(token->token, O_WRONLY | open_flags | O_CREAT, 0644);
+	if (!(((t_cmd *)tmp->cont)->err) && --((t_cmd *)tmp->cont)->ord)
+		((t_cmd *)tmp->cont)->err = errno;
 }
 
 void	filler(t_token *token, t_elems *tmp, int *flag)
 {
-    int open_flags;
-
-	if ((IN == token->type) && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[0])
+	if ((IN == token->type) && ++(*flag) && \
+		-1 != ((t_cmd *)tmp->cont)->fd_red[0])
 	{
-        if (((t_cmd *)tmp->cont)->fd_red[0])
-            free(((t_cmd *)tmp->cont)->infile);
+		if (((t_cmd *)tmp->cont)->fd_red[0])
+			free(((t_cmd *)tmp->cont)->infile);
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
 		if (!(((t_cmd *)tmp->cont)->err) && ++((t_cmd *)tmp->cont)->ord)
 			((t_cmd *)tmp->cont)->err = errno;
 	}
-	if ((OUT == token->type || APP == token->type) && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[1])
-	{
-        if (OUT == token->type)
-            open_flags = O_TRUNC;
-        else
-            open_flags = O_APPEND;
-        if (((t_cmd *)tmp->cont)->fd_red[1])
-            free(((t_cmd *)tmp->cont)->outfile);
-		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
-		((t_cmd *)tmp->cont)->fd_red[1] = \
-			open(token->token, O_WRONLY | open_flags | O_CREAT, 0644);
-		if (!(((t_cmd *)tmp->cont)->err) && --((t_cmd *)tmp->cont)->ord)
-			((t_cmd *)tmp->cont)->err = errno;
-	}
+	if ((OUT == token->type || APP == token->type) && ++(*flag) && \
+		-1 != ((t_cmd *)tmp->cont)->fd_red[1])
+		filler_cut_lines(token, tmp);
 }
 
 void	filler2(t_token *token, int j)
@@ -70,76 +74,69 @@ void	filler2(t_token *token, int j)
 	if (HERE == token->type)
 		here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
 	else if (SPC == token->type)
-        return ;
-	else if (!flag) //Tinha tambem a condicao (&& IN != token->type) mas a flag so pode ser 0 se
-        // nao for IN, for for OUT e nao for APP e entao nao faz sentido ter, visto que nao e possivel que
-        // a flag seja 0 e o token ser input. Ou seja, se entrar neste if, nao pode ser um ficheiro
+		return ;
+	else if (!flag)
 	{
-        if (j)
-		    clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
-        else
-            clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "");
+		if (j)
+			clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
+		else
+			clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "");
 		free(((t_cmd *)tmp->cont)->path);
 		((t_cmd *)tmp->cont)->path = clean;
 	}
 }
 
-int check_syntax()
+int	check_syntax(void)
 {
 	t_elems	*tmp;
-	t_elems	*end;
-	int f;
-	
+	int		f;
+
 	f = 0;
 	tmp = array(m()->tokens)->begin;
-	end = array(m()->tokens)->end;
 	if (tmp && PIPE == ((t_token *)tmp->cont)->type)
 		f = 1;
-	if (end && PIPE == ((t_token *)end->cont)->type)
+	if (array(m()->tokens)->end && \
+		PIPE == ((t_token *)array(m()->tokens)->end->cont)->type)
 		f = 1;
 	while (tmp)
 	{
-		if(PIPE == ((t_token *)tmp->cont)->type)
+		if (PIPE == ((t_token *)tmp->cont)->type)
 		{
-			if(tmp->next && PIPE == ((t_token *)tmp->next->cont)->type)
+			if (tmp->next && PIPE == ((t_token *)tmp->next->cont)->type)
 			{
-			    f = 1;
-			    break ;
+				f = 1;
+				break ;
 			}
 		}
 		tmp = tmp->next;
 	}
 	if (f && printf("Syntax error...\n"))
 		return (1);
-	return 0;	
+	return (0);
 }
 
 void	delexer(void)
 {
 	t_elems	*tmp;
 	t_elems	*cmds;
-    int     j;
-	
+	int		j;
+
 	tmp = array(m()->tokens)->begin;
-	if (!check_syntax()) //verifica erros de syntax
+	if (!check_syntax())
 	{
-		while (tmp) //percorre a lista de tokens
+		while (tmp)
 		{
 			array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)))->del = del_cmd;
 			cmds = array(m()->cmds)->end;
-			// ((t_cmd *)cmds->cont)->err = 0;
-			// ((t_cmd *)cmds->cont)->ord = 0;
-			while (tmp && PIPE != ((t_token *)tmp->cont)->type) //percorre a lista ate encontrar um pipe
+			while (tmp && PIPE != ((t_token *)tmp->cont)->type)
 			{
-                j = (tmp->prev && SPC == ((t_token *)tmp->prev->cont)->type); //se tiver previous e o token for um espaco, o j e igua a 1
-				//o j indica que nao estamos no primeiro token e que o token anterior é um espaco
-                filler2((t_token *)tmp->cont, j); // esta funcao constroi os comandos
+				j = (tmp->prev && SPC == ((t_token *)tmp->prev->cont)->type);
+				filler2((t_token *)tmp->cont, j);
 				tmp = tmp->next;
 			}
 			if (((t_cmd *)cmds->cont)->path)
-				((t_cmd *)cmds->cont)->args = s().\
-					split(((t_cmd *)cmds->cont)->path,
-						27);
+				((t_cmd *)cmds->cont)->args = \
+					s().split(((t_cmd *)cmds->cont)->path, 27);
 			free(((t_cmd *)cmds->cont)->path);
 			if (tmp)
 				tmp = tmp->next;
@@ -152,6 +149,7 @@ void	print_cmds(void)
 {
 	t_elems	*tmp;
 	t_cmd	*temp;
+
 	tmp = (array(m()->cmds)->begin);
 	while (tmp)
 	{

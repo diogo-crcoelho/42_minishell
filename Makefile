@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+         #
+#    By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 20:44:34 by dcarvalh          #+#    #+#              #
-#    Updated: 2023/04/04 21:02:56 by dcarvalh         ###   ########.fr        #
+#    Updated: 2023/04/06 20:16:41 by mvenanci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,13 @@ LIBS = -lreadline
 SRCS =	minishell.c \
 		libs/list/lst_utils.c libs/list/list_utils_2.c libs/list/list_utils_3.c libs/list/list_utils_4.c\
 		libs/strs/strings.c libs/strs/strings_utils1.c libs/strs/ft_split.c libs/strs/strings_utils2.c \
-		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/lexer_2.c parsing/delexer.c parsing/env.c\
-		builtins/pwd.c builtins/env.c builtins/cd.c builtins/export.c builtins/unset.c \
+		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/lexer_2.c parsing/lexer_3.c parsing/delexer.c\
+		builtins/pwd.c builtins/cd.c builtins/env.c builtins/export.c builtins/unset.c \
 		builtins/echo.c builtins/exit.c builtins/builtins.c\
-		utils/utils_1.c utils/symbols.c  utils/tokens.c utils/env.c utils/symbols_2.c\
+		utils/utils_1.c utils/symbols.c  utils/tokens.c utils/env.c utils/env_2.c utils/symbols_2.c\
 		signals/signals.c \
 		pipe/sopas.c pipe/gnl.c pipe/here_doc.c pipe/built.c\
-		# pipe/sopas_2.c
+		pipe/sopas_2.c
 B_SRCS = 
 
 OBJS = $(SRCS:.c=.o)

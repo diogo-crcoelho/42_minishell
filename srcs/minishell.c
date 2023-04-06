@@ -86,7 +86,7 @@ void	destroy_m(void)
 	array(m()->b)->destroy();
 	free(m()->prev_path);
 	free(m()->a_env);
-    free(m()->home);
+	free(m()->home);
 }
 
 void	reload(void)

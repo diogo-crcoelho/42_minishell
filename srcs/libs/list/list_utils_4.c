@@ -1,6 +1,14 @@
-//
-// Created by miguel on 16-02-2023.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_utils_4.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/06 18:19:33 by mvenanci          #+#    #+#             */
+/*   Updated: 2023/04/06 18:48:49 by mvenanci         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "list_utils.h"
 
@@ -27,28 +35,30 @@ void	__del_root(void)
 		(*__this())->root = (*__this())->root->right;
 }
 
+void	__del_from_tree_cut_lines(t_tree *to_del, t_tree *lower)
+{
+	if (to_del->up->left == to_del)
+		to_del->up->left = lower;
+	else
+		to_del->up->right = lower;
+}
+
 void	__del_from_tree(void *cont)
 {
 	t_tree	*to_del;
 	t_tree	*temp;
 
-    to_del = __search_tree((*__this())->root, cont);
+	to_del = __search_tree((*__this())->root, cont);
 	if (to_del == (*__this())->root)
 		__del_root();
 	else if (!to_del->right && to_del->left)
 	{
-        if (to_del->up->left == to_del)
-            to_del->up->left = to_del->left;
-        else
-            to_del->up->right = to_del->left;
+		__del_from_tree_cut_lines(to_del, to_del->left);
 		to_del->left->up = to_del->up;
 	}
 	else if (to_del->right && !to_del->left)
 	{
-        if (to_del->up->left == to_del)
-            to_del->up->left = to_del->right;
-        else
-            to_del->up->right = to_del->right;
+		__del_from_tree_cut_lines(to_del, to_del->right);
 		to_del->right->up = to_del->up;
 	}
 	else if (to_del->right && to_del->left)
@@ -57,14 +67,9 @@ void	__del_from_tree(void *cont)
 		to_del = find_leaf(to_del->left, to_del->cont, (*__this())->cmp);
 		temp->cont = to_del->cont;
 	}
-    else
-    {
-        if (to_del->up->right == to_del)
-            to_del->up->right = NULL;
-        else
-            to_del->up->left = NULL;
-    }
-    free(to_del);
+	else
+		__del_from_tree_cut_lines(to_del, NULL);
+	free(to_del);
 }
 
 void	__destroy_tree(t_tree *root)

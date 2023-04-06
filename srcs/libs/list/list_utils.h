@@ -6,7 +6,7 @@
 /*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 21:03:30 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/03/27 15:43:39 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/06 18:49:49 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ struct					s_array
 	int					size;
 	t_elems				*(*add)(void *cont);
 	void				(*remove)(t_elems *elem_to_del);
-	void				(*for_each)(void (*func)(t_elems *elem, void *o),
+	void				(*for_each)(void (*func)(t_elems *elem, void *o), \
 							void *o);
 	void				(*destroy)(void);
-	t_elems				*(*search)(int (*cmp)(void *cont, void *buf),
+	t_elems				*(*search)(int (*cmp)(void *cont, void *buf), \
 							void *buf);
 	void				**(*to_array)(void);
 	void				(*destroy_array)(void);

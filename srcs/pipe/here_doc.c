@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:23 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/04 17:36:04 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 19:40:39 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ void	here_doc(t_cmd *cmd, char *eof)
 	close(cmd->fd[1]);
 	free(eof);
 }
-

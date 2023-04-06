@@ -31,6 +31,8 @@ void	del_cmd(void *cmd)
 
 void	filler(t_token *token, t_elems *tmp, int *flag)
 {
+    int open_flags;
+
 	if ((IN == token->type) && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[0])
 	{
         if (((t_cmd *)tmp->cont)->fd_red[0])
@@ -40,23 +42,17 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 		if (!(((t_cmd *)tmp->cont)->err) && ++((t_cmd *)tmp->cont)->ord)
 			((t_cmd *)tmp->cont)->err = errno;
 	}
-	if (OUT == token->type && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[1])
+	if ((OUT == token->type || APP == token->type) && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[1])
 	{
+        if (OUT == token->type)
+            open_flags = O_TRUNC;
+        else
+            open_flags = O_APPEND;
         if (((t_cmd *)tmp->cont)->fd_red[1])
             free(((t_cmd *)tmp->cont)->outfile);
 		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[1] = \
-			open(token->token, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		if (!(((t_cmd *)tmp->cont)->err) && --((t_cmd *)tmp->cont)->ord)
-			((t_cmd *)tmp->cont)->err = errno;
-	}
-	if (APP == token->type && ++(*flag) && -1 != ((t_cmd *)tmp->cont)->fd_red[1])
-	{
-        if (((t_cmd *)tmp->cont)->fd_red[1])
-            free(((t_cmd *)tmp->cont)->outfile);
-		((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
-		((t_cmd *)tmp->cont)->fd_red[1] = \
-			open(token->token, O_WRONLY | O_APPEND | O_CREAT, 0644);
+			open(token->token, O_WRONLY | open_flags | O_CREAT, 0644);
 		if (!(((t_cmd *)tmp->cont)->err) && --((t_cmd *)tmp->cont)->ord)
 			((t_cmd *)tmp->cont)->err = errno;
 	}
@@ -75,7 +71,9 @@ void	filler2(t_token *token, int j)
 		here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
 	else if (SPC == token->type)
         return ;
-	else if (!flag && IN != token->type)
+	else if (!flag) //Tinha tambem a condicao (&& IN != token->type) mas a flag so pode ser 0 se
+        // nao for IN, for for OUT e nao for APP e entao nao faz sentido ter, visto que nao e possivel que
+        // a flag seja 0 e o token ser input. Ou seja, se entrar neste if, nao pode ser um ficheiro
 	{
         if (j)
 		    clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
@@ -123,18 +121,19 @@ void	delexer(void)
     int     j;
 	
 	tmp = array(m()->tokens)->begin;
-	if (!check_syntax())
+	if (!check_syntax()) //verifica erros de syntax
 	{
-		while (tmp)
+		while (tmp) //percorre a lista de tokens
 		{
 			array(m()->cmds)->add(ft_calloc(sizeof(t_cmd)))->del = del_cmd;
 			cmds = array(m()->cmds)->end;
 			// ((t_cmd *)cmds->cont)->err = 0;
 			// ((t_cmd *)cmds->cont)->ord = 0;
-			while (tmp && PIPE != ((t_token *)tmp->cont)->type)
+			while (tmp && PIPE != ((t_token *)tmp->cont)->type) //percorre a lista ate encontrar um pipe
 			{
-                j = (tmp->prev && SPC == ((t_token *)tmp->prev->cont)->type);
-				filler2((t_token *)tmp->cont, j);
+                j = (tmp->prev && SPC == ((t_token *)tmp->prev->cont)->type); //se tiver previous e o token for um espaco, o j e igua a 1
+				//o j indica que nao estamos no primeiro token e que o token anterior é um espaco
+                filler2((t_token *)tmp->cont, j); // esta funcao constroi os comandos
 				tmp = tmp->next;
 			}
 			if (((t_cmd *)cmds->cont)->path)

@@ -69,7 +69,6 @@ void	treat_files(t_cmd *cmd)
 
 	if (-1 == cmd->fd_red[1] && cmd->ord < 0)
 	{
-		
 		err = s().join(cmd->outfile, strerror(cmd->err), ": ");
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
@@ -143,7 +142,11 @@ void	run(t_elems *elem)
 				if (-1 == dup2(cmd->fd_red[1], 1))
 					s_exit(2);
 		close(cmd->fd[0]);
-		close(cmd->fd[1]);
+        close(cmd->fd_red[0]);
+        if (elem->prev)
+            close(((t_cmd *)elem->prev->cont)->fd[1]);
+        close(cmd->fd[1]);
+
 		execve(cmd->path, cmd->args, m()->a_env);
         befor_exit(cmd);
 	}
@@ -169,18 +172,11 @@ void	execute(t_elems *elem)
             if (-1 == cmd->pid)
                 s_exit(2);
             if (0 == cmd->pid)
-            {
-        		// treat_files(cmd);
                 run(elem);
-            }
 		    else
-		    {
 			    if (elem->next)
-			    {
 				    if (!((t_cmd *)elem->next->cont)->fd_red[0])
 					    ((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
-			    }
-		    }
 			if (cmd->infile || elem->prev)
 				close(cmd->fd_red[0]);
 			if (elem->prev)
@@ -189,9 +185,7 @@ void	execute(t_elems *elem)
 				close(cmd->fd_red[1]);
 		}
 		close(cmd->fd[0]);
-		
 		close(cmd->fd[1]);
-		
         elem = elem->next;
     }
 }

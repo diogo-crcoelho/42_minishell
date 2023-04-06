@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 14:30:16 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:35:46 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,6 @@ void	pipex(void)
 	while (size-- > 0)
 	{
 		waitpid(-1, &(m()->exit_status), 0);
-//        printf("\n--%d\n", WEXITSTATUS(m()->exit_status));
         m()->exit_status = WEXITSTATUS(m()->exit_status);
 	}
 	m()->inter = 0;

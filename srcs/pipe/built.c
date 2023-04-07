@@ -48,23 +48,20 @@ void	pipe_built(t_elems *elem)
 	cmd = (t_cmd *)elem->cont;
 	if (!cmd->args || !s().len(cmd->args[0], 0))
 		s_exit(2);
-	if (-1 != dup2(cmd->fd_red[0], 0))
+	if (elem->next && !cmd->fd_red[1])
 	{
-		if (elem->next && !cmd->fd_red[1])
-		{
-			if (-1 == dup2(cmd->fd[1], 1))
-				s_exit(2);
-		}
-		else if (!elem->next)
-		{	
-			if (cmd->fd_red[1])
-				if (-1 == dup2(cmd->fd_red[1], 1))
-					s_exit(2);
-		}
-		pipe_built_cut_lines(cmd);
-		m()->exit_status = !exe_buil(elem);
-		err = m()->exit_status;
+		if (-1 == dup2(cmd->fd[1], 1))
+			s_exit(1);
 	}
+	else if (!elem->next)
+	{	
+		if (cmd->fd_red[1])
+			if (-1 == dup2(cmd->fd_red[1], 1))
+				s_exit(1);
+	}
+	pipe_built_cut_lines(cmd);
+	m()->exit_status = !exe_buil(elem);
+	err = m()->exit_status;
 	s_exit(err);
 }
 

@@ -71,7 +71,7 @@ int	treat_files(t_cmd *cmd)
 	{
 		err = s().join(cmd->outfile, strerror(cmd->err), ": ");
 		write(2, err, s().len(err, 0));
-		write(2, "\n", 1);
+		write(2, "---\n", 4);
 		free(err);
 		m()->exit_status = 1;
 		return (1);
@@ -84,7 +84,6 @@ int	treat_files(t_cmd *cmd)
 		free(err);
 		m()->exit_status = 1;
 		return (1);
-
 	}
 	return (0);
 }

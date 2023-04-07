@@ -45,7 +45,8 @@ int	add_space(char *s)
 {
 	if (*s == '|' || !*s)
 		return (0);
-	else if (((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
+	else if (!array(m()->tokens)->end || \
+		((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
 		return (0);
 	return (1);
 }

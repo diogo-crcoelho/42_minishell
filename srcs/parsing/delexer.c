@@ -58,7 +58,8 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 			((t_cmd *)tmp->cont)->err = errno;
 	}
 	if ((OUT == token->type || APP == token->type) && ++(*flag) && \
-		-1 != ((t_cmd *)tmp->cont)->fd_red[1])
+		-1 != ((t_cmd *)tmp->cont)->fd_red[1] && \
+		-1 != ((t_cmd *)tmp->cont)->fd_red[0])
 		filler_cut_lines(token, tmp);
 }
 

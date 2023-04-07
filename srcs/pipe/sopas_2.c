@@ -99,6 +99,7 @@ void	pipex(void)
 	{
 		waitpid(-1, &(m()->exit_status), 0);
 		m()->exit_status = WEXITSTATUS(m()->exit_status);
+		// printf("--%d\n", m()->exit_status);
 	}
 	m()->inter = 0;
 }

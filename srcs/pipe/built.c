@@ -81,16 +81,16 @@ void	built_cut_lines(t_cmd *cmd, t_elems *elem)
 int	built(t_elems *elem)
 {
 	t_cmd	*cmd;
+	int		balls;
 
 	cmd = (t_cmd *)elem->cont;
-	if (treat_files(cmd))
-	{
-		m()->c_count--;
-		return (m()->exit_status);
-	}
+	balls = treat_files(cmd);
+
 	m()->inter = 1;
 	if (array(m()->cmds)->size <= 1)
 	{
+		if (balls && m()->c_count--)
+			return (m()->exit_status);
 		if (exe_buil(elem) && m()->c_count--)
 			return (1);
 		return (0);

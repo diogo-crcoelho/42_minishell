@@ -66,6 +66,6 @@ int	cd(void *cont, int fd)
 	if (path)
 		free(path);
 	if (err && err++ && ++err)
-		cona(" No such file or directory");
+		cona(" No such file or directory\n");
 	return (err);
 }

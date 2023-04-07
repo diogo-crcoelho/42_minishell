@@ -117,9 +117,9 @@ int	main(int argc, char **argv, char **envp)
 		add_history(str);
 		temp = str;
 		lex(&temp);
-//        print_tokens();
+    //    print_tokens();
 		delexer();
-//       print_cmds();
+    //   print_cmds();
 		pipex();
 		// printf("-------------------%d\n", m()->exit_status);
 		reload();

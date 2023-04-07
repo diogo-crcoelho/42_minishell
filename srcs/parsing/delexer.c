@@ -165,7 +165,7 @@ void	print_cmds(void)
 		printf("Outfile: %i\n", temp->fd_red[1]);
 		printf("cmd: ");
 		for (int i = 0; temp->args[i]; i++)
-			printf("%s ", temp->args[i]);
+			printf("%s -%i", temp->args[i], i);
 		printf("\n");
 		printf("========\n");
 		tmp = tmp->next;

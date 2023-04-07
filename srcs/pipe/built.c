@@ -107,3 +107,5 @@ int	built(t_elems *elem)
 	}
 	return (0);
 }
+
+//array(m()->b)->search_tree(NULL, cmd->args[0]) && 

@@ -121,6 +121,7 @@ int	main(int argc, char **argv, char **envp)
 		delexer();
 //       print_cmds();
 		pipex();
+		// printf("-------------------%d\n", m()->exit_status);
 		reload();
 		free(str);
 	}

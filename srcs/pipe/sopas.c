@@ -71,12 +71,12 @@ int	treat_files(t_cmd *cmd)
 	{
 		err = s().join(cmd->outfile, strerror(cmd->err), ": ");
 		write(2, err, s().len(err, 0));
-		write(2, "---\n", 4);
+		write(2, "\n", 1);
 		free(err);
 		m()->exit_status = 1;
 		return (1);
 	}
-	if (-1 == cmd->fd_red[0] && cmd->ord > 0)
+	else if (-1 == cmd->fd_red[0] && cmd->ord > 0)
 	{
 		err = s().join(cmd->infile, strerror(cmd->err), ": ");
 		write(2, err, s().len(err, 0));

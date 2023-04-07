@@ -50,12 +50,12 @@ void	run(t_elems *elem)
 		if (elem->next && !cmd->fd_red[1])
 		{
 			if (-1 == dup2(cmd->fd[1], 1))
-				s_exit(2);
+				s_exit(1);
 		}
 		else if (!elem->next)
 			if (cmd->fd_red[1])
 				if (-1 == dup2(cmd->fd_red[1], 1))
-					s_exit(2);
+					s_exit(1);
 		run_cut_lines(cmd, elem, 1);
 	}
 	run_cut_lines(cmd, elem, 0);
@@ -94,6 +94,8 @@ void	pipex(void)
 	int	size;
 
 	execute(array(m()->cmds)->begin);
+	// printf("-%d\n", m()->exit_status);
+
 	size = m()->c_count;
 	while (size-- > 0)
 	{
@@ -101,5 +103,6 @@ void	pipex(void)
 		m()->exit_status = WEXITSTATUS(m()->exit_status);
 		// printf("--%d\n", m()->exit_status);
 	}
+	// printf("---%d\n", m()->exit_status);
 	m()->inter = 0;
 }

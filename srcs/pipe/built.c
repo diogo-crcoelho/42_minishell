@@ -62,7 +62,7 @@ void	pipe_built(t_elems *elem)
 					s_exit(2);
 		}
 		pipe_built_cut_lines(cmd);
-		m()->exit_status = exe_buil(elem);
+		m()->exit_status = !exe_buil(elem);
 		err = m()->exit_status;
 	}
 	s_exit(err);

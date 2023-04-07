@@ -111,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		signals_hand();
 		str = readline("not bash> ");
-		if (!s().len(str, 0))
+		if (!str)
 			break ;
 		add_history(str);
 		temp = str;

@@ -83,7 +83,11 @@ int	built(t_elems *elem)
 	t_cmd	*cmd;
 
 	cmd = (t_cmd *)elem->cont;
-	treat_files(cmd);
+	if (treat_files(cmd))
+	{
+		m()->c_count--;
+		return (m()->exit_status);
+	}
 	m()->inter = 1;
 	if (array(m()->cmds)->size <= 1)
 	{

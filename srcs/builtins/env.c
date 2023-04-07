@@ -33,12 +33,12 @@ int	env(void *cont, int fd)
 
 	fd1 = (long)fd;
 	vars = (char **)cont;
-	if (vars[0])
+	if (vars && vars[0])
 	{
 		err = s().join("env: ", ": No such file or directory\n", vars[0]);
 		cona(err);
 		free(err);
-		return (127);
+		return (2);
 	}
 	(array(m()->env))->for_each(print_each, (void *)fd1);
 	return (0);

@@ -15,6 +15,7 @@
 void	cona(char *err)
 {
     write(2, err, s().len(err, 0));
+	m()->exit_status = 2;
 }
 
 void	free_pp(void *pp)

@@ -17,7 +17,8 @@ void	run_cut_lines(t_cmd *cmd, t_elems *elem, int flag)
 	if (flag)
 	{
 		close(cmd->fd[0]);
-		close(cmd->fd_red[0]);
+		if (cmd->infile || elem->prev)
+			close(cmd->fd_red[0]);
 		if (elem->prev)
 			close(((t_cmd *)elem->prev->cont)->fd[1]);
 		close(cmd->fd[1]);

@@ -107,12 +107,11 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	init_m(envp);
-	printf("2-%s\n", ((char *)(array(m()->env)->search_tree(0, "SHLVL"))));
 	while (1)
 	{
 		signals_hand();
 		str = readline("not bash> ");
-		if (!str)
+		if (!s().len(str, 0))
 			break ;
 		add_history(str);
 		temp = str;
@@ -123,7 +122,6 @@ int	main(int argc, char **argv, char **envp)
 		pipex();
 		reload();
 		free(str);
-		
 	}
 	s_exit(m()->exit_status);
 }

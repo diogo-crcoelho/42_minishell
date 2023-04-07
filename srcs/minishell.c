@@ -45,7 +45,8 @@ int	add_space(char *s)
 {
 	if (*s == '|' || !*s)
 		return (0);
-	else if (((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
+	else if (!array(m()->tokens)->end || \
+		((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
 		return (0);
 	return (1);
 }
@@ -107,7 +108,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 	init_m(envp);
-//	printf("2-%s\n", ((char *)(array(m()->env)->search_tree(0, "SHLVL"))));
 	while (1)
 	{
 		signals_hand();
@@ -121,6 +121,7 @@ int	main(int argc, char **argv, char **envp)
 		delexer();
 //       print_cmds();
 		pipex();
+		// printf("-------------------%d\n", m()->exit_status);
 		reload();
 		free(str);
 		

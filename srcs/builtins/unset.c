@@ -12,6 +12,22 @@
 
 #include "../../incs/minishell.h"
 
+int	unset_cut(char *vars)
+{
+	char 	*err;
+
+	if (!s().len(vars, 0) || s().alnum(vars) || \
+	!(__isalpha(vars[0])))
+	{
+		err = s().join("unset: ", ": not a valid identifier\n", vars);
+		cona(err);
+		free(err);
+		array(m()->env)->cmp = comp_var;
+		return (1);
+	}
+	return (0);
+}
+
 int	unset(void *cont, int fd)
 {
 	t_elems	*temp;
@@ -22,8 +38,11 @@ int	unset(void *cont, int fd)
 	i = -1;
 	vars = (char **)cont;
 	array(m()->env)->cmp = cmp_env;
+	
 	while (vars[++i])
 	{
+		if (unset_cut(vars[i]))
+			return (1);
 		temp = array(m()->env)->search(comp_var, vars[i]);
 		if (temp)
 		{

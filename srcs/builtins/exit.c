@@ -38,6 +38,8 @@ long	s_atoi(char *str)
 	i = -1;
 	val = 0;
 	signal = 1;
+	if (!s().len(str, 0))
+		exit_err("exit: ", ": numeric argument required\n", str);
 	if (!s().equal(str, "-9223372036854775808"))
 		return (LONG_MIN);
 	if (*str == '-' || *str == '+')
@@ -68,13 +70,13 @@ int	ft_exit(void *cont, int fd)
 
 	(void)fd;
 	vars = (char **)cont;
-	if (vars[1])
+	if (s().len(vars[0], 0) && vars[1])
 	{
 		cona("exit: too many arguments");
 		return (1);
 	}
-	if (!vars[0])
-		vars[0] = "0";
+	if (!s().len(vars[0], 0))
+		s_exit(0);
 	ret = parse_exit(s_atoi(vars[0]));
 	s_exit(ret);
 	return (0);

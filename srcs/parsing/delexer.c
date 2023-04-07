@@ -41,8 +41,11 @@ void	filler_cut_lines(t_token *token, t_elems *tmp)
 	((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 	((t_cmd *)tmp->cont)->fd_red[1] = \
 		open(token->token, O_WRONLY | open_flags | O_CREAT, 0644);
-	if (!(((t_cmd *)tmp->cont)->err) && --((t_cmd *)tmp->cont)->ord)
+	if (!(((t_cmd *)tmp->cont)->err))
+	{
+		((t_cmd *)tmp->cont)->ord = -1;
 		((t_cmd *)tmp->cont)->err = errno;
+	}
 }
 
 void	filler(t_token *token, t_elems *tmp, int *flag)
@@ -54,11 +57,15 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 			free(((t_cmd *)tmp->cont)->infile);
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
-		if (!(((t_cmd *)tmp->cont)->err) && ++((t_cmd *)tmp->cont)->ord)
+		if (!(((t_cmd *)tmp->cont)->err))
+		{
+			((t_cmd *)tmp->cont)->ord = 1;	
 			((t_cmd *)tmp->cont)->err = errno;
+		}
 	}
 	if ((OUT == token->type || APP == token->type) && ++(*flag) && \
-		-1 != ((t_cmd *)tmp->cont)->fd_red[1])
+		-1 != ((t_cmd *)tmp->cont)->fd_red[1] && \
+		-1 != ((t_cmd *)tmp->cont)->fd_red[0])
 		filler_cut_lines(token, tmp);
 }
 
@@ -158,7 +165,7 @@ void	print_cmds(void)
 		printf("Outfile: %i\n", temp->fd_red[1]);
 		printf("cmd: ");
 		for (int i = 0; temp->args[i]; i++)
-			printf("%s ", temp->args[i]);
+			printf("%s -%i", temp->args[i], i);
 		printf("\n");
 		printf("========\n");
 		tmp = tmp->next;

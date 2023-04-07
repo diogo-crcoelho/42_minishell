@@ -63,7 +63,7 @@ void	parse_paths(t_cmd *cmd)
 	cmd->path = s().copy(cmd->args[0]);
 }
 
-void	treat_files(t_cmd *cmd)
+int	treat_files(t_cmd *cmd)
 {
 	char	*err;
 
@@ -74,17 +74,18 @@ void	treat_files(t_cmd *cmd)
 		write(2, "\n", 1);
 		free(err);
 		m()->exit_status = 1;
-		return ;
+		return (1);
 	}
-	if (-1 == cmd->fd_red[0] && cmd->ord > 0)
+	else if (-1 == cmd->fd_red[0] && cmd->ord > 0)
 	{
 		err = s().join(cmd->infile, strerror(cmd->err), ": ");
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
 		free(err);
-		m()->exit_status = 2;
+		m()->exit_status = 1;
+		return (1);
 	}
-	return ;
+	return (0);
 }
 
 void	befor_exit(t_cmd *cmd)

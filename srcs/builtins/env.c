@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 20:37:43 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/06 22:43:38 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:00:44 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	print_each(t_elems *elem, void *o)
 	write(fd, err, s().len(err, 0));
 	free(err);
 }
-
 
 int	env(void *cont, int fd)
 {

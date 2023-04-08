@@ -93,7 +93,9 @@ t_tree	*__search_tree(t_tree *root, void *cont)
 		return (NULL);
 	if (!root)
 		root = (*__this())->root;
-	val = (*__this())->cmp(root->cont, cont);
+    if (!root)
+        return (NULL);
+    val = (*__this())->cmp(root->cont, cont);
 	if (val < 0 && root->right)
 		elem = __search_tree(root->right, cont);
 	else if (val > 0 && root->left)

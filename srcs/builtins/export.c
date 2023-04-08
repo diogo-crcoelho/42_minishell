@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:55 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 23:07:32 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:00:49 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	export_empty(t_tree *root, int fd)
 
 	if (root->left)
 		export_empty(root->left, fd);
-	tmp = s().join(((t_env *)root->cont)->splitted[0], \
-		((t_env *)root->cont)->splitted[1], "=\"");
+	tmp = s().join(((t_env *)root->cont)->splitted[0],
+					((t_env *)root->cont)->splitted[1],
+					"=\"");
 	msg = s().join("declare -x ", "\"\n", tmp);
 	write(fd, msg, s().len(msg, 0));
 	free(msg);
@@ -52,7 +53,7 @@ int	export_cut_lines(char *vars)
 	splitted = env_split(vars, '=');
 	temp = array(m()->env)->search_tree(NULL, splitted[0]);
 	array(m()->env)->cmp = cmp_env;
-	if (!s().len(splitted[0], 0) || s().alnum(splitted[0]) || \
+	if (!s().len(splitted[0], 0) || s().alnum(splitted[0]) ||
 		!(__isalpha(splitted[0][0])))
 	{
 		err = s().join("export: ", ": not a valid identifier\n", vars);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:33:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:55:45 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:01:10 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char	*expand(char *str)
 		{
 			if (str[++i])
 				return (s().join(((t_env *)teste->cont)->splitted[1],
-						&str[i], 0));
+									&str[i],
+									0));
 			return (s().copy(((t_env *)teste->cont)->splitted[1]));
 		}
 		else

@@ -105,9 +105,10 @@ int				__isdigit(int c);
 int				s_exit(int sc);
 
 //pipex
-int 			treat_files(t_cmd *cmd);
+int				treat_files(t_cmd *cmd);
 void			built_cut_lines(t_cmd *cmd, t_elems *elem);
 void			befor_exit(t_cmd *cmd);
 void			parse_paths(t_cmd *cmd);
 void			**to_array_mini(void);
+void			close_pipes(t_cmd *cmd);
 #endif

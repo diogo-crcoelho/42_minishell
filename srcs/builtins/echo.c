@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:46:10 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 18:03:36 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:00:29 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
+
+int	flag_check(char *str, int *next)
+{
+	int	i;
+
+	i = -1;
+	while (str && str[++i])
+		if ('n' != str[i])
+			return (0);
+	++*next;
+	return (1);
+}
 
 int	echo(void *cont, int fd)
 {
@@ -23,11 +35,8 @@ int	echo(void *cont, int fd)
 	flag = 0;
 	if (!*strs)
 		return (0);
-	if (!s().equal(*strs, "-n"))
-	{
-		++i;
-		flag = 1;
-	}
+	if (!s().equal_n(*strs, "-n", 2))
+		flag = flag_check(&(*strs)[2], &i);
 	while (strs[++i])
 	{
 		write(fd, strs[i], s().len(strs[i], 0));

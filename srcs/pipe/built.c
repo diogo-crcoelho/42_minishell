@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:25 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/06 19:40:26 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:07:48 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,16 @@ int	exe_buil(t_elems *elem)
 	return (1);
 }
 
-void	pipe_built_cut_lines(t_cmd *cmd)
+int	built_cut_lines2(t_elems *elem, int balls)
 {
-	close(cmd->fd[0]);
-	close(cmd->fd[1]);
+	if (balls && m()->c_count--)
+		return (m()->exit_status);
+	if (exe_buil(elem) && m()->c_count--)
+		return (1);
+	return (0);
 }
+
+
 
 void	pipe_built(t_elems *elem)
 {
@@ -54,12 +59,12 @@ void	pipe_built(t_elems *elem)
 			s_exit(1);
 	}
 	else if (!elem->next)
-	{	
+	{
 		if (cmd->fd_red[1])
 			if (-1 == dup2(cmd->fd_red[1], 1))
 				s_exit(1);
 	}
-	pipe_built_cut_lines(cmd);
+	close_pipes(cmd);
 	m()->exit_status = !exe_buil(elem);
 	err = m()->exit_status;
 	s_exit(err);
@@ -82,16 +87,9 @@ int	built(t_elems *elem)
 
 	cmd = (t_cmd *)elem->cont;
 	balls = treat_files(cmd);
-
 	m()->inter = 1;
 	if (array(m()->cmds)->size <= 1)
-	{
-		if (balls && m()->c_count--)
-			return (m()->exit_status);
-		if (exe_buil(elem) && m()->c_count--)
-			return (1);
-		return (0);
-	}
+		return (built_cut_lines2(elem, balls));
 	else if (cmd->args && array(m()->b)->search_tree(NULL, cmd->args[0]))
 	{
 		cmd->pid = fork();
@@ -99,13 +97,12 @@ int	built(t_elems *elem)
 			s_exit(2);
 		if (0 == cmd->pid)
 			pipe_built(elem);
-		else
-			if (elem->next && !((t_cmd *)elem->next->cont)->fd_red[0])
-				((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
+		else if (elem->next && !((t_cmd *)elem->next->cont)->fd_red[0])
+			((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
 		built_cut_lines(cmd, elem);
 		return (1);
 	}
 	return (0);
 }
 
-//array(m()->b)->search_tree(NULL, cmd->args[0]) && 
+//array(m()->b)->search_tree(NULL, cmd->args[0]) &&

@@ -18,9 +18,9 @@ char	**rec_split(char **splited, int words, char c, const char *s)
 	int		i;
 
 	i = 0;
-	while (*s && *s == c)
+	while (s && *s && *s == c)
 		s++;
-	while (s[i] && s[i] != c)
+	while (s && s[i] && s[i] != c)
 		i++;
 	word = NULL;
 	if (i)

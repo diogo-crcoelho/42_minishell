@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 19:18:51 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 19:19:03 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:01:03 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	check_tilde(char **str)
 		token = ((t_elems *)token)->cont;
 	if ((token->type == SPC || token->type == PIPE) && check_validity(*str))
 	{
-		(array(m()->tokens))->add(c_token(s().copy(tilde), VAR))->\
-			del = del_token;
+		(array(m()->tokens))->add(c_token(s().copy(tilde),
+					VAR))->del = del_token;
 		(*str)++;
 		return (1);
 	}
@@ -42,7 +42,7 @@ int	check_tilde(char **str)
 
 void	*heredoc_state(char **str, int add)
 {
-	char	*here;
+	char *here;
 
 	*str += 2;
 	while (**str == ' ' || **str == '\t')

@@ -43,7 +43,6 @@ struct					s_mini
 	void				*cmds;
 	int					inter;
 	int					exit_status;
-	char				*prev_path;
 	void				*tokens;
 	void				*symbols;
 	void				*b;

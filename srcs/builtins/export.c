@@ -36,7 +36,7 @@ void	add_new(char *splitted, char *new)
 	array(m()->env)->add(create_cont(new))->del = del_elem;
 }
 
-void	change_var(t_tree *var, char *new, char *splitted)
+void	change_var(t_elems *var, char *new, char *splitted)
 {
 	free(((t_env *)var->cont)->splitted[1]);
 	((t_env *)var->cont)->splitted[1] = splitted;
@@ -47,11 +47,11 @@ void	change_var(t_tree *var, char *new, char *splitted)
 int	export_cut_lines(char *vars)
 {
 	char	**splitted;
-	t_tree	*temp;
+	t_elems	*temp;
 	char	*err;
 
 	splitted = env_split(vars, '=');
-	temp = array(m()->env)->search_tree(NULL, splitted[0]);
+	temp = array(m()->env)->search(comp_var, splitted[0]);
 	array(m()->env)->cmp = cmp_env;
 	if (!s().len(splitted[0], 0) || s().alnum(splitted[0]) ||
 		!(__isalpha(splitted[0][0])))

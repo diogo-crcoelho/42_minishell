@@ -14,13 +14,13 @@
 
 void shell_lvl(void)
 {
-    t_tree	*temp;
+    t_elems 	*temp;
     long	lvl;
     char	*var;
     char	*var2;
     char	**tmp;
 
-    temp = array(m()->env)->search_tree(NULL, "SHLVL");
+    temp = array(m()->env)->search(comp_var, "SHLVL");
     if (!temp) {
         tmp = s().split("SHLVL=1", 0);
         export(tmp, 0);

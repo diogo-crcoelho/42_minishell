@@ -17,13 +17,9 @@
 
 void	g_path(char *old)
 {
-	t_tree	*tt;
 	char	**pwds;
 	char	str[PATH_MAX];
 
-	tt = array(m()->env)->search_tree(NULL, "OLDPWD");
-	free(m()->prev_path);
-	m()->prev_path = s().copy(((t_env *)tt->cont)->splitted[1]);
 	pwds = ft_calloc((sizeof(char *) * 3));
 	pwds[0] = s().join("OLDPWD=", old, "");
 	pwds[1] = s().join("PWD=", getcwd(str, PATH_MAX), "");
@@ -36,8 +32,6 @@ char	*cd_cut_lines(char *path)
 {
 	if (!s().len(path, 0))
 		path = s().copy(m()->home);
-	else if (!s().equal(path, "-"))
-		path = s().copy(m()->prev_path);
 	else
 		path = s().copy(path);
 	return (path);

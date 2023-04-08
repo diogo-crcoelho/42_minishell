@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:05 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 15:56:32 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:01:28 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static int	next_line(char *stash)
 	}
 	while (stash[i] && j > -1)
 	{
-			stash[j++] = stash[i];
-			stash[i++] = 0;
+		stash[j++] = stash[i];
+		stash[i++] = 0;
 	}
 	return (j);
 }
@@ -81,7 +81,7 @@ char	*get_next_line(int fd)
 
 	i = -1;
 	if (read(fd, 0, 0) < 0)
-	{	
+	{
 		while (stash[++i])
 			stash[i] = 0;
 		return (NULL);

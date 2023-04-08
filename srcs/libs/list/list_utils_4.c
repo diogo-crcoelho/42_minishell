@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils_4.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:19:33 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 18:48:49 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:40:09 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ void	__del_from_tree(void *cont)
 	else if (to_del->right && to_del->left)
 	{
 		temp = to_del;
-		to_del = find_leaf(to_del->left, to_del->cont, (*__this())->cmp);
+		to_del = find_leaf(to_del->right, to_del->cont, (*__this())->cmp);
 		temp->cont = to_del->cont;
+		__del_from_tree_cut_lines(to_del, NULL);
 	}
 	else
 		__del_from_tree_cut_lines(to_del, NULL);

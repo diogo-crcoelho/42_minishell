@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:08:13 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 20:17:06 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:07:16 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	cona(char *err)
 {
-    write(2, err, s().len(err, 0));
+	write(2, err, s().len(err, 0));
 	m()->exit_status = 2;
 }
 
@@ -30,4 +30,10 @@ void	free_pp(void *pp)
 	if (freed)
 		free(freed);
 	freed = NULL;
+}
+
+void	close_pipes(t_cmd *cmd)
+{
+	close(cmd->fd[0]);
+	close(cmd->fd[1]);
 }

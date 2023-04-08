@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:49:42 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 18:18:57 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:00:54 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	unset_cut(char *vars)
 {
-	char 	*err;
+	char	*err;
 
-	if (!s().len(vars, 0) || s().alnum(vars) || \
-	!(__isalpha(vars[0])))
+	if (!s().len(vars, 0) || s().alnum(vars) ||
+		!(__isalpha(vars[0])))
 	{
 		err = s().join("unset: ", ": not a valid identifier\n", vars);
 		cona(err);
@@ -38,7 +38,6 @@ int	unset(void *cont, int fd)
 	i = -1;
 	vars = (char **)cont;
 	array(m()->env)->cmp = cmp_env;
-	
 	while (vars[++i])
 	{
 		if (unset_cut(vars[i]))

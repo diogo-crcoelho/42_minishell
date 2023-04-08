@@ -15,6 +15,7 @@
 t_array		**__this(void);
 void		__del_from_tree(void *cont);
 void		__destroy_tree(t_tree *root);
+void	    __build_tree(void);
 
 void	__del(t_elems *elem)
 {
@@ -76,7 +77,7 @@ t_elems	*__add(void *cont)
 	(*__this())->size++;
 	if ((*__this())->root)
 		(*__this())->add_leaf(cont);
-	return (new);
+    return (new);
 }
 
 void	__destroy(void)

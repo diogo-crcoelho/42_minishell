@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:00:37 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/06 19:29:51 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:00:41 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 // Podemos implementar o cd -...
 // like guradarmos na estrutura global o caminho atual sempre que chamarmos o cd
-
 
 void	g_path(char *old)
 {
@@ -28,7 +27,7 @@ void	g_path(char *old)
 	pwds = ft_calloc((sizeof(char *) * 3));
 	pwds[0] = s().join("OLDPWD=", old, "");
 	pwds[1] = s().join("PWD=", getcwd(str, PATH_MAX), "");
-	export (pwds, 0);
+	export(pwds, 0);
 	free_pp(pwds);
 	free(old);
 }
@@ -36,7 +35,7 @@ void	g_path(char *old)
 char	*cd_cut_lines(char *path)
 {
 	if (!s().len(path, 0))
-		path = s().copy(getenv("HOME"));
+		path = s().copy(m()->home);
 	else if (!s().equal(path, "-"))
 		path = s().copy(m()->prev_path);
 	else

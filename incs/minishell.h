@@ -65,7 +65,7 @@ void			create_env(char **envp);
 t_env			*create_cont(char *total);
 char			**env_split(char *str, char sep);
 void			del_elem(void *cont);
-
+void            shell_lvl(void);
 //utils
 char			**env_split(char *str, char sep);
 char			*ft_itoa(int n);

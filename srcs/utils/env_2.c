@@ -27,10 +27,10 @@ void	create_env(char **envp)
 	char str[PATH_MAX];
 
 	m()->env = creat_array();
-	(m())->prev_path = s().copy(getcwd(str, PATH_MAX));
 	while (*envp)
 		array(m()->env)->add(create_cont(*envp++))->del = del_elem;
 	array(m()->env)->to_array = to_array_mini;
+    shell_lvl();
 	array(m()->env)->cmp = cmp_env;
 	array(m()->env)->build_tree();
 	array(m()->env)->cmp = comp_var;

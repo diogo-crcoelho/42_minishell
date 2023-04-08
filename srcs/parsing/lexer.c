@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:51:10 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 19:30:04 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:01:06 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 	t_dict	*symbol;
 
 	symbol = NULL;
-	if (array(m()->symbols)->search_tree(array(m()->symbols)->root,
-			*str))
-		symbol = (t_dict *)array(m()->symbols)->\
-			search_tree(array(m()->symbols)->root,*str)->cont;
+	if (array(m()->symbols)->search_tree(array(m()->symbols)->root, *str))
+		symbol = (t_dict *)array(m()->symbols)->search_tree(array(m()->symbols)->root,
+				*str)->cont;
 	temp = lex;
 	if (symbol && p_sym->comp[symbol->value])
 	{
@@ -44,8 +43,6 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 	free(temp);
 	return (lex);
 }
-
-
 
 void	*var_state(char **str, int add)
 {
@@ -66,8 +63,8 @@ void	*var_state(char **str, int add)
 			(*str)++;
 		temp = s().copy_n(temp, *str - temp);
 		if (array(m()->env)->search_tree(NULL, temp))
-			var = s().copy(((t_env *)array(m()->env)->\
-			search_tree(array(m()->env)->root, temp)->cont)->splitted[1]);
+			var = s().copy(((t_env *)array(m()->env)->search_tree(array(m()->env)->root,
+							temp)->cont)->splitted[1]);
 		else
 			var = ft_calloc(1);
 		free(temp);
@@ -83,24 +80,23 @@ void	*infile_state(char **str, int add)
 	char	*infile;
 
 	(void)add;
-	p_sym = ((t_dict *)array(m()->symbols)->\
-		search_tree(array(m()->symbols)->root, *str)->cont);
+	p_sym = ((t_dict *)array(m()->symbols)->search_tree(array(m()->symbols)->root,
+				*str)->cont);
 	infile = ft_calloc(1);
 	(*str)++;
 	if (p_sym->value == HERE || p_sym->value == APP)
 		(*str)++;
 	while (**str && **str == ' ')
 		(*str)++;
-	while (**str && **str != ' ' && **str != '|' && *\
-		*str != '<' && **str != '>')
+	while (**str && **str != ' ' && **str != '|' && **str != '<'
+		&& **str != '>')
 	{
 		infile = aux_state(str, infile, p_sym);
 		if (!**str)
 			break ;
 		(*str)++;
 	}
-	(array(m()->tokens))->add(c_token(infile, p_sym->value))->\
-		del = del_token;
+	(array(m()->tokens))->add(c_token(infile, p_sym->value))->del = del_token;
 	return (infile);
 }
 
@@ -110,8 +106,8 @@ void	*str_state(char **str, int add)
 	char	*infile;
 
 	(void)add;
-	p_sym = ((t_dict *)array(m()->symbols)->\
-		search_tree(array(m()->symbols)->root,*str)->cont);
+	p_sym = ((t_dict *)array(m()->symbols)->search_tree(array(m()->symbols)->root,
+				*str)->cont);
 	infile = ft_calloc(1);
 	(*str)++;
 	while (**str && **str != '"')
@@ -124,7 +120,7 @@ void	*str_state(char **str, int add)
 	if (**str)
 		(*str)++;
 	if (add)
-		(array(m()->tokens))->add(c_token(infile, p_sym->value))->\
-			del = del_token;
+		(array(m()->tokens))->add(c_token(infile,
+					p_sym->value))->del = del_token;
 	return (infile);
 }

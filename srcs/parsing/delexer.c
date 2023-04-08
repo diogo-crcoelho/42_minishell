@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 18:58:37 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:00:59 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,16 @@ void	filler_cut_lines(t_token *token, t_elems *tmp)
 	int	open_flags;
 
 	if (OUT == token->type)
-			open_flags = O_TRUNC;
+		open_flags = O_TRUNC;
 	else
 		open_flags = O_APPEND;
 	if (((t_cmd *)tmp->cont)->fd_red[1])
-		free(((t_cmd *)tmp->cont)->outfile);
+    {
+        free(((t_cmd *)tmp->cont)->outfile);
+        close(((t_cmd *)tmp->cont)->fd_red[1]);
+    }
 	((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
-	((t_cmd *)tmp->cont)->fd_red[1] = \
+	((t_cmd *)tmp->cont)->fd_red[1] =
 		open(token->token, O_WRONLY | open_flags | O_CREAT, 0644);
 	if (!(((t_cmd *)tmp->cont)->err))
 	{
@@ -50,21 +53,24 @@ void	filler_cut_lines(t_token *token, t_elems *tmp)
 
 void	filler(t_token *token, t_elems *tmp, int *flag)
 {
-	if ((IN == token->type) && ++(*flag) && \
+	if ((IN == token->type) && ++(*flag) &&
 		-1 != ((t_cmd *)tmp->cont)->fd_red[0])
 	{
 		if (((t_cmd *)tmp->cont)->fd_red[0])
-			free(((t_cmd *)tmp->cont)->infile);
+        {
+            free(((t_cmd *)tmp->cont)->infile);
+            close(((t_cmd *)tmp->cont)->fd_red[0]);
+        }
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
 		if (!(((t_cmd *)tmp->cont)->err))
 		{
-			((t_cmd *)tmp->cont)->ord = 1;	
+			((t_cmd *)tmp->cont)->ord = 1;
 			((t_cmd *)tmp->cont)->err = errno;
 		}
 	}
-	if ((OUT == token->type || APP == token->type) && ++(*flag) && \
-		-1 != ((t_cmd *)tmp->cont)->fd_red[1] && \
+	if ((OUT == token->type || APP == token->type) && ++(*flag) &&
+		-1 != ((t_cmd *)tmp->cont)->fd_red[1] &&
 		-1 != ((t_cmd *)tmp->cont)->fd_red[0])
 		filler_cut_lines(token, tmp);
 }
@@ -102,7 +108,7 @@ int	check_syntax(void)
 	tmp = array(m()->tokens)->begin;
 	if (tmp && PIPE == ((t_token *)tmp->cont)->type)
 		f = 1;
-	if (array(m()->tokens)->end && \
+	if (array(m()->tokens)->end &&
 		PIPE == ((t_token *)array(m()->tokens)->end->cont)->type)
 		f = 1;
 	while (tmp)
@@ -142,12 +148,12 @@ void	delexer(void)
 				tmp = tmp->next;
 			}
 			if (((t_cmd *)cmds->cont)->path)
-				((t_cmd *)cmds->cont)->args = \
+				((t_cmd *)cmds->cont)->args =
 					s().split(((t_cmd *)cmds->cont)->path, 27);
 			free(((t_cmd *)cmds->cont)->path);
 			if (tmp)
 				tmp = tmp->next;
-		}	
+		}
 	}
 	m()->c_count = (array(m()->cmds)->size);
 }

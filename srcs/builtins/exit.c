@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:30 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 18:05:02 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:25:31 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ long	s_atoi(char *str)
 	while (str && str[++i])
 	{
 		old = val;
-		val = val * 10 + (str[i] -48);
+		val = val * 10 + (str[i] - 48);
 		if (val < old || !__isdigit(str[i]))
 			exit_err("exit: ", ": numeric argument required\n", str);
 	}
@@ -72,7 +72,7 @@ int	ft_exit(void *cont, int fd)
 	vars = (char **)cont;
 	if (s().len(vars[0], 0) && vars[1])
 	{
-		cona("exit: too many arguments");
+		cona("exit: too many arguments\n");
 		return (1);
 	}
 	if (!s().len(vars[0], 0))

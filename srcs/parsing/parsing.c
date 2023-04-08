@@ -34,14 +34,12 @@ void shell_lvl(void)
     export(tmp, 0);
     free_pp(tmp);
     free(var);
+    free(var2);
 }
 
 void	init_m(char **envp)
 {
-
-
 	create_env(envp);
-    shell_lvl();
 	m()->cmds = creat_array();
 	init_tokens();
 	init_symbols();

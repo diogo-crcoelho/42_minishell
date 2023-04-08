@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:47 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 19:18:58 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:01:01 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	*lstr_state(char **str, int add)
 	char	*lstr;
 	char	*temp;
 
-	type = ((t_dict *)array(m()->symbols)->\
-		search_tree(array(m()->symbols)->root, *str)->cont)->value;
+	type = ((t_dict *)array(m()->symbols)->search_tree(array(m()->symbols)->root,
+				*str)->cont)->value;
 	(*str)++;
 	temp = *str;
 	while (**str && **str != 39)
@@ -32,8 +32,8 @@ void	*lstr_state(char **str, int add)
 	return (lstr);
 }
 
-void	*non_symbol_state_cut_lines(char *temp, char *temp_free, \
-		t_dict *symbol, char **str)
+void	*non_symbol_state_cut_lines(char *temp, char *temp_free, t_dict *symbol,
+		char **str)
 {
 	char	*temp_free_2;
 
@@ -51,15 +51,15 @@ void	*non_symbol_state(char **str, int add)
 	t_dict	*symbol;
 
 	temp = ft_calloc(1);
-	while (**str && **str != ' ' && \
-		**str != '|' && **str != '<' && **str != '>')
+	while (**str && **str != ' ' &&
+			**str != '|' && **str != '<' && **str != '>')
 	{
 		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL, *str);
 		temp_free = temp;
 		if (symbol)
 		{
-			temp = non_symbol_state_cut_lines(temp, temp_free, \
-				((t_tree *)(symbol))->cont, str);
+			temp = non_symbol_state_cut_lines(temp, temp_free,
+					((t_tree *)(symbol))->cont, str);
 			continue ;
 		}
 		else
@@ -75,26 +75,25 @@ void	*non_symbol_state(char **str, int add)
 
 int	check_validity(char *str)
 {
-	if (*str == '~' && (*(str + 1) == ' ' || \
-		*(str + 1) == '|' || *(str + 1) == '/'
-			|| !*(str + 1)))
+	if (*str == '~' && (*(str + 1) == ' ' || *(str + 1) == '|' || *(str
+				+ 1) == '/' || !*(str + 1)))
 		return (1);
 	return (0);
 }
 
 void	update_home(void)
 {
-	char	*home;
+	char	    *home;
 
 	home = (char *)(array(m()->env)->search_tree(0, "HOME"));
-	if (home)
+    if (home)
 	{
-		home = ((t_env *)((t_tree *)home)->cont)->splitted[1];
-		if (s().equal(m()->home, home))
+        home = ((t_env *)((t_tree *)home)->cont)->splitted[1];
+        if (!m()->home || s().equal(m()->home, home))
 		{
-			if (m()->home)
-				free(m()->home);
-			m()->home = s().copy(home);
-		}
-	}
+            if (m()->home)
+                free(m()->home);
+            m()->home = s().copy(home);
+        }
+    }
 }

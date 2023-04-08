@@ -34,8 +34,8 @@ void	print_tokens(void)
 	c = (array(m()->tokens)->begin);
 	while (c)
 	{
-		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->cont))->token,
-				((t_token *)(c->cont))->type);
+		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->cont))->token, \
+			((t_token *)(c->cont))->type);
 		c = c->next;
 		i++;
 	}
@@ -45,8 +45,8 @@ int	add_space(char *s)
 {
 	if (*s == '|' || !*s)
 		return (0);
-	else if (!array(m()->tokens)->end ||
-				((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
+	else if (!array(m()->tokens)->end || \
+		((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
 		return (0);
 	return (1);
 }
@@ -57,7 +57,8 @@ void	lex(char **temp)
 
 	while (**temp)
 	{
-		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL, *temp);
+		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL,
+				*temp);
 		if (check_tilde(temp))
 			continue ;
 		if (symbol)
@@ -71,7 +72,8 @@ void	lex(char **temp)
 		while (**temp == ' ' || (add_space(*temp)
 				&& !array(m()->tokens)->add(c_token(" ", SPC))))
 			(*temp)++;
-		if (**temp == '|' && array(m()->tokens)->add(c_token("|", PIPE)))
+		if (**temp == '|' && array(m()->tokens)->add(c_token("|",
+					PIPE)))
 			(*temp)++;
 	}
 }
@@ -115,9 +117,9 @@ int	main(int argc, char **argv, char **envp)
 		add_history(str);
 		temp = str;
 		lex(&temp);
-		//    print_tokens();
+    //    print_tokens();
 		delexer();
-		//   print_cmds();
+    //   print_cmds();
 		pipex();
 		// printf("-------------------%d\n", m()->exit_status);
 		reload();
@@ -129,18 +131,18 @@ int	main(int argc, char **argv, char **envp)
 //cat <./minishell_tester/test_files/infile_big | ls
 /*
 export hello
-export HELLO=123 
-export A- 
-export HELLO=123 A 
-export HELLO="123 A-" 
-export hello world 
-export HELLO-=123 
-export = 
-export 123 
-unset 
-unset HELLO 
-unset HELLO1 HELLO2 
-unset HOME 
-unset PATH 
-unset SHELL 
+export HELLO=123
+export A-
+export HELLO=123 A
+export HELLO="123 A-"
+export hello world
+export HELLO-=123
+export =
+export 123
+unset
+unset HELLO
+unset HELLO1 HELLO2
+unset HOME
+unset PATH
+unset SHELL
 */

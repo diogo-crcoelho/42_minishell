@@ -40,17 +40,31 @@ int	check_tilde(char **str)
 	return (0);
 }
 
+int check_here_validity(char c)
+{
+    if (!c || c == '|' || c == '<' || c == '>' || c == ' ')
+        return (0);
+    return (1);
+}
+
 void	*heredoc_state(char **str, int add)
 {
 	char *here;
+    t_dict	*symbol;
 
-	*str += 2;
-	while (**str == ' ' || **str == '\t')
-		(*str)++;
-	here = *str;
-	while (**str && **str != ' ' && **str != '\t' && **str != '|')
-		(*str)++;
-	here = s().copy_n(here, (*str - here));
+
+    symbol = (t_dict *)array(m()->symbols)->search_tree(NULL, *str);
+    *str += 2;
+    here = ft_calloc(1);
+    while (**str == ' ' || **str == '\t')
+        (*str)++;
+    while (check_here_validity(**str))
+    {
+        here = aux_state(str, here, symbol);
+        if (!**str)
+            break ;
+        (*str)++;
+    }
 	if (add)
 		(array(m()->tokens))->add(c_token(here, HERE))->del = del_token;
 	return (here);

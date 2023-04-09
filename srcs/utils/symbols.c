@@ -74,5 +74,8 @@ int	*init_comp(int type)
 		return (comp);
 	comp[3] = 1;
 	comp[4] = 1;
-	return (comp);
+    if (type == IN || type == OUT)
+	    return (comp);
+    comp[0] = 0;
+    return (comp);
 }

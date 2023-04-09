@@ -12,35 +12,6 @@
 
 #include "../incs/minishell.h"
 
-//TODO
-
-void	pipex(void);
-
-void	print_cmds(void);
-
-t_mini	*m(void)
-{
-	static t_mini	a;
-
-	return (&a);
-}
-
-void	print_tokens(void)
-{
-	t_elems	*c;
-	int		i;
-
-	i = 0;
-	c = (array(m()->tokens)->begin);
-	while (c)
-	{
-		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->cont))->token, \
-			((t_token *)(c->cont))->type);
-		c = c->next;
-		i++;
-	}
-}
-
 int	add_space(char *s)
 {
 	if (*s == '|' || !*s)
@@ -114,32 +85,10 @@ int	main(int argc, char **argv, char **envp)
 		add_history(str);
 		temp = str;
 		lex(&temp);
-		//    print_tokens();
-		delexer(array(m()->tokens)->begin);
-		//       print_cmds();
+		delexer(array(m()->tokens)->begin, 0);
 		pipex();
-		// printf("-------------------%d\n", m()->exit_status);
 		reload();
 		free(str);
 	}
 	s_exit(m()->exit_status);
 }
-
-//cat <./minishell_tester/test_files/infile_big | ls
-/*
-export hello
-export HELLO=123
-export A-
-export HELLO=123 A
-export HELLO="123 A-"
-export hello world
-export HELLO-=123
-export =
-export 123
-unset
-unset HELLO
-unset HELLO1 HELLO2
-unset HOME
-unset PATH
-unset SHELL
-*/

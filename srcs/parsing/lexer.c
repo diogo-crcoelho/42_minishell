@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:51:10 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 20:27:41 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:02:34 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_isalnum(char c)
 {
-	if ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A') || (c <= '9' && \
-		c >= '0'))
+	if ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A') || (c <= '9'
+			&& c >= '0'))
 		return (1);
 	return (0);
 }
@@ -29,7 +29,7 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 	symbol = NULL;
 	if (array(m()->symbols)->search_tree(array(m()->symbols)->root, *str))
 		symbol = (t_dict *)array(m()->symbols) \
-		->search_tree(array(m()->symbols)->root, *str)->cont;
+			->search_tree(array(m()->symbols)->root, *str)->cont;
 	temp = lex;
 	if (symbol && p_sym->comp[symbol->value])
 	{
@@ -42,13 +42,6 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 		lex = s().append(lex, **str);
 	free(temp);
 	return (lex);
-}
-
-int check_var_validity(char c)
-{
-    if (!c || c == ' ' || c == '|')
-        return (0);
-    return (1);
 }
 
 void	*var_state(char **str, int add)
@@ -65,20 +58,10 @@ void	*var_state(char **str, int add)
 	else if (!check_var_validity(**str) || **str == '"')
 		var = s().copy("$");
 	else if (**str && ft_isalnum(**str))
-	{
-		while (**str && ft_isalnum(**str))
-			(*str)++;
-		temp = s().copy_n(temp, *str - temp);
-		if (array(m()->env)->search_tree(NULL, temp))
-			var = s().copy(((t_env *)array(m()->env) \
-			->search_tree(array(m()->env)->root, temp)->cont)->splitted[1]);
-		else
-			var = ft_calloc(1);
-		free(temp);
-	}
-    else
-        var = ft_calloc(1);
-    if (add)
+		var = var_state_cut_lines(str, temp);
+	else
+		var = ft_calloc(1);
+	if (add)
 		(array(m()->tokens))->add(c_token(var, p_sym->value))->del = del_token;
 	return (var);
 }

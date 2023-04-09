@@ -6,27 +6,11 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 20:33:36 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:41:15 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
-
-void	del_cmd(void *cmd)
-{
-	int	i;
-
-	i = -1;
-	if (((t_cmd *)cmd)->outfile)
-		free(((t_cmd *)cmd)->outfile);
-	if (((t_cmd *)cmd)->infile)
-		free(((t_cmd *)cmd)->infile);
-	while (((t_cmd *)cmd)->args && ((t_cmd *)cmd)->args[++i])
-		free(((t_cmd *)cmd)->args[i]);
-	if (((t_cmd *)cmd)->args)
-		free(((t_cmd *)cmd)->args);
-	free(cmd);
-}
 
 void	filler_cut_lines(t_token *token, t_elems *tmp)
 {
@@ -75,15 +59,14 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 		filler_cut_lines(token, tmp);
 }
 
-void	filler2(t_token *token, int j)
+void	filler2(t_token *token, int j, int *flag)
 {
 	char	*clean;
-	int		flag;
 	t_elems	*tmp;
 
-	flag = 0;
+	*flag = 0;
 	tmp = array(m()->cmds)->end;
-	filler(token, tmp, &flag);
+	filler(token, tmp, flag);
 	if (HERE == token->type)
 	{
 		if (((t_cmd *)tmp->cont)->fd_red[0])
@@ -93,9 +76,7 @@ void	filler2(t_token *token, int j)
 		else
 			here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
 	}
-	else if (SPC == token->type)
-		return ;
-	else if (!flag)
+	else if ((SPC != token->type) && !*flag)
 	{
 		if (j)
 			clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
@@ -135,7 +116,7 @@ int	check_syntax(void)
 	return (0);
 }
 
-void	delexer(t_elems *tmp)
+void	delexer(t_elems *tmp, int flag)
 {
 	t_elems	*cmds;
 	int		j;
@@ -149,7 +130,7 @@ void	delexer(t_elems *tmp)
 			while (tmp && PIPE != ((t_token *)tmp->cont)->type)
 			{
 				j = (tmp->prev && SPC == ((t_token *)tmp->prev->cont)->type);
-				filler2((t_token *)tmp->cont, j);
+				filler2((t_token *)tmp->cont, j, &flag);
 				tmp = tmp->next;
 			}
 			if (((t_cmd *)cmds->cont)->path)

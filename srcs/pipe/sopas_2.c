@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:36 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 20:28:02 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 22:22:22 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	run_cut_lines(t_cmd *cmd, t_elems *elem, int flag)
 	if (flag)
 	{
 		close(cmd->fd[0]);
-		if (cmd->fd_red[0] || elem->prev)
-			close(cmd->fd_red[0]);
+		close(cmd->fd[1]);
 		if (cmd->fd_red[1])
 			close(cmd->fd_red[1]);
+		if (cmd->fd_red[0] || elem->prev)
+			close(cmd->fd_red[0]);
 		if (elem->prev)
 			close(((t_cmd *)elem->prev->cont)->fd[1]);
-		close(cmd->fd[1]);
 		execve(cmd->path, cmd->args, m()->a_env);
 		befor_exit(cmd);
 	}

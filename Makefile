@@ -6,7 +6,7 @@
 #    By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 20:44:34 by dcarvalh          #+#    #+#              #
-#    Updated: 2023/04/08 17:13:52 by dcarvalh         ###   ########.fr        #
+#    Updated: 2023/04/09 21:58:44 by dcarvalh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS =	minishell.c \
 		parsing/parsing.c parsing/parsing_utils.c parsing/parsing_utils2.c parsing/lexer.c parsing/lexer_2.c parsing/lexer_3.c parsing/delexer.c\
 		builtins/pwd.c builtins/cd.c builtins/env.c builtins/export.c builtins/unset.c \
 		builtins/echo.c builtins/exit.c builtins/builtins.c\
-		utils/utils_1.c utils/symbols.c  utils/tokens.c utils/env.c utils/env_2.c utils/symbols_2.c\
+		utils/utils_0.c utils/utils_1.c utils/symbols.c  utils/tokens.c utils/env.c utils/env_2.c utils/symbols_2.c\
 		signals/signals.c \
 		pipe/sopas.c pipe/gnl.c pipe/here_doc.c pipe/built.c\
 		pipe/sopas_2.c

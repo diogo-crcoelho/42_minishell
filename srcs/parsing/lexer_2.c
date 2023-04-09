@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:47 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 18:54:53 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 21:52:03 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*non_symbol_state(char **str, int add)
 int	check_validity(char *str)
 {
 	if (*str == '~' && (*(str + 1) == ' ' || *(str + 1) == '|' || \
-        *(str + 1) == '/' || !*(str + 1)))
+		*(str + 1) == '/' || !*(str + 1)))
 		return (1);
 	return (0);
 }

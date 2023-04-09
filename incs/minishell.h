@@ -50,6 +50,7 @@ int				ft_exit(void *cont, int fd);
 int				built(t_elems *elem);
 void			destroy_cmds(t_elems *elem);
 void			export_empty(t_tree *root, int fd);
+int				ft_isalnum(char c);
 
 t_mini			*m(void);
 void			init_m(char **envp);
@@ -74,9 +75,11 @@ long			s_atoi(char *str);
 //tokens
 void			init_tokens(void);
 t_token			*c_token(char *s, int type);
+int				check_var_validity(char c);
 void			del_token(void *token);
 
 //states
+char			*var_state_cut_lines(char **str, char *temp);
 void			*infile_state(char **s, int add);
 void			*var_state(char **s, int add);
 char			*aux_state(char **s, char *lex, t_dict *p_sym);
@@ -99,12 +102,13 @@ int				comp_symbols_build(void *c1, void *c2);
 
 void			signals_hand(void);
 int				cmp_env(void *cont1, void *cont2);
-void			delexer(t_elems *tmp);
+void			delexer(t_elems *tmp, int flag);
 int				__isalpha(int c);
 int				__isdigit(int c);
 int				s_exit(int sc);
 
 //pipex
+void			pipex(void);
 int				treat_files(t_cmd *cmd);
 void			built_cut_lines(t_cmd *cmd, t_elems *elem);
 void			befor_exit(t_cmd *cmd);

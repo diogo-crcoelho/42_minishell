@@ -33,16 +33,16 @@ int	echo(void *cont, int fd)
 	strs = (char **)cont;
 	i = -1;
 	flag = 0;
-	if (!*strs)
-		return (0);
-	if (!s().equal_n(*strs, "-n", 2))
-		flag = flag_check(&(*strs)[2], &i);
-	while (strs[++i])
-	{
-		write(fd, strs[i], s().len(strs[i], 0));
-		if (strs[i + 1])
-			write(fd, " ", 1);
-	}
+	if (*strs)
+    {
+        if (!s().equal_n(*strs, "-n", 2))
+            flag = flag_check(&(*strs)[2], &i);
+        while (strs[++i]) {
+            write(fd, strs[i], s().len(strs[i], 0));
+            if (strs[i + 1])
+                write(fd, " ", 1);
+        }
+    }
 	if (!flag)
 		write(fd, "\n", 1);
 	return (0);

@@ -84,8 +84,13 @@ void	filler2(t_token *token, int j)
 	flag = 0;
 	tmp = array(m()->cmds)->end;
 	filler(token, tmp, &flag);
-	if (HERE == token->type)
-		here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
+    if (HERE == token->type)
+    {
+        if (!s().len(token->token, 0) && write(2, "Syntax error...\n", 16))
+            ((t_cmd *)tmp->cont)->fd_red[0] = -1;
+        else
+            here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
+    }
 	else if (SPC == token->type)
 		return ;
 	else if (!flag)

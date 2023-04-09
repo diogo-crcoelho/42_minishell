@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:51:10 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:01:06 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 20:27:41 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_isalnum(char c)
 {
-	if ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A') || (c <= '9'
-			&& c >= '0'))
+	if ((c <= 'z' && c >= 'a') || (c <= 'Z' && c >= 'A') || (c <= '9' && \
+		c >= '0'))
 		return (1);
 	return (0);
 }
@@ -28,8 +28,8 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 
 	symbol = NULL;
 	if (array(m()->symbols)->search_tree(array(m()->symbols)->root, *str))
-		symbol = (t_dict *)array(m()->symbols)->search_tree(array(m()->symbols)->root,
-				*str)->cont;
+		symbol = (t_dict *)array(m()->symbols) \
+		->search_tree(array(m()->symbols)->root, *str)->cont;
 	temp = lex;
 	if (symbol && p_sym->comp[symbol->value])
 	{
@@ -63,8 +63,8 @@ void	*var_state(char **str, int add)
 			(*str)++;
 		temp = s().copy_n(temp, *str - temp);
 		if (array(m()->env)->search_tree(NULL, temp))
-			var = s().copy(((t_env *)array(m()->env)->search_tree(array(m()->env)->root,
-							temp)->cont)->splitted[1]);
+			var = s().copy(((t_env *)array(m()->env) \
+			->search_tree(array(m()->env)->root, temp)->cont)->splitted[1]);
 		else
 			var = ft_calloc(1);
 		free(temp);
@@ -80,8 +80,8 @@ void	*infile_state(char **str, int add)
 	char	*infile;
 
 	(void)add;
-	p_sym = ((t_dict *)array(m()->symbols)->search_tree(array(m()->symbols)->root,
-				*str)->cont);
+	p_sym = ((t_dict *)array(m()->symbols) \
+		->search_tree(array(m()->symbols)->root, *str)->cont);
 	infile = ft_calloc(1);
 	(*str)++;
 	if (p_sym->value == HERE || p_sym->value == APP)
@@ -106,8 +106,8 @@ void	*str_state(char **str, int add)
 	char	*infile;
 
 	(void)add;
-	p_sym = ((t_dict *)array(m()->symbols)->search_tree(array(m()->symbols)->root,
-				*str)->cont);
+	p_sym = ((t_dict *)array(m()->symbols) \
+		->search_tree(array(m()->symbols)->root, str)->cont);
 	infile = ft_calloc(1);
 	(*str)++;
 	while (**str && **str != '"')

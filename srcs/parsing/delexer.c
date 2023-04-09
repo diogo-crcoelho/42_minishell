@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 18:53:25 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 20:33:36 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 		if (((t_cmd *)tmp->cont)->fd_red[0])
 		{
 			free(((t_cmd *)tmp->cont)->infile);
-            close(((t_cmd *)tmp->cont)->fd_red[0]);
+			close(((t_cmd *)tmp->cont)->fd_red[0]);
 		}
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
@@ -86,6 +86,8 @@ void	filler2(t_token *token, int j)
 	filler(token, tmp, &flag);
 	if (HERE == token->type)
 	{
+		if (((t_cmd *)tmp->cont)->fd_red[0])
+			close(((t_cmd *)tmp->cont)->fd_red[0]);
 		if (!s().len(token->token, 0) && write(2, "Syntax error...\n", 16))
 			((t_cmd *)tmp->cont)->fd_red[0] = -1;
 		else

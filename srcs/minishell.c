@@ -34,8 +34,8 @@ void	print_tokens(void)
 	c = (array(m()->tokens)->begin);
 	while (c)
 	{
-		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->cont))->token,
-				((t_token *)(c->cont))->type);
+		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->cont))->token, \
+			((t_token *)(c->cont))->type);
 		c = c->next;
 		i++;
 	}

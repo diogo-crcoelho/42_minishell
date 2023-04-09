@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:23 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 19:30:10 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 20:28:31 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	here_doc(t_cmd *cmd, char *eof)
 	m()->inter = 1;
 	if (pipe(cmd->fd) < 0)
 		s_exit(2);
-    if (cmd->fd_red[0])
-        close(cmd->fd_red[0]);
-    while (1)
+	while (1)
 	{
 		write(1, "here_doc> ", 10);
 		str = get_next_line(1);
@@ -40,7 +38,7 @@ void	here_doc(t_cmd *cmd, char *eof)
 	}
 	if (-1 != cmd->fd_red[0])
 		cmd->fd_red[0] = dup(cmd->fd[0]);
-    close_pipes(cmd);
+	close_pipes(cmd);
 	m()->inter = 0;
 	free(eof);
 }

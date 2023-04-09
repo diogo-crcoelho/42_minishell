@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   symbols.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:43:16 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/03/27 16:07:06 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/09 20:32:16 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	*init_comp(int type)
 		return (comp);
 	comp[3] = 1;
 	comp[4] = 1;
-    if (type == IN || type == OUT)
-	    return (comp);
-    comp[0] = 0;
-    return (comp);
+	if (type == IN || type == OUT)
+		return (comp);
+	comp[0] = 0;
+	return (comp);
 }

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:00:59 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:53:25 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	filler_cut_lines(t_token *token, t_elems *tmp)
 	else
 		open_flags = O_APPEND;
 	if (((t_cmd *)tmp->cont)->fd_red[1])
-    {
-        free(((t_cmd *)tmp->cont)->outfile);
-        close(((t_cmd *)tmp->cont)->fd_red[1]);
-    }
+	{
+		free(((t_cmd *)tmp->cont)->outfile);
+		close(((t_cmd *)tmp->cont)->fd_red[1]);
+	}
 	((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
-	((t_cmd *)tmp->cont)->fd_red[1] =
+	((t_cmd *)tmp->cont)->fd_red[1] = \
 		open(token->token, O_WRONLY | open_flags | O_CREAT, 0644);
 	if (!(((t_cmd *)tmp->cont)->err))
 	{
@@ -53,14 +53,14 @@ void	filler_cut_lines(t_token *token, t_elems *tmp)
 
 void	filler(t_token *token, t_elems *tmp, int *flag)
 {
-	if ((IN == token->type) && ++(*flag) &&
+	if ((IN == token->type) && ++(*flag) && \
 		-1 != ((t_cmd *)tmp->cont)->fd_red[0])
 	{
 		if (((t_cmd *)tmp->cont)->fd_red[0])
-        {
-            free(((t_cmd *)tmp->cont)->infile);
-            close(((t_cmd *)tmp->cont)->fd_red[0]);
-        }
+		{
+			free(((t_cmd *)tmp->cont)->infile);
+			close(((t_cmd *)tmp->cont)->fd_red[0]);
+		}
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
 		if (!(((t_cmd *)tmp->cont)->err))
@@ -69,8 +69,8 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 			((t_cmd *)tmp->cont)->err = errno;
 		}
 	}
-	if ((OUT == token->type || APP == token->type) && ++(*flag) &&
-		-1 != ((t_cmd *)tmp->cont)->fd_red[1] &&
+	if ((OUT == token->type || APP == token->type) && ++(*flag) && \
+		-1 != ((t_cmd *)tmp->cont)->fd_red[1] && \
 		-1 != ((t_cmd *)tmp->cont)->fd_red[0])
 		filler_cut_lines(token, tmp);
 }
@@ -84,13 +84,13 @@ void	filler2(t_token *token, int j)
 	flag = 0;
 	tmp = array(m()->cmds)->end;
 	filler(token, tmp, &flag);
-    if (HERE == token->type)
-    {
-        if (!s().len(token->token, 0) && write(2, "Syntax error...\n", 16))
-            ((t_cmd *)tmp->cont)->fd_red[0] = -1;
-        else
-            here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
-    }
+	if (HERE == token->type)
+	{
+		if (!s().len(token->token, 0) && write(2, "Syntax error...\n", 16))
+			((t_cmd *)tmp->cont)->fd_red[0] = -1;
+		else
+			here_doc((t_cmd *)tmp->cont, s().append(token->token, '\n'));
+	}
 	else if (SPC == token->type)
 		return ;
 	else if (!flag)
@@ -113,7 +113,7 @@ int	check_syntax(void)
 	tmp = array(m()->tokens)->begin;
 	if (tmp && PIPE == ((t_token *)tmp->cont)->type)
 		f = 1;
-	if (array(m()->tokens)->end &&
+	if (array(m()->tokens)->end && \
 		PIPE == ((t_token *)array(m()->tokens)->end->cont)->type)
 		f = 1;
 	while (tmp)
@@ -133,13 +133,11 @@ int	check_syntax(void)
 	return (0);
 }
 
-void	delexer(void)
+void	delexer(t_elems *tmp)
 {
-	t_elems	*tmp;
 	t_elems	*cmds;
 	int		j;
 
-	tmp = array(m()->tokens)->begin;
 	if (!check_syntax())
 	{
 		while (tmp)
@@ -153,7 +151,7 @@ void	delexer(void)
 				tmp = tmp->next;
 			}
 			if (((t_cmd *)cmds->cont)->path)
-				((t_cmd *)cmds->cont)->args =
+				((t_cmd *)cmds->cont)->args = \
 					s().split(((t_cmd *)cmds->cont)->path, 27);
 			free(((t_cmd *)cmds->cont)->path);
 			if (tmp)
@@ -161,24 +159,4 @@ void	delexer(void)
 		}
 	}
 	m()->c_count = (array(m()->cmds)->size);
-}
-
-void	print_cmds(void)
-{
-	t_elems	*tmp;
-	t_cmd	*temp;
-
-	tmp = (array(m()->cmds)->begin);
-	while (tmp)
-	{
-		temp = (t_cmd *)tmp->cont;
-		printf("Infile: %i\n", temp->fd_red[0]);
-		printf("Outfile: %i\n", temp->fd_red[1]);
-		printf("cmd: ");
-		for (int i = 0; temp->args[i]; i++)
-			printf("%s -%i", temp->args[i], i);
-		printf("\n");
-		printf("========\n");
-		tmp = tmp->next;
-	}
 }

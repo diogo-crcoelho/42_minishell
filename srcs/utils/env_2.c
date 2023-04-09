@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 20:15:01 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:02:04 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:46:24 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	create_env(char **envp)
 	while (*envp)
 		array(m()->env)->add(create_cont(*envp++))->del = del_elem;
 	array(m()->env)->to_array = to_array_mini;
-    m()->a_env = (char **)array(m()->env)->to_array();
-    shell_lvl();
-    array(m()->env)->cmp = cmp_env;
-    array(m()->env)->build_tree();
-    array(m()->env)->cmp = comp_var;
+	m()->a_env = (char **)array(m()->env)->to_array();
+	shell_lvl();
+	array(m()->env)->cmp = cmp_env;
+	array(m()->env)->build_tree();
+	array(m()->env)->cmp = comp_var;
 }

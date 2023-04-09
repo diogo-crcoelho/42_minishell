@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:01:43 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:45:58 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	parse_paths(t_cmd *cmd)
 	int		i;
 
 	i = 0;
-    paths = (char **)array(m()->env)->search_tree(NULL, "PATH");
-    if (paths)
-	    paths = s().split(((t_env *)((t_tree *)paths)->cont)->splitted[1], ':');
+	paths = (char **)array(m()->env)->search_tree(NULL, "PATH");
+	if (paths)
+		paths = s().split(((t_env *)((t_tree *)paths)->cont)->splitted[1], ':');
 	while (paths && paths[i])
 	{
 		teste = s().join(paths[i++], cmd->args[0], "/");
@@ -71,8 +71,8 @@ int	treat_files(t_cmd *cmd)
 
 	if (-1 == cmd->fd_red[1] && cmd->ord < 0)
 	{
-        if (cmd->fd_red[0] > 0)
-            close(cmd->fd_red[0]);
+		if (cmd->fd_red[0] > 0)
+			close(cmd->fd_red[0]);
 		err = s().join(cmd->outfile, strerror(cmd->err), ": ");
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
@@ -82,8 +82,8 @@ int	treat_files(t_cmd *cmd)
 	}
 	else if (-1 == cmd->fd_red[0] && cmd->ord > 0)
 	{
-        if (cmd->fd_red[1] > 0)
-            close(cmd->fd_red[1]);
+		if (cmd->fd_red[1] > 0)
+			close(cmd->fd_red[1]);
 		err = s().join(cmd->infile, strerror(cmd->err), ": ");
 		write(2, err, s().len(err, 0));
 		write(2, "\n", 1);
@@ -108,7 +108,7 @@ void	befor_exit(t_cmd *cmd)
 		{
 			if (0 != access(cmd->args[0], X_OK) && --(m()->exit_status))
 				err = s().join(cmd->args[0], "Permission denied\n", ": ");
-			else if (s().contains(cmd->args[0], "/") &&
+			else if (s().contains(cmd->args[0], "/") && \
 						opendir(cmd->args[0]) && --m()->exit_status)
 				err = s().join(cmd->args[0], "Is a directory\n", ": ");
 			else

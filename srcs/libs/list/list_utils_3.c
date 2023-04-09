@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils_3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:19:24 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/06 18:19:27 by mvenanci         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:41:59 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ t_tree	*__search_tree(t_tree *root, void *cont)
 		return (NULL);
 	if (!root)
 		root = (*__this())->root;
-    if (!root)
-        return (NULL);
-    val = (*__this())->cmp(root->cont, cont);
+	if (!root)
+		return (NULL);
+	val = (*__this())->cmp(root->cont, cont);
 	if (val < 0 && root->right)
 		elem = __search_tree(root->right, cont);
 	else if (val > 0 && root->left)

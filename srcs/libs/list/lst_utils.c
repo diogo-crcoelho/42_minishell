@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:22:19 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/03/28 15:47:56 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:41:31 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_array		**__this(void);
 void		__del_from_tree(void *cont);
 void		__destroy_tree(t_tree *root);
-void	    __build_tree(void);
+void		__build_tree(void);
 
 void	__del(t_elems *elem)
 {
@@ -77,7 +77,7 @@ t_elems	*__add(void *cont)
 	(*__this())->size++;
 	if ((*__this())->root)
 		(*__this())->add_leaf(cont);
-    return (new);
+	return (new);
 }
 
 void	__destroy(void)

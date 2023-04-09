@@ -117,7 +117,7 @@ int	main(int argc, char **argv, char **envp)
 		temp = str;
 		lex(&temp);
     //    print_tokens();
-		delexer();
+		delexer(array(m()->tokens)->begin);
 //       print_cmds();
 		pipex();
 		// printf("-------------------%d\n", m()->exit_status);

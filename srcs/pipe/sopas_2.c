@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:36 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:08:50 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:45:28 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	run_cut_lines(t_cmd *cmd, t_elems *elem, int flag)
 		close(cmd->fd[0]);
 		if (cmd->fd_red[0] || elem->prev)
 			close(cmd->fd_red[0]);
-        if (cmd->fd_red[1])
-            close(cmd->fd_red[1]);
+		if (cmd->fd_red[1])
+			close(cmd->fd_red[1]);
 		if (elem->prev)
 			close(((t_cmd *)elem->prev->cont)->fd[1]);
 		close(cmd->fd[1]);
@@ -29,8 +29,7 @@ void	run_cut_lines(t_cmd *cmd, t_elems *elem, int flag)
 	}
 	else
 	{
-
-            close(cmd->fd_red[1]);
+		close(cmd->fd_red[1]);
 		close_pipes(cmd);
 		free(cmd->path);
 	}
@@ -40,13 +39,13 @@ void	run(t_elems *elem)
 {
 	t_cmd	*cmd;
 
-    cmd = (t_cmd *)elem->cont;
-    if (!cmd->args || !s().len(cmd->args[0], 0))
+	cmd = (t_cmd *)elem->cont;
+	if (!cmd->args || !s().len(cmd->args[0], 0))
 	{
-        close_pipes(cmd);
-        s_exit(0);
-    }
-    parse_paths(cmd);
+		close_pipes(cmd);
+		s_exit(0);
+	}
+	parse_paths(cmd);
 	if (!cmd->fd_red[0] || -1 != dup2(cmd->fd_red[0], 0))
 	{
 		if (elem->next && !cmd->fd_red[1])

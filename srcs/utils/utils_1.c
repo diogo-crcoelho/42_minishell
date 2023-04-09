@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:08:13 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:07:16 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:49:22 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,24 @@ void	close_pipes(t_cmd *cmd)
 {
 	close(cmd->fd[0]);
 	close(cmd->fd[1]);
+}
+
+void	print_cmds(void)
+{
+	t_elems	*tmp;
+	t_cmd	*temp;
+
+	tmp = (array(m()->cmds)->begin);
+	while (tmp)
+	{
+		temp = (t_cmd *)tmp->cont;
+		printf("Infile: %i\n", temp->fd_red[0]);
+		printf("Outfile: %i\n", temp->fd_red[1]);
+		printf("cmd: ");
+		for (int i = 0; temp->args[i]; i++)
+			printf("%s -%i", temp->args[i], i);
+		printf("\n");
+		printf("========\n");
+		tmp = tmp->next;
+	}
 }

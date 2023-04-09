@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:47 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:01:01 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:54:53 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	*lstr_state(char **str, int add)
 	char	*lstr;
 	char	*temp;
 
-	type = ((t_dict *)array(m()->symbols)->search_tree(array(m()->symbols)->root,
+	type = ((t_dict *)array(m()->symbols) \
+	->search_tree(array(m()->symbols)->root,
 				*str)->cont)->value;
 	(*str)++;
 	temp = *str;
@@ -51,7 +52,7 @@ void	*non_symbol_state(char **str, int add)
 	t_dict	*symbol;
 
 	temp = ft_calloc(1);
-	while (**str && **str != ' ' &&
+	while (**str && **str != ' ' && \
 			**str != '|' && **str != '<' && **str != '>')
 	{
 		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL, *str);
@@ -83,17 +84,17 @@ int	check_validity(char *str)
 
 void	update_home(void)
 {
-	char	    *home;
+	char	*home;
 
 	home = (char *)(array(m()->env)->search_tree(0, "HOME"));
-    if (home)
+	if (home)
 	{
-        home = ((t_env *)((t_tree *)home)->cont)->splitted[1];
-        if (!m()->home || s().equal(m()->home, home))
+		home = ((t_env *)((t_tree *)home)->cont)->splitted[1];
+		if (!m()->home || s().equal(m()->home, home))
 		{
-            if (m()->home)
-                free(m()->home);
-            m()->home = s().copy(home);
-        }
-    }
+			if (m()->home)
+				free(m()->home);
+			m()->home = s().copy(home);
+		}
+	}
 }

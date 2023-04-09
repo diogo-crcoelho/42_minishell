@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:19:33 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:40:09 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:41:56 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	__del_root(void)
 	if ((*__this())->root->left && (*__this())->root->right)
 	{
 		lower_leaf = find_leaf((*__this())->root->right,
-				(*__this())->root->cont, (*__this())->cmp);
+								(*__this())->root->cont,
+								(*__this())->cmp);
 		lower_leaf->right = (*__this())->root->left;
 		(*__this())->root->left->up = lower_leaf;
 		(*__this())->root = (*__this())->root->right;

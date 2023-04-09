@@ -65,7 +65,7 @@ void			create_env(char **envp);
 t_env			*create_cont(char *total);
 char			**env_split(char *str, char sep);
 void			del_elem(void *cont);
-void            shell_lvl(void);
+void			shell_lvl(void);
 //utils
 char			**env_split(char *str, char sep);
 char			*ft_itoa(int n);
@@ -99,7 +99,7 @@ int				comp_symbols_build(void *c1, void *c2);
 
 void			signals_hand(void);
 int				cmp_env(void *cont1, void *cont2);
-void			delexer(void);
+void			delexer(t_elems *tmp);
 int				__isalpha(int c);
 int				__isdigit(int c);
 int				s_exit(int sc);

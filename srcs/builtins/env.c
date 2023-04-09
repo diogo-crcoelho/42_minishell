@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 20:37:43 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/08 17:00:44 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:47:43 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	print_each(t_elems *elem, void *o)
 
 	(void)o;
 	fd = (int)((long)o);
-    if (((t_env *)elem->cont)->splitted[1])
-    {
-        err = s().append(((t_env *)elem->cont)->total, '\n');
-        write(fd, err, s().len(err, 0));
-        free(err);
-    }
+	if (((t_env *)elem->cont)->splitted[1])
+	{
+		err = s().append(((t_env *)elem->cont)->total, '\n');
+		write(fd, err, s().len(err, 0));
+		free(err);
+	}
 }
 
 int	env(void *cont, int fd)

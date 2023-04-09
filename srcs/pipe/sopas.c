@@ -12,18 +12,6 @@
 
 #include "../../incs/minishell.h"
 
-int	dup_and_close(t_cmd *cmd)
-{
-	if (dup2(cmd->fd_red[1], 1) < 0)
-		return (-1);
-	close(cmd->fd_red[1]);
-	if (dup2(cmd->fd_red[0], 0) < 0)
-		return (-1);
-	if (cmd->fd_red[0])
-		close(cmd->fd_red[0]);
-	return (1);
-}
-
 void	error_handle(char *cmd)
 {
 	if (!*cmd)

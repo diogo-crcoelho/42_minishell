@@ -29,8 +29,9 @@ void	*ft_calloc(size_t size)
 
 int main()
 {
-    t_func stringss = (void *)s()->len;
+    char *str = ft_calloc(10);
 
-    t_s *a = ((t_s*)stringss());
-    printf("%d\n", (int)((long)stringss("Hello", 0)));
+    free(str);
+    str = NULL;
+    free(str);
 }

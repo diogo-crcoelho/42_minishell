@@ -59,7 +59,7 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 		if (((t_cmd *)tmp->cont)->fd_red[0])
 		{
 			free(((t_cmd *)tmp->cont)->infile);
-			close(((t_cmd *)tmp->cont)->fd_red[0]);
+            close(((t_cmd *)tmp->cont)->fd_red[0]);
 		}
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
 		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);

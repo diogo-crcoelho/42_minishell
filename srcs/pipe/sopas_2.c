@@ -84,6 +84,8 @@ void	execute(t_elems *elem)
 			built_cut_lines(cmd, elem);
 		}
 		close_pipes(cmd);
+        if (cmd->fd_red[0])
+            close(cmd->fd_red[0]);
 		elem = elem->next;
 	}
 }

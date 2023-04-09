@@ -22,7 +22,9 @@ void	here_doc(t_cmd *cmd, char *eof)
 	m()->inter = 1;
 	if (pipe(cmd->fd) < 0)
 		s_exit(2);
-	while (1)
+    if (cmd->fd_red[0])
+        close(cmd->fd_red[0]);
+    while (1)
 	{
 		write(1, "here_doc> ", 10);
 		str = get_next_line(1);
@@ -39,7 +41,6 @@ void	here_doc(t_cmd *cmd, char *eof)
 	if (-1 != cmd->fd_red[0])
 		cmd->fd_red[0] = dup(cmd->fd[0]);
     close_pipes(cmd);
-//	close(cmd->fd_red[0]);
 	m()->inter = 0;
 	free(eof);
 }

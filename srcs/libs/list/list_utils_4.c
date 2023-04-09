@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:19:33 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 18:41:56 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 19:03:24 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,8 @@ void	__del_root(void)
 
 	if ((*__this())->root->left && (*__this())->root->right)
 	{
-		lower_leaf = find_leaf((*__this())->root->right,
-								(*__this())->root->cont,
-								(*__this())->cmp);
+		lower_leaf = find_leaf((*__this())->root->right, \
+			(*__this())->root->cont, (*__this())->cmp);
 		lower_leaf->right = (*__this())->root->left;
 		(*__this())->root->left->up = lower_leaf;
 		(*__this())->root = (*__this())->root->right;
@@ -36,12 +35,13 @@ void	__del_root(void)
 		(*__this())->root = (*__this())->root->right;
 }
 
-void	__del_from_tree_cut_lines(t_tree *to_del, t_tree *lower)
+int	__del_from_tree_cut_lines(t_tree *to_del, t_tree *lower)
 {
 	if (to_del->up->left == to_del)
 		to_del->up->left = lower;
 	else
 		to_del->up->right = lower;
+	return (1);
 }
 
 void	__del_from_tree(void *cont)
@@ -52,16 +52,12 @@ void	__del_from_tree(void *cont)
 	to_del = __search_tree((*__this())->root, cont);
 	if (to_del == (*__this())->root)
 		__del_root();
-	else if (!to_del->right && to_del->left)
-	{
-		__del_from_tree_cut_lines(to_del, to_del->left);
+	else if (!to_del->right && to_del->left && \
+		__del_from_tree_cut_lines(to_del, to_del->left))
 		to_del->left->up = to_del->up;
-	}
-	else if (to_del->right && !to_del->left)
-	{
-		__del_from_tree_cut_lines(to_del, to_del->right);
+	else if (to_del->right && !to_del->left && \
+		__del_from_tree_cut_lines(to_del, to_del->right))
 		to_del->right->up = to_del->up;
-	}
 	else if (to_del->right && to_del->left)
 	{
 		temp = to_del;

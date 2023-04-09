@@ -34,8 +34,8 @@ void	print_tokens(void)
 	c = (array(m()->tokens)->begin);
 	while (c)
 	{
-		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->cont))->token, \
-			((t_token *)(c->cont))->type);
+		printf("Token %d: %s, type=%d\n", i, ((t_token *)(c->cont))->token,
+				((t_token *)(c->cont))->type);
 		c = c->next;
 		i++;
 	}
@@ -57,8 +57,7 @@ void	lex(char **temp)
 
 	while (**temp)
 	{
-		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL,
-				*temp);
+		symbol = (t_dict *)array(m()->symbols)->search_tree(NULL, *temp);
 		if (check_tilde(temp))
 			continue ;
 		if (symbol)
@@ -72,20 +71,19 @@ void	lex(char **temp)
 		while (**temp == ' ' || (add_space(*temp)
 				&& !array(m()->tokens)->add(c_token(" ", SPC))))
 			(*temp)++;
-		if (**temp == '|' && array(m()->tokens)->add(c_token("|",
-					PIPE)))
+		if (**temp == '|' && array(m()->tokens)->add(c_token("|", PIPE)))
 			(*temp)++;
 	}
 }
 
 void	destroy_m(void)
 {
-    free(m()->a_env);
-    array(m()->tokens)->destroy();
-    array(m()->cmds)->destroy();
-    array(m()->symbols)->destroy();
-    array(m()->env)->destroy();
-    array(m()->b)->destroy();
+	free(m()->a_env);
+	array(m()->tokens)->destroy();
+	array(m()->cmds)->destroy();
+	array(m()->symbols)->destroy();
+	array(m()->env)->destroy();
+	array(m()->b)->destroy();
 	free(m()->home);
 }
 
@@ -116,9 +114,9 @@ int	main(int argc, char **argv, char **envp)
 		add_history(str);
 		temp = str;
 		lex(&temp);
-    //    print_tokens();
+		//    print_tokens();
 		delexer(array(m()->tokens)->begin);
-//       print_cmds();
+		//       print_cmds();
 		pipex();
 		// printf("-------------------%d\n", m()->exit_status);
 		reload();

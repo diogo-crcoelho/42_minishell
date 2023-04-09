@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 19:18:51 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:01:03 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:57:27 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_tilde(char **str)
 
 void	*heredoc_state(char **str, int add)
 {
-	char *here;
+	char	*here;
 
 	*str += 2;
 	while (**str == ' ' || **str == '\t')

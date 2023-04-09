@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:38:25 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/09 18:42:31 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 19:49:00 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	pipe_built(t_elems *elem)
 	}
 	close_pipes(cmd);
 	m()->exit_status = !exe_buil(elem);
+	if (cmd->fd_red[0])
+		close(cmd->fd_red[0]);
 	close(cmd->fd_red[1]);
 	err = m()->exit_status;
 	s_exit(err);
@@ -75,7 +77,7 @@ void	built_cut_lines(t_cmd *cmd, t_elems *elem)
 		close(cmd->fd_red[0]);
 	if (elem->prev)
 		close(((t_cmd *)elem->prev->cont)->fd[1]);
-	if (cmd->outfile || elem->next)
+	if (cmd->outfile)
 		close(cmd->fd_red[1]);
 }
 
@@ -98,6 +100,7 @@ int	built(t_elems *elem)
 			pipe_built(elem);
 		else if (elem->next && !((t_cmd *)elem->next->cont)->fd_red[0])
 			((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
+		built_cut_lines(cmd, elem);
 		return (1);
 	}
 	return (0);

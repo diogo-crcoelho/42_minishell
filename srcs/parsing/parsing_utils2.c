@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:33:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:01:10 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/09 18:58:07 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ char	*expand(char *str)
 		if (teste)
 		{
 			if (str[++i])
-				return (s().join(((t_env *)teste->cont)->splitted[1],
-									&str[i],
-									0));
+				return (s().join(((t_env *)teste->cont)->splitted[1], \
+					&str[i], 0));
 			return (s().copy(((t_env *)teste->cont)->splitted[1]));
 		}
 		else

@@ -19,13 +19,19 @@ void	export_empty(t_tree *root, int fd)
 
 	if (root->left)
 		export_empty(root->left, fd);
-	tmp = s().join(((t_env *)root->cont)->splitted[0],
-					((t_env *)root->cont)->splitted[1],
-					"=\"");
-	msg = s().join("declare -x ", "\"\n", tmp);
-	write(fd, msg, s().len(msg, 0));
-	free(msg);
-	free(tmp);
+    if (((t_env *)root->cont)->splitted[1])
+    {
+        tmp = s().join(((t_env *) root->cont)->splitted[0],
+                       ((t_env *) root->cont)->splitted[1],
+                       "=\"");
+        msg = s().join("declare -x ", "\"\n", tmp);
+        free(tmp);
+    }
+    else {
+        msg = s().join("declare -x ", "\n", ((t_env *) root->cont)->splitted[0]);
+    }
+    write(fd, msg, s().len(msg, 0));
+    free(msg);
 	if (root->right)
 		export_empty(root->right, fd);
 }

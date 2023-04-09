@@ -19,9 +19,12 @@ void	print_each(t_elems *elem, void *o)
 
 	(void)o;
 	fd = (int)((long)o);
-	err = s().append(((t_env *)elem->cont)->total, '\n');
-	write(fd, err, s().len(err, 0));
-	free(err);
+    if (((t_env *)elem->cont)->splitted[1])
+    {
+        err = s().append(((t_env *)elem->cont)->total, '\n');
+        write(fd, err, s().len(err, 0));
+        free(err);
+    }
 }
 
 int	env(void *cont, int fd)

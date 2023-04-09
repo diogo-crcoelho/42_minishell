@@ -29,7 +29,7 @@
 # include "structs.h"
 # include "pipex.h"
 
-typedef void	(*t_func)();
+//typedef void	(*t_func)();
 //t_func func = (void *) printf;
 
 //general

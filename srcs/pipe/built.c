@@ -66,6 +66,7 @@ void	pipe_built(t_elems *elem)
 	}
 	close_pipes(cmd);
 	m()->exit_status = !exe_buil(elem);
+    close(cmd->fd_red[1]);
 	err = m()->exit_status;
 	s_exit(err);
 }
@@ -76,7 +77,7 @@ void	built_cut_lines(t_cmd *cmd, t_elems *elem)
 		close(cmd->fd_red[0]);
 	if (elem->prev)
 		close(((t_cmd *)elem->prev->cont)->fd[1]);
-	if (cmd->outfile)
+	if (cmd->outfile || elem->next)
 		close(cmd->fd_red[1]);
 }
 
@@ -99,7 +100,7 @@ int	built(t_elems *elem)
 			pipe_built(elem);
 		else if (elem->next && !((t_cmd *)elem->next->cont)->fd_red[0])
 			((t_cmd *)elem->next->cont)->fd_red[0] = dup(cmd->fd[0]);
-		built_cut_lines(cmd, elem);
+//        close(((t_cmd *)elem->cont)->fd_red[1]);
 		return (1);
 	}
 	return (0);

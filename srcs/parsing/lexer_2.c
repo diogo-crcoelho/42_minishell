@@ -76,8 +76,8 @@ void	*non_symbol_state(char **str, int add)
 
 int	check_validity(char *str)
 {
-	if (*str == '~' && (*(str + 1) == ' ' || *(str + 1) == '|' || *(str
-				+ 1) == '/' || !*(str + 1)))
+	if (*str == '~' && (*(str + 1) == ' ' || *(str + 1) == '|' || \
+        *(str + 1) == '/' || !*(str + 1)))
 		return (1);
 	return (0);
 }

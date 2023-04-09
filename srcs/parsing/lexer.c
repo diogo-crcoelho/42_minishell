@@ -44,6 +44,13 @@ char	*aux_state(char **str, char *lex, t_dict *p_sym)
 	return (lex);
 }
 
+int check_var_validity(char c)
+{
+    if (!c || c == ' ' || c == '|')
+        return (0);
+    return (1);
+}
+
 void	*var_state(char **str, int add)
 {
 	t_dict	*p_sym;
@@ -55,9 +62,9 @@ void	*var_state(char **str, int add)
 	(*str)++;
 	if (**str == '?' && (*str)++)
 		var = ft_itoa(m()->exit_status);
-	else if (!ft_isalnum(**str))
+	else if (!check_var_validity(**str) || **str == '"')
 		var = s().copy("$");
-	else
+	else if (**str && ft_isalnum(**str))
 	{
 		while (**str && ft_isalnum(**str))
 			(*str)++;
@@ -69,7 +76,9 @@ void	*var_state(char **str, int add)
 			var = ft_calloc(1);
 		free(temp);
 	}
-	if (add)
+    else
+        var = ft_calloc(1);
+    if (add)
 		(array(m()->tokens))->add(c_token(var, p_sym->value))->del = del_token;
 	return (var);
 }
@@ -107,7 +116,7 @@ void	*str_state(char **str, int add)
 
 	(void)add;
 	p_sym = ((t_dict *)array(m()->symbols) \
-		->search_tree(array(m()->symbols)->root, str)->cont);
+		->search_tree(NULL, *str)->cont);
 	infile = ft_calloc(1);
 	(*str)++;
 	while (**str && **str != '"')

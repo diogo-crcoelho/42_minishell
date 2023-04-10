@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/10 15:43:58 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:02:14 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ int	treat_files(t_cmd *cmd)
 void	befor_exit(t_cmd *cmd)
 {
 	char	*err;
-	DIR		*dir;
+	DIR		*d;
 
-	dir = opendir(cmd->args[0]);
+	d = opendir(cmd->args[0]);
 	err = NULL;
 	m()->exit_status = 127;
 	if (s().contains(cmd->args[0], "/") && access(cmd->args[0], F_OK))
@@ -98,7 +98,7 @@ void	befor_exit(t_cmd *cmd)
 		{
 			if (0 != access(cmd->args[0], X_OK) && --(m()->exit_status))
 				err = s().join(cmd->args[0], "Permission denied\n", ": ");
-			else if (dir && --m()->exit_status)
+			else if (s().contains(*cmd->args, "/") && d && --m()->exit_status)
 				err = s().join(cmd->args[0], "Is a directory\n", ": ");
 			else
 				err = s().join(cmd->args[0], "command not found\n", ": ");
@@ -106,7 +106,7 @@ void	befor_exit(t_cmd *cmd)
 		else
 			err = s().join(cmd->args[0], "command not found\n", ": ");
 	}
-	closedir(dir);
+	closedir(d);
 	write(2, err, s().len(err, 0));
 	free(err);
 }

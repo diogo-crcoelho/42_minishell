@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:23 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/10 17:06:02 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:57:53 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,100 +15,101 @@
 //
 #include "../../incs/minishell.h"
 
-char    *here_lines_cut_lines(char *str, char **tmp)
+char	*here_lines_cut_lines(char *str, char **tmp)
 {
-    char *str2;
-    char *var;
+	char	*str2;
+	char	*var;
 
-    str2 = str;
-    var = var_state(tmp, 0);
-    str = s().join(str, var, "");
-    free(str2);
-    free(var);
-    return (str);
+	str2 = str;
+	var = var_state(tmp, 0);
+	str = s().join(str, var, "");
+	free(str2);
+	free(var);
+	return (str);
 }
 
-char    *here_lines(void)
+char	*here_lines(void)
 {
-    char *tmp;
-    char *tmp2;
-    char *str;
-    char *str2;
+	char	*tmp;
+	char	*tmp2;
+	char	*str;
+	char	*str2;
 
-    tmp = get_next_line(0);
-    tmp2 = tmp;
-    str = NULL;
-    while (tmp && *tmp)
-    {
-        while (*tmp && *tmp != '$')
-        {
-            str2 = str;
-            str = s().append(str, *tmp++);
-            free(str2);
-        }
-        if (*tmp == '$')
-            str = here_lines_cut_lines(str, &tmp);
-    }
-    free(tmp2);
-    return (str);
+	tmp = get_next_line(0);
+	tmp2 = tmp;
+	str = NULL;
+	while (tmp && *tmp)
+	{
+		while (*tmp && *tmp != '$')
+		{
+			str2 = str;
+			str = s().append(str, *tmp++);
+			free(str2);
+		}
+		if (*tmp == '$')
+			str = here_lines_cut_lines(str, &tmp);
+	}
+	free(tmp2);
+	return (str);
 }
 
-void here_c(int sig)
+void	here_c(int sig)
 {
-    (void)sig;
-    write(2, "^C\n", 3);
-    s_exit(130);
-
+	(void)sig;
+	write(2, "^C\n", 3);
+	s_exit(130);
 }
 
-void    signal_here()
+void	signal_here(void)
 {
-    signal(SIGINT, here_c);
-    signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, here_c);
+	signal(SIGQUIT, SIG_IGN);_MANY_FUNCS   
 }
 
-void    loop_here(t_cmd *cmd, char *eof)
+void	loop_here(t_cmd *cmd, char *eof)
 {
-    char	*str;
-    close(cmd->fd[0]);
-    while (1)
-    {
-        term_change();
-        signal_here();
-        write(1, "here_doc> ", 10);
-        str = here_lines();
-        if (!str && printf("\n")){
-            write(cmd->fd[1], "\0", 1);
-            free(eof);
-            s_exit(0) ;
-        }
-        if (!s().equal(eof, str))
-        {
-            close(cmd->fd[1]);
-            free(eof);
-            free(str);
-            s_exit(0) ;
-        }
-        write(cmd->fd[1], str, s().len(str, 0));
-        free(str);
-    }
+	char	*str;
+
+	close(cmd->fd[0]);
+	while (1)
+	{
+		term_change();
+		signal_here();
+		write(1, "here_doc> ", 10);
+		str = here_lines();
+		if (!str && printf("\n"))
+		{
+			write(cmd->fd[1], "\0", 1);
+			free(eof);
+			s_exit(0);
+		}
+		if (!s().equal(eof, str))
+		{
+			close(cmd->fd[1]);
+			free(eof);
+			free(str);
+			s_exit(0);
+		}
+		write(cmd->fd[1], str, s().len(str, 0));
+		free(str);
+	}
 }
 void	here_doc(t_cmd *cmd, char *eof)
 {
-    int pid;
+	int	pid;
 
 	m()->inter = -1;
-    if (pipe(cmd->fd) < 0)
-        s_exit(2);
-    pid = fork();
-    if (!pid)
-        loop_here(cmd, eof);
-    wait(&m()->exit_status);
-    m()->h = WEXITSTATUS(m()->exit_status);
-    m()->exit_status = m()->h;
-    if (-1 != cmd->fd_red[0])
+	if (pipe(cmd->fd) < 0)
+		s_exit(2);
+	pid = fork();
+	if (!pid)
+		loop_here(cmd, eof);
+	wait(&m()->exit_status);
+	m()->h = WEXITSTATUS(m()->exit_status);
+	m()->exit_status = m()->h;
+	if (-1 != cmd->fd_red[0])
 		cmd->fd_red[0] = dup(cmd->fd[0]);
-    free(eof);
-    close_pipes(cmd);
-    signals_hand();
+	free(eof);
+	close_pipes(cmd);
+	signals_hand();
 }

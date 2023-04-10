@@ -6,14 +6,14 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:59:42 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 19:30:15 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:56:10 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-#   include <termios.h>
+# include <termios.h>
 
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
@@ -50,8 +50,8 @@ struct					s_mini
 	void				*b;
 	char				*home;
 	int					c_count;
-    volatile int        h;
-    struct termios      term;
+	volatile int		h;
+	struct termios		term;
 };
 
 struct					s_env
@@ -68,14 +68,16 @@ struct					s_dict
 	void				*(*state)(char **str, int add);
 };
 
-struct s_built{
-	char	*key;
-	int		(*b)(void *, int);
+struct					s_built
+{
+	char				*key;
+	int					(*b)(void *, int);
 };
 
-struct s_token{
-	char	*token;
-	int		type;
+struct					s_token
+{
+	char				*token;
+	int					type;
 };
 
 struct					s_cmd

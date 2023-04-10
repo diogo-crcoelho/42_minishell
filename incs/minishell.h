@@ -13,22 +13,22 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../srcs/libs/list/list_utils.h"
+# include "../srcs/libs/strs/ft_strings.h"
+# include "pipex.h"
+# include "structs.h"
+# include <dirent.h>
+# include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <sys/wait.h>
-# include <wait.h>
-# include <errno.h>
-# include <unistd.h>
+# include <stdio.h>
 # include <sys/types.h>
-# include <dirent.h>
-#   include <termios.h>
-# include "../srcs/libs/list/list_utils.h"
-# include "../srcs/libs/strs/ft_strings.h"
-# include "structs.h"
-# include "pipex.h"
+# include <sys/wait.h>
+# include <termios.h>
+# include <unistd.h>
+# include <wait.h>
 
 //typedef void	(*t_func)();
 //t_func func = (void *) printf;
@@ -101,8 +101,8 @@ int				*init_comp(int type);
 int				comp_symbols_search(void *c1, void *c2);
 int				comp_symbols_build(void *c1, void *c2);
 
-void            signals_hand(void);
-void            term_change(void);
+void			signals_hand(void);
+void			term_change(void);
 int				cmp_env(void *cont1, void *cont2);
 void			delexer(t_elems *tmp, int flag);
 int				__isalpha(int c);

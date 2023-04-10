@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:30 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 18:25:31 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 19:59:21 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	s_exit(int sc)
 {
 	destroy_m();
-    printf("%d\n", sc);
 	exit(sc);
 }
 

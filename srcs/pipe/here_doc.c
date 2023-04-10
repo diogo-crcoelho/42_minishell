@@ -15,31 +15,41 @@
 //
 #include "../../incs/minishell.h"
 
-char    *here_lines()
+char    *here_lines_cut_lines(char *str, char **tmp)
+{
+    char *str2;
+    char *var;
+
+    str2 = str;
+    var = var_state(tmp, 0);
+    str = s().join(str, var, "");
+    free(str2);
+    free(var);
+    return (str);
+}
+
+char    *here_lines(void)
 {
     char *tmp;
-    char *var;
     char *tmp2;
     char *str;
     char *str2;
 
-    str2 = NULL;
     tmp = get_next_line(0);
-    if (!s().len(tmp, 0))
-        return (NULL);
     tmp2 = tmp;
-    while (*tmp && *tmp != '$')
-        ++tmp;
-    str = s().copy_n(tmp2, tmp - tmp2);
-    if (*tmp)
+    str = NULL;
+    while (tmp && *tmp)
     {
-        str2 = str;
-        var = var_state(&tmp, 0);
-        str = s().join(str2, tmp, var);
-        free(var);
+        while (*tmp && *tmp != '$')
+        {
+            str2 = str;
+            str = s().append(str, *tmp++);
+            free(str2);
+        }
+        if (*tmp == '$')
+            str = here_lines_cut_lines(str, &tmp);
     }
     free(tmp2);
-    free(str2);
     return (str);
 }
 
@@ -66,7 +76,7 @@ void    loop_here(t_cmd *cmd, char *eof)
         term_change();
         signal_here();
         write(1, "here_doc> ", 10);
-        str = get_next_line(0);
+        str = here_lines();
         if (!str && printf("\n")){
             write(cmd->fd[1], "\0", 1);
             s_exit(0) ;
@@ -93,7 +103,6 @@ void	here_doc(t_cmd *cmd, char *eof)
         loop_here(cmd, eof);
     wait(&m()->exit_status);
     m()->h = WEXITSTATUS(m()->exit_status);
-    printf("%d\n", m()->h);
     m()->exit_status = m()->h;
     if (-1 != cmd->fd_red[0])
 		cmd->fd_red[0] = dup(cmd->fd[0]);

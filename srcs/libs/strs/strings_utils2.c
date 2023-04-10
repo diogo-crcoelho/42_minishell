@@ -44,10 +44,14 @@ char	*__append(char *str, char c)
 	char	*new;
 	int		i;
 
-	i = -1;
+	i = 0;
 	new = ft_calloc(s().len(str, 0) + 2);
-	while (str[++i])
-		new[i] = str[i];
+	while (str && str[i])
+    {
+        new[i] = str[i];
+        i++;
+    }
+
 	new[i] = c;
 	return (new);
 }

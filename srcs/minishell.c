@@ -65,6 +65,7 @@ void	reload(void)
 	array(m()->cmds)->destroy();
 	m()->cmds = creat_array();
     m()->h = 0;
+    m()->inter = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

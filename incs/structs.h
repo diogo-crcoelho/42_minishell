@@ -48,6 +48,7 @@ struct					s_mini
 	void				*b;
 	char				*home;
 	int					c_count;
+    volatile int        h;
 };
 
 struct					s_env

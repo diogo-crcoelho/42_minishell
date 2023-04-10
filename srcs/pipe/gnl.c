@@ -87,7 +87,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	line = NULL;
-	while (*stash || read(fd, stash, 100) > 0)
+	while (*stash || read(fd, stash, 1) > 0)
 	{
 		line = ft_strjoin(line, stash);
 		if (-1 != next_line(stash))

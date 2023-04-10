@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:54:53 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/09 18:44:59 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:04:45 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,24 @@
 void	ctrl_c(int sig)
 {
 	(void)sig;
-	if (m()->inter)
+    m()->exit_status = 130;
+	if (m()->inter > 0)
 	{
 		write(1, "\n", 1);
 		return ;
 	}
-	write(2, "^C\n", 3);
-	rl_replace_line("", 1);
-	rl_on_new_line();
-	rl_redisplay();
-	m()->exit_status = 130;
+    else if (!m()->inter) {
+        write(2, "^C\n", 3);
+        rl_replace_line("", 1);
+        rl_on_new_line();
+        rl_redisplay();
+    }
 }
 
 void	ctrl_bs(int sig)
 {
 	(void)sig;
-	if (!m()->inter)
+	if (m()->inter < 1)
 		SIG_IGN ;
 	else
 		printf("Quit (core dumped)\n");

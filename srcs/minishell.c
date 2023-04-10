@@ -64,6 +64,7 @@ void	reload(void)
 	m()->tokens = creat_array();
 	array(m()->cmds)->destroy();
 	m()->cmds = creat_array();
+    m()->h = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -81,13 +82,17 @@ int	main(int argc, char **argv, char **envp)
 		signals_hand();
 		str = readline("not bash> ");
 		if (!str)
-			break ;
+        {
+            m()->exit_status = 0;
+            break ;
+        }
 		add_history(str);
 		temp = str;
 		lex(&temp);
 		delexer(array(m()->tokens)->begin, 0);
-		pipex();
-		reload();
+        if (130 != m()->h)
+		    pipex();
+        reload();
 		free(str);
 	}
 	s_exit(m()->exit_status);

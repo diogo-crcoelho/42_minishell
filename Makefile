@@ -69,10 +69,6 @@ fclean: clean
 	
 re: fclean all
 
-r: re
-	make clean
-	./minishell
-
 
 norm_M:
 	@$(echo) "$(C_RED)$(BG_YELLOW)[Norminette]$(C_RESET)"

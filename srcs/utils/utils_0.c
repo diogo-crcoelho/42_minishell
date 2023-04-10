@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 21:53:00 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/09 22:04:03 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:12:39 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,14 @@ char	*var_state_cut_lines(char **str, char *temp)
 		var = ft_calloc(1);
 	free(temp);
 	return (var);
+}
+
+int	add_space(char *s)
+{
+	if (*s == '|' || !*s)
+		return (0);
+	else if (!array(m()->tokens)->end || \
+		((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
+		return (0);
+	return (1);
 }

@@ -12,15 +12,7 @@
 
 #include "../incs/minishell.h"
 
-int	add_space(char *s)
-{
-	if (*s == '|' || !*s)
-		return (0);
-	else if (!array(m()->tokens)->end || \
-		((t_token *)array(m()->tokens)->end->cont)->type == PIPE)
-		return (0);
-	return (1);
-}
+int	add_space(char *s);
 
 void	lex(char **temp)
 {
@@ -64,37 +56,42 @@ void	reload(void)
 	m()->tokens = creat_array();
 	array(m()->cmds)->destroy();
 	m()->cmds = creat_array();
-    m()->h = 0;
-    m()->inter = 0;
+	m()->h = 0;
+	m()->inter = 0;
 }
 
-int	main(int argc, char **argv, char **envp)
+void	new_func(void)
 {
 	char	*str;
 	char	*temp;
 
-	if (argc != 1)
-		exit(1);
-	(void)argv;
-	(void)envp;
-	init_m(envp);
 	while (1)
 	{
 		signals_hand();
 		str = readline("not bash> ");
 		if (!str)
-        {
-            m()->exit_status = 0;
-            break ;
-        }
+		{
+			m()->exit_status = 0;
+			break ;
+		}
 		add_history(str);
 		temp = str;
 		lex(&temp);
 		delexer(array(m()->tokens)->begin, 0);
-        if (130 != m()->h)
-		    pipex();
-        reload();
+		if (130 != m()->h)
+			pipex();
+		reload();
 		free(str);
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	if (argc != 1)
+		exit(1);
+	(void)argv;
+	(void)envp;
+	init_m(envp);
+	new_func();
 	s_exit(m()->exit_status);
 }

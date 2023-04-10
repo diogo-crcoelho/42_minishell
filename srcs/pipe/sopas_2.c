@@ -43,6 +43,10 @@ void	run(t_elems *elem)
 	if (!cmd->args || !s().len(cmd->args[0], 0))
 	{
 		close_pipes(cmd);
+        if (cmd->fd_red[0])
+            close(cmd->fd_red[0]);
+        if (cmd->fd_red[1])
+            close(cmd->fd_red[1]);
 		s_exit(0);
 	}
 	parse_paths(cmd);

@@ -6,19 +6,20 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:36 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/10 15:44:18 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:34:42 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
+void	tmp_clear(t_cmd *cmd);
+
 void	run_cut_lines(t_cmd *cmd, t_elems *elem, int flag)
 {
+	close_pipes(cmd);
 	if (flag)
 	{
-		close(cmd->fd[0]);
-		close(cmd->fd[1]);
-		if (cmd->fd_red[1])
+		if (cmd->fd_red[1] && printf("aa"))
 			close(cmd->fd_red[1]);
 		if (cmd->fd_red[0] || elem->prev)
 			close(cmd->fd_red[0]);
@@ -30,7 +31,6 @@ void	run_cut_lines(t_cmd *cmd, t_elems *elem, int flag)
 	else
 	{
 		close(cmd->fd_red[1]);
-		close_pipes(cmd);
 		free(cmd->path);
 	}
 }
@@ -42,12 +42,7 @@ void	run(t_elems *elem)
 	cmd = (t_cmd *)elem->cont;
 	if (!cmd->args || !s().len(cmd->args[0], 0))
 	{
-		close_pipes(cmd);
-        if (cmd->fd_red[0])
-            close(cmd->fd_red[0]);
-        if (cmd->fd_red[1])
-            close(cmd->fd_red[1]);
-		s_exit(0);
+		tmp_clear(cmd);
 	}
 	parse_paths(cmd);
 	if (!cmd->fd_red[0] || -1 != dup2(cmd->fd_red[0], 0))

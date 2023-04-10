@@ -15,6 +15,35 @@
 //
 #include "../../incs/minishell.h"
 
+char    *here_lines()
+{
+    char *tmp;
+    char *var;
+    char *tmp2;
+    char *str;
+    char *str2;
+
+    str2 = NULL;
+    tmp = get_next_line(0);
+    if (!s().len(tmp, 0))
+        return (NULL);
+    tmp2 = tmp;
+    while (*tmp && *tmp != '$')
+        ++tmp;
+    str = s().copy_n(tmp2, tmp - tmp2);
+    if (*tmp)
+    {
+        str2 = str;
+        var = var_state(&tmp, 0);
+        str = s().join(str2, tmp, var);
+        free(var);
+    }
+    free(tmp2);
+    free(str2);
+    return (str);
+}
+
+
 void	here_doc(t_cmd *cmd, char *eof)
 {
 	char	*str;
@@ -25,8 +54,8 @@ void	here_doc(t_cmd *cmd, char *eof)
 	while (1)
 	{
 		write(1, "here_doc> ", 10);
-		str = get_next_line(1);
-		if (!str)
+		str = here_lines();
+		if (!str && printf("\n"))
 			break ;
 		if (!s().equal(eof, str))
 		{

@@ -85,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(str);
 		temp = str;
 		lex(&temp);
+
 		delexer(array(m()->tokens)->begin, 0);
 		pipex();
 		reload();

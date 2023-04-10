@@ -43,6 +43,8 @@ void	close_pipes(t_cmd *cmd)
 {
 	close(cmd->fd[0]);
 	close(cmd->fd[1]);
+    if (cmd->fd_red[0])
+        close(cmd->fd_red[0]);
 }
 
 void	del_cmd(void *cmd)

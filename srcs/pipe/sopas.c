@@ -85,7 +85,9 @@ int	treat_files(t_cmd *cmd)
 void	befor_exit(t_cmd *cmd)
 {
 	char	*err;
+    DIR     *dir;
 
+    dir = opendir(cmd->args[0]);
 	err = NULL;
 	m()->exit_status = 127;
 	if (s().contains(cmd->args[0], "/") && access(cmd->args[0], F_OK))
@@ -96,8 +98,7 @@ void	befor_exit(t_cmd *cmd)
 		{
 			if (0 != access(cmd->args[0], X_OK) && --(m()->exit_status))
 				err = s().join(cmd->args[0], "Permission denied\n", ": ");
-			else if (s().contains(cmd->args[0], "/") && \
-						opendir(cmd->args[0]) && --m()->exit_status)
+			else if (s().contains(cmd->args[0], "/") && dir && --m()->exit_status)
 				err = s().join(cmd->args[0], "Is a directory\n", ": ");
 			else
 				err = s().join(cmd->args[0], "command not found\n", ": ");
@@ -105,6 +106,7 @@ void	befor_exit(t_cmd *cmd)
 		else
 			err = s().join(cmd->args[0], "command not found\n", ": ");
 	}
+    closedir(dir);
 	write(2, err, s().len(err, 0));
 	free(err);
 }

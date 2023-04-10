@@ -63,7 +63,7 @@ void	here_c(int sig)
 void	signal_here(void)
 {
 	signal(SIGINT, here_c);
-	signal(SIGQUIT, SIG_IGN);_MANY_FUNCS   
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	loop_here(t_cmd *cmd, char *eof)

@@ -79,11 +79,13 @@ void    loop_here(t_cmd *cmd, char *eof)
         str = here_lines();
         if (!str && printf("\n")){
             write(cmd->fd[1], "\0", 1);
+            free(eof);
             s_exit(0) ;
         }
         if (!s().equal(eof, str))
         {
             close(cmd->fd[1]);
+            free(eof);
             free(str);
             s_exit(0) ;
         }
@@ -106,7 +108,7 @@ void	here_doc(t_cmd *cmd, char *eof)
     m()->exit_status = m()->h;
     if (-1 != cmd->fd_red[0])
 		cmd->fd_red[0] = dup(cmd->fd[0]);
+    free(eof);
     close_pipes(cmd);
     signals_hand();
-	free(eof);
 }

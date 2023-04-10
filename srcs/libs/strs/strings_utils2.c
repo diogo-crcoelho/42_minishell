@@ -51,7 +51,6 @@ char	*__append(char *str, char c)
         new[i] = str[i];
         i++;
     }
-
 	new[i] = c;
 	return (new);
 }

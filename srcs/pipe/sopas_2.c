@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:36 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 22:22:22 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 15:44:18 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void	execute(t_elems *elem)
 			built_cut_lines(cmd, elem);
 		}
 		close_pipes(cmd);
-
+		if (cmd->fd_red[0])
+			close(cmd->fd_red[0]);
 		elem = elem->next;
 	}
 }

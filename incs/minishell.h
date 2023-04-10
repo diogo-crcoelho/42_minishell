@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <dirent.h>
+#   include <termios.h>
 # include "../srcs/libs/list/list_utils.h"
 # include "../srcs/libs/strs/ft_strings.h"
 # include "structs.h"
@@ -100,7 +101,8 @@ int				*init_comp(int type);
 int				comp_symbols_search(void *c1, void *c2);
 int				comp_symbols_build(void *c1, void *c2);
 
-void	signals_hand(void);
+void            signals_hand(void);
+void            term_change(void);
 int				cmp_env(void *cont1, void *cont2);
 void			delexer(t_elems *tmp, int flag);
 int				__isalpha(int c);

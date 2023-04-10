@@ -15,6 +15,7 @@
 int	s_exit(int sc)
 {
 	destroy_m();
+    printf("%d\n", sc);
 	exit(sc);
 }
 

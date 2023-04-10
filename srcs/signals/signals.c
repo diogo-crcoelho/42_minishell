@@ -45,3 +45,31 @@ void	signals_hand(void)
 	signal(SIGINT, ctrl_c);
 	signal(SIGQUIT, ctrl_bs);
 }
+
+void	reset_the_terminal(void)
+{
+    tcsetattr(0, 0, &m()->term);
+}
+
+void term_change(void)
+{
+    struct termios	termios_new;
+
+    if (tcgetattr(0, &m()->term))
+    {
+        perror("");
+        return ;
+    }
+    if (atexit(reset_the_terminal))
+    {
+        perror("");
+        return ;
+    }
+    termios_new = m()->term;
+    termios_new.c_lflag &= ~ECHOCTL;
+    if (tcsetattr(0, 0, &termios_new))
+    {
+        perror("");
+        return ;
+    }
+}

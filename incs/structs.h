@@ -13,6 +13,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+#   include <termios.h>
+
 typedef struct s_prompt	t_prompt;
 typedef struct s_token	t_token;
 typedef struct s_built	t_built;
@@ -49,6 +51,7 @@ struct					s_mini
 	char				*home;
 	int					c_count;
     volatile int        h;
+    struct termios      term;
 };
 
 struct					s_env

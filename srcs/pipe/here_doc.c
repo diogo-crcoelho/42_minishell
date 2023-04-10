@@ -45,19 +45,16 @@ char    *here_lines()
 
 void here_c(int sig)
 {
-    if (SIGINT == sig)
-    {
-        write(2, "\n", 1);
-        s_exit(130);
-    }
-    if (SIGQUIT == sig)
-        SIG_IGN ;
+    (void)sig;
+    write(2, "^C\n", 3);
+    s_exit(130);
+
 }
 
 void    signal_here()
 {
     signal(SIGINT, here_c);
-    signal(SIGQUIT, here_c);
+    signal(SIGQUIT, SIG_IGN);
 }
 
 void    loop_here(t_cmd *cmd, char *eof)
@@ -96,6 +93,7 @@ void	here_doc(t_cmd *cmd, char *eof)
         loop_here(cmd, eof);
     wait(&m()->exit_status);
     m()->h = WEXITSTATUS(m()->exit_status);
+    printf("%d\n", m()->h);
     m()->exit_status = m()->h;
     if (-1 != cmd->fd_red[0])
 		cmd->fd_red[0] = dup(cmd->fd[0]);

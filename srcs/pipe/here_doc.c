@@ -6,27 +6,13 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:23 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/10 19:57:53 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/10 20:09:13 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//
-// Created by dcarvalh on 3/26/23.
-//
 #include "../../incs/minishell.h"
 
-char	*here_lines_cut_lines(char *str, char **tmp)
-{
-	char	*str2;
-	char	*var;
-
-	str2 = str;
-	var = var_state(tmp, 0);
-	str = s().join(str, var, "");
-	free(str2);
-	free(var);
-	return (str);
-}
+char	*here_lines_cut_lines(char *str, char **tmp);
 
 char	*here_lines(void)
 {
@@ -94,6 +80,7 @@ void	loop_here(t_cmd *cmd, char *eof)
 		free(str);
 	}
 }
+
 void	here_doc(t_cmd *cmd, char *eof)
 {
 	int	pid;

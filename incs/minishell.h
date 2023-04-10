@@ -108,7 +108,7 @@ void			delexer(t_elems *tmp, int flag);
 int				__isalpha(int c);
 int				__isdigit(int c);
 int				s_exit(int sc);
-void	        del_cmd(void *cmd);
+void			del_cmd(void *cmd);
 
 //pipex
 void			pipex(void);
@@ -118,6 +118,6 @@ void			befor_exit(t_cmd *cmd);
 void			parse_paths(t_cmd *cmd);
 void			**to_array_mini(void);
 void			close_pipes(t_cmd *cmd);
-char	        *get_next_line(int fd);
-void	        here_doc(t_cmd *cmd, char *eof);
+char			*get_next_line(int fd);
+void			here_doc(t_cmd *cmd, char *eof);
 #endif

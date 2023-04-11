@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 20:37:43 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/09 18:47:43 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 12:00:41 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	env(void *cont, int fd)
 	if (vars && vars[0])
 	{
 		err = s().join("env: ", ": No such file or directory\n", vars[0]);
-		cona(err);
+		err_hand(err);
 		free(err);
 		return (2);
 	}

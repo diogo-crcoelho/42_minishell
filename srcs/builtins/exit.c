@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:30 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/10 19:59:21 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 12:03:01 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,21 @@
 
 int	s_exit(int sc)
 {
+	t_elems	*elem;
+
+	elem = array(m()->cmds)->begin;
+	while (elem)
+	{
+		if (((t_cmd *)elem->cont)->fd_red[1] > 2)
+			close(((t_cmd *)elem->cont)->fd_red[1]);
+		if (((t_cmd *)elem->cont)->fd_red[0] > 2)
+			close(((t_cmd *)elem->cont)->fd[0]);
+		if (((t_cmd *)elem->cont)->fd[1] > 2)
+			close(((t_cmd *)elem->cont)->fd[1]);
+		if (((t_cmd *)elem->cont)->fd[0] > 2)
+			close(((t_cmd *)elem->cont)->fd[0]);
+		elem = elem->next;
+	}
 	destroy_m();
 	exit(sc);
 }
@@ -72,7 +87,7 @@ int	ft_exit(void *cont, int fd)
 	vars = (char **)cont;
 	if (s().len(vars[0], 0) && vars[1])
 	{
-		cona("exit: too many arguments\n");
+		err_hand("exit: too many arguments\n");
 		return (1);
 	}
 	if (!s().len(vars[0], 0))

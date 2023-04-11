@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:54:53 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/10 20:11:17 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 11:52:22 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ctrl_c(int sig)
 	m()->exit_status = 130;
 	if (m()->inter > 0)
 	{
-		write(1, "\n", 1);
+		write(1, "^C\n", 3);
 		return ;
 	}
 	else if (!m()->inter)

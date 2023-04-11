@@ -12,7 +12,7 @@
 
 #include "../incs/minishell.h"
 
-int	add_space(char *s);
+int		add_space(char *s);
 
 void	lex(char **temp)
 {
@@ -52,27 +52,27 @@ void	destroy_m(void)
 
 void	reload(void)
 {
-    t_elems  *elem;
+	t_elems	*elem;
 
-    elem = array(m()->cmds)->begin;
-    while (elem)
-    {
-        if (((t_cmd *)elem->cont)->fd_red[1] > 2)
-            close(((t_cmd *)elem->cont)->fd_red[1]);
-        if (((t_cmd *)elem->cont)->fd_red[0] > 2)
-            close(((t_cmd *)elem->cont)->fd[0]);
-        if (((t_cmd *)elem->cont)->fd[1] > 2)
-            close(((t_cmd *)elem->cont)->fd[1]);
-        if (((t_cmd *)elem->cont)->fd[0] > 2)
-            close(((t_cmd *)elem->cont)->fd[0]);
-        elem = elem->next;
-    }
-    array(m()->tokens)->destroy();
-    m()->tokens = creat_array();
-    array(m()->cmds)->destroy();
-    m()->cmds = creat_array();
-    m()->h = 0;
-    m()->inter = 0;
+	elem = array(m()->cmds)->begin;
+	while (elem)
+	{
+		if (((t_cmd *)elem->cont)->fd_red[1] > 2)
+			close(((t_cmd *)elem->cont)->fd_red[1]);
+		if (((t_cmd *)elem->cont)->fd_red[0] > 2)
+			close(((t_cmd *)elem->cont)->fd[0]);
+		if (((t_cmd *)elem->cont)->fd[1] > 2)
+			close(((t_cmd *)elem->cont)->fd[1]);
+		if (((t_cmd *)elem->cont)->fd[0] > 2)
+			close(((t_cmd *)elem->cont)->fd[0]);
+		elem = elem->next;
+	}
+	array(m()->tokens)->destroy();
+	m()->tokens = creat_array();
+	array(m()->cmds)->destroy();
+	m()->cmds = creat_array();
+	m()->h = 0;
+	m()->inter = 0;
 }
 
 void	new_func(void)

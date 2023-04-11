@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:23 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/10 20:09:13 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 12:12:08 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*here_lines(void)
 void	here_c(int sig)
 {
 	(void)sig;
+	if (m()->tmp)
+		free(m()->tmp);
 	write(2, "^C\n", 3);
 	s_exit(130);
 }
@@ -56,6 +58,7 @@ void	loop_here(t_cmd *cmd, char *eof)
 {
 	char	*str;
 
+	m()->tmp = eof;
 	close(cmd->fd[0]);
 	while (1)
 	{
@@ -71,9 +74,6 @@ void	loop_here(t_cmd *cmd, char *eof)
 		}
 		if (!s().equal(eof, str))
 		{
-			close(cmd->fd[1]);
-            if (cmd->fd_red[1])
-                close(cmd->fd_red[1]);
 			free(eof);
 			free(str);
 			s_exit(0);

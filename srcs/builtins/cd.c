@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:00:37 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/08 17:00:41 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 12:00:41 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	cd(void *cont, int fd)
 	old = getcwd(old, PATH_MAX);
 	if (path && ((char **)cont)[1])
 	{
-		cona("cd: too many arguments\n");
+		err_hand("cd: too many arguments\n");
 		return (1);
 	}
 	path = cd_cut_lines(path);
@@ -59,6 +59,6 @@ int	cd(void *cont, int fd)
 	if (path)
 		free(path);
 	if (err && err++ && ++err)
-		cona(" No such file or directory\n");
+		err_hand(" No such file or directory\n");
 	return (err);
 }

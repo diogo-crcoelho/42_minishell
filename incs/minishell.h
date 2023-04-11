@@ -36,7 +36,7 @@
 //general
 unsigned long	hash(char *str);
 void			init_parse(const char *str);
-void			cona(char *err);
+void			err_hand(char *err);
 void			free_pp(void *pp);
 
 //builtins

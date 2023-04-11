@@ -6,13 +6,13 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:08:13 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 21:30:33 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 12:09:36 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	cona(char *err)
+void	err_hand(char *err)
 {
 	write(2, err, s().len(err, 0));
 	m()->exit_status = 2;
@@ -41,8 +41,10 @@ t_mini	*m(void)
 
 void	close_pipes(t_cmd *cmd)
 {
-	close(cmd->fd[0]);
-	close(cmd->fd[1]);
+	if (cmd->fd[0] > 2)
+		close(cmd->fd[0]);
+	if (cmd->fd[0] > 2)
+		close(cmd->fd[1]);
 }
 
 void	del_cmd(void *cmd)

@@ -72,6 +72,8 @@ void	loop_here(t_cmd *cmd, char *eof)
 		if (!s().equal(eof, str))
 		{
 			close(cmd->fd[1]);
+            if (cmd->fd_red[1])
+                close(cmd->fd_red[1]);
 			free(eof);
 			free(str);
 			s_exit(0);

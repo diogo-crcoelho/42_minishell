@@ -89,10 +89,10 @@ void	new_func(void)
 			m()->exit_status = 0;
 			break ;
 		}
-		add_history(str);
 		temp = str;
 		lex(&temp);
 		delexer(array(m()->tokens)->begin, 0);
+		history(array(m()->cmds)->begin, str);
 		if (130 != m()->h)
 			pipex();
 		reload();

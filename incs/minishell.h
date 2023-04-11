@@ -120,4 +120,8 @@ void			**to_array_mini(void);
 void			close_pipes(t_cmd *cmd);
 char			*get_next_line(int fd);
 void			here_doc(t_cmd *cmd, char *eof);
+void			second_parse(t_cmd *cmd);
+void			cutter(char *str);
+void			history(t_elems *elem, char *str);
+
 #endif

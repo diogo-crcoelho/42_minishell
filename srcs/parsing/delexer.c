@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 12:10:33 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:21:14 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	filler2(t_token *token, int j, int *flag)
 	}
 	else if ((SPC != token->type) && !*flag)
 	{
+		cutter(token->token);
 		if (j)
 			clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
 		else

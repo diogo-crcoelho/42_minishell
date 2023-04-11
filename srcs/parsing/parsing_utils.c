@@ -6,24 +6,42 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:55:31 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/08 17:01:08 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:53:26 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	second_parse(char *str)
+void	second_parse(t_cmd *cmd)
 {
-	printf("%s\n", str);
-}
-
-void	init_parse(const char *str)
-{
-	char	**splitted;
-	int		i;
+	int	i;
 
 	i = -1;
-	splitted = s().split(str, '|');
-	while (splitted[++i])
-		second_parse(s().trim(splitted[i]));
+	while (cmd->args && cmd->args[++i])
+		if ('\b' == *(cmd->args[i]))
+			*(cmd->args[i]) = 0;
+}
+
+void	cutter(char *str)
+{
+	if (!*str)
+		*str = '\b';
+}
+
+void	history(t_elems *elem, char *str)
+{
+	t_cmd	*cmd;
+
+	while (elem)
+	{
+		cmd = (t_cmd *)elem->cont;
+		if (cmd->fd_red[0] || cmd->fd_red[1] || \
+			cmd->args || *cmd->args)
+		{
+			add_history(str);
+			return ;
+		}
+		elem = elem->next;
+	}
+	return ;
 }

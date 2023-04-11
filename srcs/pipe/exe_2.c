@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:36 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 12:14:13 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/11 15:18:14 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	run_cut_lines(t_cmd *cmd, t_elems *elem, int flag)
 	close_pipes(cmd);
 	if (flag)
 	{
-		if (cmd->fd_red[1] && printf("aa"))
+		if (cmd->fd_red[1])
 			close(cmd->fd_red[1]);
 		if (cmd->fd_red[0] || elem->prev)
 			close(cmd->fd_red[0]);
@@ -44,6 +44,7 @@ void	run(t_elems *elem)
 	{
 		tmp_clear(cmd);
 	}
+	second_parse(cmd);
 	parse_paths(cmd);
 	if (!cmd->fd_red[0] || -1 != dup2(cmd->fd_red[0], 0))
 	{
@@ -52,7 +53,7 @@ void	run(t_elems *elem)
 			if (-1 == dup2(cmd->fd[1], 1))
 				s_exit(1);
 		}
-		else if (!elem->next)
+		else if (cmd->fd_red[1] || !elem->next)
 			if (cmd->fd_red[1])
 				if (-1 == dup2(cmd->fd_red[1], 1))
 					s_exit(1);
@@ -98,7 +99,10 @@ void	pipex(void)
 	while (size-- > 0)
 	{
 		waitpid(-1, &(m()->exit_status), 0);
-		m()->exit_status = WEXITSTATUS(m()->exit_status);
+		if (WIFEXITED(m()->exit_status))
+			m()->exit_status = WEXITSTATUS(m()->exit_status);
+		else
+			m()->exit_status = WTERMSIG(m()->exit_status) + 128;
 	}
 	m()->inter = 0;
 }

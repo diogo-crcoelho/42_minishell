@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:54:47 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 21:52:03 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:13:06 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	*lstr_state(char **str, int add)
 	temp = *str;
 	while (**str && **str != 39)
 		(*str)++;
-	lstr = s().copy_n(temp, *str - temp);
+	if (!(*str - temp))
+		lstr = ft_calloc(2);
+	else
+		lstr = s().copy_n(temp, *str - temp);
 	if (**str)
 		(*str)++;
 	if (add)
@@ -51,7 +54,7 @@ void	*non_symbol_state(char **str, int add)
 	char	*temp_free;
 	t_dict	*symbol;
 
-	temp = ft_calloc(1);
+	temp = ft_calloc(2);
 	while (**str && **str != ' ' && \
 			**str != '|' && **str != '<' && **str != '>')
 	{

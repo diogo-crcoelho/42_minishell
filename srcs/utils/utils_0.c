@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 21:53:00 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/10 20:12:39 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:15:46 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*var_state_cut_lines(char **str, char *temp)
 			->search_tree(array(m()->env)->root, temp) \
 			->cont)->splitted[1]);
 	else
-		var = ft_calloc(1);
+		var = ft_calloc(2);
 	free(temp);
 	return (var);
 }

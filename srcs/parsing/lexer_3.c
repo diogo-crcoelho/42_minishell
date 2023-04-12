@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 19:18:51 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 20:34:13 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:10:08 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*heredoc_state(char **str, int add)
 
 	symbol = (t_dict *)array(m()->symbols)->search_tree(NULL, *str);
 	*str += 2;
-	here = ft_calloc(1);
+	here = ft_calloc(2);
 	while (**str == ' ' || **str == '\t')
 		(*str)++;
 	while (check_here_validity(**str))

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 15:21:14 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/12 16:10:51 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ void	delexer(t_elems *tmp, int flag)
 			cmds = array(m()->cmds)->end;
 			while (tmp && PIPE != ((t_token *)tmp->cont)->type)
 			{
-				j = (tmp->prev && SPC == ((t_token *)tmp->prev->cont)->type);
+				j = (tmp->prev && (SPC == ((t_token *)tmp->prev->cont)->type || \
+					'\b' == *(((t_token *)tmp->prev->cont)->token)));
 				filler2((t_token *)tmp->cont, j, &flag);
 				tmp = tmp->next;
 			}

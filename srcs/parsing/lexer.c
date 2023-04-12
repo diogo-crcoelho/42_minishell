@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:51:10 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 22:02:34 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:14:39 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	*var_state(char **str, int add)
 	else if (**str && ft_isalnum(**str))
 		var = var_state_cut_lines(str, temp);
 	else
-		var = ft_calloc(1);
+		var = ft_calloc(2);
 	if (add)
 		(array(m()->tokens))->add(c_token(var, p_sym->value))->del = del_token;
 	return (var);
@@ -74,7 +74,7 @@ void	*infile_state(char **str, int add)
 	(void)add;
 	p_sym = ((t_dict *)array(m()->symbols) \
 		->search_tree(array(m()->symbols)->root, *str)->cont);
-	infile = ft_calloc(1);
+	infile = ft_calloc(2);
 	(*str)++;
 	if (p_sym->value == HERE || p_sym->value == APP)
 		(*str)++;
@@ -100,7 +100,7 @@ void	*str_state(char **str, int add)
 	(void)add;
 	p_sym = ((t_dict *)array(m()->symbols) \
 		->search_tree(NULL, *str)->cont);
-	infile = ft_calloc(1);
+	infile = ft_calloc(2);
 	(*str)++;
 	while (**str && **str != '"')
 	{

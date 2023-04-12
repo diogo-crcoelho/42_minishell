@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:36 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 15:18:14 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:43:45 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	run(t_elems *elem)
 	{
 		tmp_clear(cmd);
 	}
-	second_parse(cmd);
 	parse_paths(cmd);
 	if (!cmd->fd_red[0] || -1 != dup2(cmd->fd_red[0], 0))
 	{
@@ -70,6 +69,7 @@ void	execute(t_elems *elem)
 	while (elem)
 	{
 		cmd = (t_cmd *)elem->cont;
+		second_parse(cmd);
 		if (pipe(cmd->fd) < 0)
 			s_exit(2);
 		if (!built(elem))

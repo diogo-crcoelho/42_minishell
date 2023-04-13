@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 20:37:43 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/11 12:00:41 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:26:12 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,14 @@ void	print_each(t_elems *elem, void *o)
 int	env(void *cont, int fd)
 {
 	char	**vars;
-	char	*err;
 	long	fd1;
 
 	fd1 = (long)fd;
 	vars = (char **)cont;
 	if (vars && vars[0])
 	{
-		err = s().join("env: ", ": No such file or directory\n", vars[0]);
-		err_hand(err);
-		free(err);
+		err_hand(s().join("env: ", ": No such file or directory\n", \
+		vars[0]), 1);
 		return (2);
 	}
 	(array(m()->env))->for_each(print_each, (void *)fd1);

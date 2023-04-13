@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:49:42 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 12:00:41 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:26:39 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 
 int	unset_cut(char *vars)
 {
-	char	*err;
-
 	if (!s().len(vars, 0) || s().alnum(vars) || \
 		!(__isalpha(vars[0])))
 	{
-		err = s().join("unset: ", ": not a valid identifier\n", vars);
-		err_hand(err);
-		free(err);
+		err_hand(s().join("unset: ", ": not a valid identifier\n", vars), 1);
 		array(m()->env)->cmp = comp_var;
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 14:00:37 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/11 12:00:41 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/13 02:22:57 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	cd(void *cont, int fd)
 	int		err;
 	char	*path;
 	char	*old;
+	char	*str;
 
 	(void)fd;
 	path = ((char **)cont)[0];
@@ -56,9 +57,13 @@ int	cd(void *cont, int fd)
 	err = chdir(path);
 	if (!err)
 		g_path(old);
+	if (err && err++ && ++err)
+	{
+		str = s().join(path, "No such file or directory\n", ": ");
+		err_hand(str);
+		free(str);
+	}
 	if (path)
 		free(path);
-	if (err && err++ && ++err)
-		err_hand(" No such file or directory\n");
 	return (err);
 }

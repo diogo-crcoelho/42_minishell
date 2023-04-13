@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:46:10 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 18:46:47 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/13 01:54:11 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	echo(void *cont, int fd)
 		while (strs[++i])
 		{
 			write(fd, strs[i], s().len(strs[i], 0));
-			if (strs[i + 1])
+			if (*(strs[i]) && strs[i + 1])
 				write(fd, " ", 1);
 		}
 	}

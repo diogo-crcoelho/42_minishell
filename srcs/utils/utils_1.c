@@ -6,15 +6,17 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 16:08:13 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 12:09:36 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:25:38 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incs/minishell.h"
 
-void	err_hand(char *err)
+void	err_hand(char *err, int flag)
 {
 	write(2, err, s().len(err, 0));
+	if (flag)
+		free(err);
 	m()->exit_status = 2;
 }
 

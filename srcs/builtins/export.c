@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:55 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 12:00:41 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/13 15:26:27 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,14 @@ int	export_cut_lines(char *vars)
 {
 	char	**splitted;
 	t_elems	*temp;
-	char	*err;
-
+	
 	splitted = env_split(vars, '=');
 	temp = array(m()->env)->search(comp_var, splitted[0]);
 	array(m()->env)->cmp = cmp_env;
 	if (!s().len(splitted[0], 0) || s().alnum(splitted[0]) || \
 		!(__isalpha(splitted[0][0])))
 	{
-		err = s().join("export: ", ": not a valid identifier\n", vars);
-		err_hand(err);
-		free(err);
+		err_hand(s().join("export: ", ": not a valid identifier\n", vars), 1);
 		free_pp(splitted);
 		array(m()->env)->cmp = comp_var;
 		return (1);

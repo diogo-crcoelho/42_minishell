@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:19:24 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 18:41:59 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:34:04 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	__build_tree(void)
 	t_elems	*temp;
 
 	temp = (*__this())->begin;
+	if ((*__this())->root)
+		return ;
 	while (temp)
 	{
 		(*__this())->add_leaf(temp->cont);

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 21:22:19 by mvenanci@st       #+#    #+#             */
-/*   Updated: 2023/04/09 18:41:31 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:20:35 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,15 @@ void	__del(t_elems *elem)
 		__del_from_tree(elem->cont);
 	if ((*__this())->begin == elem)
 	{
-		(*__this())->begin = (*__this())->begin->next;
-		(*__this())->begin->prev = NULL;
+		if ((*__this())->begin->next)
+		{
+			(*__this())->begin = (*__this())->begin->next;
+			(*__this())->begin->prev = NULL;
+		}
+		else
+			(*__this())->begin = NULL;
 	}
-	else
+	else if ((*__this())->begin != elem)
 	{
 		elem->prev->next = elem->next;
 		if (elem->next)

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:55 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/13 15:26:27 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:35:10 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	export_empty(t_tree *root, int fd)
 	char	*msg;
 	char	*tmp;
 
-	if (root->left)
+	msg = NULL;
+	if (root && root->left)
 		export_empty(root->left, fd);
-	if (((t_env *)root->cont)->splitted[1])
+	if (root && ((t_env *)root->cont)->splitted[1])
 	{
 		tmp = s().join(((t_env *)root->cont)->splitted[0], \
 						((t_env *)root->cont)->splitted[1], \
@@ -27,13 +28,12 @@ void	export_empty(t_tree *root, int fd)
 		msg = s().join("declare -x ", "\"\n", tmp);
 		free(tmp);
 	}
-	else
-	{
+	else if (root)
 		msg = s().join("declare -x ", "\n", ((t_env *)root->cont)->splitted[0]);
-	}
-	write(fd, msg, s().len(msg, 0));
+	if (msg)
+		write(fd, msg, s().len(msg, 0));
 	free(msg);
-	if (root->right)
+	if (root && root->right)
 		export_empty(root->right, fd);
 }
 
@@ -41,6 +41,8 @@ void	add_new(char *splitted, char *new)
 {
 	free(splitted);
 	array(m()->env)->add(create_cont(new))->del = del_elem;
+	if (!array(m()->env)->root)
+		array(m()->env)->build_tree();
 }
 
 void	change_var(t_elems *var, char *new, char *splitted)

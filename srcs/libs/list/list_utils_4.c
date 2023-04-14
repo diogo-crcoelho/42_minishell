@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:19:33 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/09 19:03:24 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/14 21:16:09 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ t_tree	*find_leaf(t_tree *temp, void *cont, int (*cmp)(void *cont1,
 				void *cont2));
 t_array	**__this(void);
 t_tree	*__search_tree(t_tree *root, void *cont);
+int	__del_from_tree_cut_lines(t_tree *to_del, t_tree *lower);
 
-void	__del_root(void)
+void	__del_root(t_tree **to_del)
 {
 	t_tree	*lower_leaf;
 
@@ -25,14 +26,22 @@ void	__del_root(void)
 	{
 		lower_leaf = find_leaf((*__this())->root->right, \
 			(*__this())->root->cont, (*__this())->cmp);
-		lower_leaf->right = (*__this())->root->left;
-		(*__this())->root->left->up = lower_leaf;
-		(*__this())->root = (*__this())->root->right;
+		(*__this())->root->cont = lower_leaf->cont;
+		__del_from_tree_cut_lines(lower_leaf, NULL);
+		*to_del = lower_leaf;
 	}
 	else if ((*__this())->root->left)
+	{
 		(*__this())->root = (*__this())->root->left;
+		(*__this())->root->up = NULL;
+	}
 	else if ((*__this())->root->right)
+	{
 		(*__this())->root = (*__this())->root->right;
+		(*__this())->root->up = NULL;
+	}
+	else
+		(*__this())->root = NULL;
 }
 
 int	__del_from_tree_cut_lines(t_tree *to_del, t_tree *lower)
@@ -51,7 +60,7 @@ void	__del_from_tree(void *cont)
 
 	to_del = __search_tree((*__this())->root, cont);
 	if (to_del == (*__this())->root)
-		__del_root();
+		__del_root(&to_del);
 	else if (!to_del->right && to_del->left && \
 		__del_from_tree_cut_lines(to_del, to_del->left))
 		to_del->left->up = to_del->up;

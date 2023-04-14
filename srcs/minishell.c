@@ -104,7 +104,7 @@ void	new_func(void)
 		delexer(array(m()->tokens)->begin, 0);
 //        array(m()->tokens)->for_each(print_tokens, NULL);
 		history(array(m()->cmds)->begin, str);
-		if (130 != m()->h)
+		if (130 != m()->h )
 			pipex();
 		reload();
 		free(str);

@@ -29,7 +29,7 @@ char	**rec_split(char **splited, int words, char c, const char *s)
 		while (*s && *s != c)
 			*word++ = *s++;
 	}
-	if (i && word - i)
+	if (word)
 		splited = rec_split(splited, words + 1, c, s);
 	else if (!*s)
 		splited = ft_calloc(sizeof(char *) * (words + 1));

@@ -14,6 +14,8 @@
 
 int	__isalpha(int c)
 {
+	if ('_' == c)
+		return (1);
 	if (c < 65 || c > 122)
 		return (0);
 	if (c > 90 && c < 97)

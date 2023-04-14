@@ -55,7 +55,7 @@ void	*var_state(char **str, int add)
 	(*str)++;
 	if (**str == '?' && (*str)++)
 		var = ft_itoa(m()->exit_status);
-	else if (!check_var_validity(**str) || **str == '"')
+	else if (!check_var_validity(**str) || (**str == '"' && m()->in_quotes))
 		var = s().copy("$");
 	else if (**str && ft_isalnum(**str))
 		var = var_state_cut_lines(str, temp);
@@ -102,13 +102,15 @@ void	*str_state(char **str, int add)
 		->search_tree(NULL, *str)->cont);
 	infile = ft_calloc(2);
 	(*str)++;
-	while (**str && **str != '"')
+    m()->in_quotes = 1;
+    while (**str && **str != '"')
 	{
 		infile = aux_state(str, infile, p_sym);
 		if (!**str)
 			break ;
 		(*str)++;
 	}
+    m()->in_quotes = 0;
 	if (**str)
 		(*str)++;
 	if (add)

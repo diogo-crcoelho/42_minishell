@@ -22,9 +22,9 @@ void	second_parse(t_cmd *cmd)
 			*(cmd->args[i]) = 0;
 }
 
-void	cutter(char *str)
+void	cutter(char *str, int type)
 {
-	if (!*str)
+	if (!*str && type != VAR)
 		*str = '\b';
 }
 

@@ -41,9 +41,7 @@ void	run(t_elems *elem)
 
 	cmd = (t_cmd *)elem->cont;
 	if (!cmd->args || !s().len(cmd->args[0], 0))
-	{
 		tmp_clear(cmd);
-	}
 	parse_paths(cmd);
 	if (!cmd->fd_red[0] || -1 != dup2(cmd->fd_red[0], 0))
 	{

@@ -78,7 +78,7 @@ void	filler2(t_token *token, int j, int *flag)
 	}
 	else if ((SPC != token->type) && !*flag)
 	{
-		cutter(token->token);
+		cutter(token->token, token->type);
 		if (j)
 			clean = s().join(((t_cmd *)tmp->cont)->path, token->token, "\e");
 		else

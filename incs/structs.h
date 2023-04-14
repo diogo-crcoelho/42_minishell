@@ -53,6 +53,7 @@ struct					s_mini
 	volatile int		h;
 	char				*tmp;
 	struct termios		term;
+    int                 in_quotes;
 };
 
 struct					s_env

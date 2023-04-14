@@ -121,7 +121,7 @@ void			close_pipes(t_cmd *cmd);
 char			*get_next_line(int fd);
 void			here_doc(t_cmd *cmd, char *eof);
 void			second_parse(t_cmd *cmd);
-void			cutter(char *str);
+void			cutter(char *str, int type);
 void			history(t_elems *elem, char *str);
 
 #endif

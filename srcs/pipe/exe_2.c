@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:36 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/14 18:22:50 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/14 18:39:25 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,15 @@ void	execute(t_elems *elem)
 void	pipex(void)
 {
 	int	size;
+	int exit_code;
 
 	execute(array(m()->cmds)->begin);
 	size = m()->c_count;
 	while (size--)
 	{
-		waitpid(-1, &(m()->exit_status), WUNTRACED);
-		if (WIFEXITED(m()->exit_status))
-			m()->exit_status = WEXITSTATUS(m()->exit_status);
-		else if (13 != WTERMSIG(m()->exit_status))
-			m()->exit_status = WTERMSIG(m()->exit_status) + 128;
-		else 
-			m()->exit_status = 0;
+		waitpid(-1, &exit_code, WUNTRACED);
+		if (WIFEXITED(exit_code))
+			m()->exit_status = WEXITSTATUS(exit_code);
 	}
 	m()->inter = 0;
 }

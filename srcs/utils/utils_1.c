@@ -45,7 +45,7 @@ void	close_pipes(t_cmd *cmd)
 {
 	if (cmd->fd[0] > 2)
 		close(cmd->fd[0]);
-	if (cmd->fd[0] > 2)
+	if (cmd->fd[1] > 2)
 		close(cmd->fd[1]);
 }
 

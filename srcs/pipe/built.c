@@ -75,8 +75,6 @@ void	built_cut_lines(t_cmd *cmd, t_elems *elem)
 {
 	if (cmd->infile || elem->prev)
 		close(cmd->fd_red[0]);
-//	if (elem->prev && ((t_cmd *)elem->prev->cont)->fd[1] > 2)
-//		close(((t_cmd *)elem->prev->cont)->fd[1]);
 	if (cmd->outfile)
 		close(cmd->fd_red[1]);
 }

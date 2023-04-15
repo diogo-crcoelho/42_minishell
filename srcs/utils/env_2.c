@@ -30,4 +30,7 @@ void	create_env(char **envp)
 	array(m()->env)->to_array = to_array_mini;
 	m()->a_env = (char **)array(m()->env)->to_array();
 	shell_lvl();
+    array(m()->env)->cmp = cmp_env;
+    array(m()->env)->build_tree();
+    array(m()->env)->cmp = comp_var;
 }

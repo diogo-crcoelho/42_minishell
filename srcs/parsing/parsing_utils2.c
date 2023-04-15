@@ -57,30 +57,30 @@ char	*ft_itoa(int n)
 	return (res);
 }
 
-char	*expand(char *str)
-{
-	t_elems	*teste;
-	int		i;
-
-	if (!s().equal_n(str, "~", 1))
-		return (s().join(getenv("HOME"), &str[1], 0));
-	else if (!s().equal_n(str, "$", 1) && (str[1]) != '?')
-	{
-		i = s().alnum(&str[1]);
-		if (!i)
-			i = s().len(&str[1], 0);
-		teste = array(m()->env)->search(comp_var, str + 1);
-		if (teste)
-		{
-			if (str[++i])
-				return (s().join(((t_env *)teste->cont)->splitted[1], \
-					&str[i], 0));
-			return (s().copy(((t_env *)teste->cont)->splitted[1]));
-		}
-		else
-			return (s().copy(""));
-	}
-	else if (!s().equal_n(str, "$", 1))
-		return (ft_itoa(m()->exit_status));
-	return (s().copy(str));
-}
+//char	*expand(char *str)
+//{
+//	t_elems	*teste;
+//	int		i;
+//
+//	if (!s().equal_n(str, "~", 1))
+//		return (s().join(getenv("HOME"), &str[1], 0));
+//	else if (!s().equal_n(str, "$", 1) && (str[1]) != '?')
+//	{
+//		i = s().alnum(&str[1]);
+//		if (!i)
+//			i = s().len(&str[1], 0);
+//		teste = array(m()->env)->search(comp_var, str + 1);
+//		if (teste)
+//		{
+//			if (str[++i])
+//				return (s().join(((t_env *)teste->cont)->splitted[1],
+//					&str[i], 0));
+//			return (s().copy(((t_env *)teste->cont)->splitted[1]));
+//		}
+//		else
+//			return (s().copy(""));
+//	}
+//	else if (!s().equal_n(str, "$", 1))
+//		return (ft_itoa(m()->exit_status));
+//	return (s().copy(str));
+//}

@@ -37,7 +37,7 @@ int	__isal_num(char *str)
 	i = -1;
 	while (str && str[++i])
 		if (!__isdigit(str[i]) && !__isalpha(str[i]))
-			return (i);
+			return (1);
 	return (0);
 }
 

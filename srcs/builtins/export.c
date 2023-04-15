@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:55 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/14 21:35:10 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/15 15:57:55 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	export_cut_lines(char *vars)
 {
 	char	**splitted;
 	t_elems	*temp;
-	
+
 	splitted = env_split(vars, '=');
 	temp = array(m()->env)->search(comp_var, splitted[0]);
 	array(m()->env)->cmp = cmp_env;

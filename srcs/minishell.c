@@ -13,6 +13,15 @@
 #include "../incs/minishell.h"
 
 int		add_space(char *s);
+// void print_tokens(t_elems *elem, void *o)
+// {
+//     (void)o;
+//     t_token *token = elem->cont;
+//     printf("=================================\n");
+//     printf("token -- '%s'\n", token->token);
+//     printf("type -- %d\n", token->type);
+//     printf("=================================\n");
+// }
 
 void	lex(char **temp)
 {
@@ -75,16 +84,6 @@ void	reload(void)
 	m()->inter = 0;
 }
 
-void print_tokens(t_elems *elem, void *o)
-{
-    (void)o;
-    t_token *token = elem->cont;
-    printf("=================================\n");
-    printf("token -- '%s'\n", token->token);
-    printf("type -- %d\n", token->type);
-    printf("=================================\n");
-}
-
 void	new_func(void)
 {
 	char	*str;
@@ -102,9 +101,8 @@ void	new_func(void)
 		temp = str;
 		lex(&temp);
 		delexer(array(m()->tokens)->begin, 0);
-//        array(m()->tokens)->for_each(print_tokens, NULL);
 		history(array(m()->cmds)->begin, str);
-		if (130 != m()->h )
+		if (130 != m()->h)
 			pipex();
 		reload();
 		free(str);

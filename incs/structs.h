@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:59:42 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 11:58:42 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/15 15:59:48 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ struct					s_mini
 	volatile int		h;
 	char				*tmp;
 	struct termios		term;
-    int                 in_quotes;
+	int					in_quotes;
 };
 
 struct					s_env

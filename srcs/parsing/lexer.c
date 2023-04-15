@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:51:10 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/12 15:14:39 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/15 15:56:45 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,15 @@ void	*str_state(char **str, int add)
 		->search_tree(NULL, *str)->cont);
 	infile = ft_calloc(2);
 	(*str)++;
-    m()->in_quotes = 1;
-    while (**str && **str != '"')
+	m()->in_quotes = 1;
+	while (**str && **str != '"')
 	{
 		infile = aux_state(str, infile, p_sym);
 		if (!**str)
 			break ;
 		(*str)++;
 	}
-    m()->in_quotes = 0;
+	m()->in_quotes = 0;
 	if (**str)
 		(*str)++;
 	if (add)

@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 18:19:33 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/14 21:16:09 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/15 15:56:07 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_tree	*find_leaf(t_tree *temp, void *cont, int (*cmp)(void *cont1,
 				void *cont2));
 t_array	**__this(void);
 t_tree	*__search_tree(t_tree *root, void *cont);
-int	__del_from_tree_cut_lines(t_tree *to_del, t_tree *lower);
+int		__del_from_tree_cut_lines(t_tree *to_del, t_tree *lower);
 
 void	__del_root(t_tree **to_del)
 {

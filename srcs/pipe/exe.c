@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:56:48 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/11 12:13:36 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/15 15:58:55 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ void	befor_exit(t_cmd *cmd)
 	d = opendir(cmd->args[0]);
 	err = NULL;
 	m()->exit_status = 127;
-    if (s().contains(cmd->args[0], "/") && access(cmd->args[0], F_OK))
+	if (s().contains(cmd->args[0], "/") && access(cmd->args[0], F_OK))
 		err = s().join(cmd->args[0], "No such file or directory\n", ": ");
-    else
+	else
 	{
 		if (!access(cmd->args[0], F_OK))
 		{

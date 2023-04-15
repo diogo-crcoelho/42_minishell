@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:57:36 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/14 18:39:25 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/15 16:00:14 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	run(t_elems *elem)
 
 	cmd = (t_cmd *)elem->cont;
 	if (!cmd->args || !cmd->args[0])
-        s_exit(0);
+		s_exit(0);
 	parse_paths(cmd);
 	if (!cmd->fd_red[0] || -1 != dup2(cmd->fd_red[0], 0))
 	{
@@ -91,7 +91,7 @@ void	execute(t_elems *elem)
 void	pipex(void)
 {
 	int	size;
-	int exit_code;
+	int	exit_code;
 
 	execute(array(m()->cmds)->begin);
 	size = m()->c_count;

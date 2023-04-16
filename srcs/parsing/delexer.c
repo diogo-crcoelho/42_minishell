@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delexer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: mvenanci <mvenanci@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:27:27 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/12 16:10:51 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:25:27 by mvenanci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	filler_cut_lines(t_token *token, t_elems *tmp)
 	}
 	((t_cmd *)tmp->cont)->outfile = s().copy(token->token);
 	((t_cmd *)tmp->cont)->fd_red[1] = \
-		open(token->token, O_WRONLY | open_flags | O_CREAT, 0644);
+		open(token->token, O_WRONLY | open_flags | O_CREAT | O_ASYNC, 0644);
 	if (!(((t_cmd *)tmp->cont)->err))
 	{
 		((t_cmd *)tmp->cont)->ord = -1;
@@ -46,7 +46,8 @@ void	filler(t_token *token, t_elems *tmp, int *flag)
 			close(((t_cmd *)tmp->cont)->fd_red[0]);
 		}
 		((t_cmd *)tmp->cont)->infile = s().copy(token->token);
-		((t_cmd *)tmp->cont)->fd_red[0] = open(token->token, O_RDONLY);
+		((t_cmd *)tmp->cont)->fd_red[0] = \
+			open(token->token, O_RDONLY | O_ASYNC);
 		if (!(((t_cmd *)tmp->cont)->err))
 		{
 			((t_cmd *)tmp->cont)->ord = 1;

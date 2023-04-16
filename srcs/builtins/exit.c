@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 15:47:30 by mvenanci          #+#    #+#             */
-/*   Updated: 2023/04/13 15:24:53 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:35:27 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_exit(void *cont, int fd)
 		return (1);
 	}
 	if (!s().len(vars[0], 0))
-		s_exit(0);
+		s_exit(m()->exit_status);
 	ret = parse_exit(s_atoi(vars[0]));
 	s_exit(ret);
 	return (0);

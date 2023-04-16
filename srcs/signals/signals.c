@@ -6,7 +6,7 @@
 /*   By: dcarvalh <dcarvalh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 11:54:53 by dcarvalh          #+#    #+#             */
-/*   Updated: 2023/04/11 15:04:56 by dcarvalh         ###   ########.fr       */
+/*   Updated: 2023/04/16 11:38:53 by dcarvalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void	ctrl_bs(int sig)
 	if (m()->inter < 1)
 		SIG_IGN ;
 	else
+	{
+		m()->exit_status = 131;
 		printf("Quit (core dumped)\n");
+	}
 }
 
 void	signals_hand(void)
